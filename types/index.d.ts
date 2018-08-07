@@ -1,7 +1,3 @@
-/*
- * Copyright (c) 2018.  Pablo Klaschka <contact@pabloklaschka.de>.
- */
-
 import {Artboard, SceneNode} from "scenegraph";
 
 export {};
