@@ -1,7 +1,3 @@
-/*
- * Copyright (c) 2018 Pablo Klaschka <contact@pabloklaschka.de>.
- */
-
 /**
  * You can make structural changes to the scenegraph, and perform other complex operations, by programmatically invoking the same commands as XD users have access to in the UI. These methods do not take arguments. Instead, set the selection to the objects you want the command to target, then invoke the command:
  */
