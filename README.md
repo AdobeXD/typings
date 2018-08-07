@@ -13,7 +13,7 @@ To make it easier to describe how to use the plugins, here is a sample folder st
 - Adobe XD Plugins folder (```plugins```)
   - com.me.sampleplugin
     - main.js
-    - xdplugin.json
+    - manifest.json
   - \[…]
 
 #### Common (all editors and IDEs)
@@ -30,7 +30,7 @@ First of all, you need to copy the ```types```-folder and the ```jsconfig.json``
        - \[…]
      - ```jsconfig.json```
      - ```main.js```
-     - ```xdplugin.json```
+     - ```manifest.json```
    - \[…]
 
 Now, the main part is done. Depending on the IDE or editor you use, there may be a few more steps required:
