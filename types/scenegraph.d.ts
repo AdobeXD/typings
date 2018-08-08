@@ -186,12 +186,12 @@ declare abstract class SceneNode {
     public readonly localCenterPoint: Point;
 
     /**
-     * The node’s draw bounds in document-global coordinate space. Draw bounds are larger than the selection outline seen in XD, including outer stroke, drop shadow / blur, etc. - every visible pixel of the node is encompassed by these bounds. This matches the image dimensions if the node is declareed as a PNG/JPEG bitmap.
+     * The node’s draw bounds in document-global coordinate space. Draw bounds are larger than the selection outline seen in XD, including outer stroke, drop shadow / blur, etc. - every visible pixel of the node is encompassed by these bounds. This matches the image dimensions if the node is exported as a PNG/JPEG bitmap.
      */
     public readonly globalDrawBounds: Bounds;
 
     /**
-     * Node name as seen in the Layers panel. Also used as filename during declare.
+     * Node name as seen in the Layers panel. Also used as filename during export.
      */
     public name: string;
 
@@ -206,7 +206,7 @@ declare abstract class SceneNode {
     public locked: boolean;
 
     /**
-     * True if the node should be included in the output of File > declare > Batch and other bulk-declare workflows.
+     * True if the node should be included in the output of File > export > Batch and other bulk-export workflows.
      */
     public markedForExport: boolean;
 
