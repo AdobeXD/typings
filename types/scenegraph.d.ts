@@ -255,10 +255,92 @@ declare class LinearGradientFill {
 }
 
 declare class RadialGradientFill {
+    // TODO: Waiting for documentation to arrive
 }
 
 declare class BitmapFill {
+    /**
+     * The image is stretched (distorting its aspect ratio) so its edges line up exactly with the edges of the shape. (Similar to `object-fit: fill` in CSS).
+     */
+    public static SCALE_NORMAL: string;
+    /**
+     * The image's aspect ratio is preserved and it it scaled to completely cover the area of the shape. This means on one axis the image's edges line up exactly with the edges of the shape, and on the other axis the image extends beyond the shape's bounds and is cropped. (Similar to `object-fit: cover` in CSS).
+     */
+    public static SCALE_COVER: string;
+
+    /**
+     * Pixel dimensions of the underlying bitmap image data.
+     */
+    public width: number;
+
+    /**
+     * Pixel dimensions of the underlying bitmap image data.
+     */
+    public height: number;
+
+    /**
+     * Indicates the format the image data was originally encoded in, such as image/gif or image/jpeg.
+     */
+    public imageMIMEType: string;
+
+    /**
+     * How the image is scaled when the aspect ratio of the shape does not match the aspect ratio of the image:
+     * * BitmapFill.SCALE_NORMAL - The image is stretched (distorting its aspect ratio) so its edges line up exactly with the edges of the shape. (Similar to `object-fit: fill` in CSS).
+     * * BitmapFill.SCALE_COVER - The image's aspect ratio is preserved and it it scaled to completely cover the area of the shape. This means on one axis the image's edges line up exactly with the edges of the shape, and on the other axis the image extends beyond the shape's bounds and is cropped. (Similar to `object-fit: cover` in CSS).
+     *
+     * Image size and scaling are also affected by cropping settings, but these are not yet exposed to plugins.
+     *
+     * To change this property, use cloneWithOverrides.
+     */
+    public scaleBehaviour: string;
+
+    /**
+     * True if the image comes from a link to an external resource, such as Creative Cloud Libraries.
+     */
+    public linked: boolean;
+
+    /**
+     * Create a new BitmapFill object with the given properties. These properties cannot be modified after the BitmapFill is created, but you can create a new BitmapFill with changed properties via cloneWithOverrides. Any properties not specified in the properties argument are left at default values.
+     *
+     * After creating a BitmapFill with create(), you must call loadFromURL or loadBase64Image to attach image data to the object.
+     * @param properties `properties.scaleBehaviour`: Default is BitmapFill.SCALE_NORMAL
+     */
+    public static create(properties: { scaleBehaviour: string }): BitmapFill;
+
+    /**
+     * Returns a copy of this BitmapFill, with the given properties changed to new values. These properties cannot be modified after the cloned BitmapFill has been created. Any properties not specified in the properties argument are copied unchanged from the original BitmapFill object.
+     * @param properties
+     */
+    public cloneWithOverrides(properties: { scaleBehaviour: string }): BitmapFill;
+
+    /**
+     * **This is a temporary API.** The same capability will be exposed with a cleaner API in the future.
+     *
+     * Loads a file from disk and initializes this BitmapFill to display it. Despite the function name, you must pass this function a local filesystem path - it does not support URLs from the network or even file: local URLs. Given a File object, use file.nativePath to get a local path suitable for use with this function.
+     *
+     * Only call this method on a freshly-created "blank" BitmapFill (from create). Do not call it on an existing BitmapFill or a clone of an existing fill.
+     * @param path Local filesystem path to the image file.
+     *
+     * @return  true if the image data was successfully loaded
+     */
+    public loadFromURL(path: string): boolean;
+
+    /**
+     * Parses the given Base64-encoded image data and initializes this BitmapFill to display it.
+     *
+     * Only call this method on a freshly-created "blank" BitmapFill (from create). Do not call it on an existing BitmapFill or a clone of an existing fill.
+     *
+     * @param dataURI A data: URI pointing to a Base64-encoded image
+     * @return true if the image data was successfully loaded
+     */
+    public loadBase64Image(dataURI): boolean;
+
+    /**
+     * Encodes the image as a Base64 string and returns it. You can use this in conjunction with the imageMIMEType property to build a data: URI representing this image.
+     */
+    public getBase64Representation(): string;
 }
+
 
 declare class Shadow {
     /**
