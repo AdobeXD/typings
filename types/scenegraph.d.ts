@@ -1,5 +1,3 @@
-import {SceneNodeList} from "./index";
-
 declare class Point {
     x: number;
     y: number;
@@ -22,30 +20,30 @@ declare class Color {
     /**
      * Integer 0-255. Get/set the green channel value.
      */
-    public g:number;
+    public g: number;
 
     /**
      * Integer 0-255. Get/set the blue channel value.
      */
-    public b:number;
+    public b: number;
 
     /**
      * Creates a new color instance.
      * @param value String in CSS color format (hex, rgb, rgba, hsl, hsla, hsv, hsva, or color name); or ARGB numeric value (unsigned 32-bit integer); or object with r, g, b, a keys all set to integers from 0 - 255 (if a is omitted, 255 is used).
      * @param opacity Optional, floating-point value from 0 - 1. Use when value parameter doesn't specify an opacity and you don't want the default 1.0 (100%) opacity.
      */
-    public constructor(value: string | {r:number, g:number, b:number, a?:number}, opacity?: number);
+    public constructor(value: string | { r: number, g: number, b: number, a?: number }, opacity?: number);
 
     /**
      * Convert to an object with r, g, b, a keys where r, g, b, a range from 0 - 255.
      */
-    public toRgba(): {r:number, g:number, b:number, a:number};
+    public toRgba(): { r: number, g: number, b: number, a: number };
 
     /**
      * Convert to hex string with "#" prefix. Ignores the Color's alpha value. Returns a 3-digit string if possible, otherwise returns a 6-digit string.
      * @param forceSixDigits True if you want the result to always have 6 digits.
      */
-    public toHex(forceSixDigits:boolean):string;
+    public toHex(forceSixDigits: boolean): string;
 
     /**
      * Returns a clone of the current color object
@@ -233,8 +231,8 @@ declare abstract class SceneNode {
     /**
      * Move the node so the given point in its local coordinates is placed at the given point in its parent’s coordinates (taking into account any rotation on this node, etc.).
      * For an overview of node positioning & coordinate systems, see Coordinate spaces.
-     * @param {scenegraph.Point} registrationPoint Point in this node’s local coordinate space to align with parentPoint
-     * @param {scenegraph.Point} parentPoint Point in this node’s parent’s coordinate space to move registrationPoint to
+     * @param {Point} registrationPoint Point in this node’s local coordinate space to align with parentPoint
+     * @param {Point} parentPoint Point in this node’s parent’s coordinate space to move registrationPoint to
      */
     public placeInParentCoordinates(
         registrationPoint: Point,
@@ -244,7 +242,7 @@ declare abstract class SceneNode {
     /**
      * Rotate the node clockwise by the given number of degrees around the given point in the plugin’s local coordinate space. If this node already has nonzero rotation, this operation adds to its existing angle.
      * @param {number} deltaAngle In degrees.
-     * @param {scenegraph.Point} rotationCenter Point to rotate around, in node’s local coordinates.
+     * @param {Point} rotationCenter Point to rotate around, in node’s local coordinates.
      */
     public rotateAround(deltaAngle: number, rotationCenter: Point): void;
 
@@ -381,22 +379,22 @@ declare class Artboard extends GraphicsNode {
 
     /**
      * Adds a child node to this container node. You can only add leaf nodes this way; to create structured subtrees of content, use commands.
-     * @param {scenegraph.SceneNode} node Child to add
+     * @param {SceneNode} node Child to add
      * @param {number} index Optional: index to insert child at. Child is appended to end of children list (top of z order) otherwise.
      */
     public addChild(node: SceneNode, index?: number): void;
 
     /**
      * Inserts a child node after the given reference node.
-     * @param {scenegraph.SceneNode} node Child to add
-     * @param {scenegraph.SceneNode} relativeTo New child is added immediately after this existing child
+     * @param {SceneNode} node Child to add
+     * @param {SceneNode} relativeTo New child is added immediately after this existing child
      */
     public addChildAfter(node: SceneNode, relativeTo: SceneNode): void;
 
     /**
      * Inserts a child node before the given reference node.
-     * @param {scenegraph.SceneNode} node Child to add
-     * @param {scenegraph.SceneNode} relativeTo New child is added immediately before this existing child
+     * @param {SceneNode} node Child to add
+     * @param {SceneNode} relativeTo New child is added immediately before this existing child
      */
     public addChildBefore(node: SceneNode, relativeTo: SceneNode): void;
 
@@ -516,22 +514,22 @@ declare class BooleanGroup extends GraphicsNode {
 
     /**
      * Adds a child node to this container node. You can only add leaf nodes this way; to create structured subtrees of content, use commands.
-     * @param {scenegraph.SceneNode} node Child to add
+     * @param {SceneNode} node Child to add
      * @param {number} index Optional: index to insert child at. Child is appended to end of children list (top of z order) otherwise.
      */
     public addChild(node: SceneNode, index?: number): void;
 
     /**
      * Inserts a child node after the given reference node.
-     * @param {scenegraph.SceneNode} node Child to add
-     * @param {scenegraph.SceneNode} relativeTo New child is added immediately after this existing child
+     * @param {SceneNode} node Child to add
+     * @param {SceneNode} relativeTo New child is added immediately after this existing child
      */
     public addChildAfter(node: SceneNode, relativeTo: SceneNode): void;
 
     /**
      * Inserts a child node before the given reference node.
-     * @param {scenegraph.SceneNode} node Child to add
-     * @param {scenegraph.SceneNode} relativeTo New child is added immediately before this existing child
+     * @param {SceneNode} node Child to add
+     * @param {SceneNode} relativeTo New child is added immediately before this existing child
      */
     public addChildBefore(node: SceneNode, relativeTo: SceneNode): void;
 
@@ -620,22 +618,22 @@ declare class Group extends SceneNode {
 
     /**
      * Adds a child node to this container node. You can only add leaf nodes this way; to create structured subtrees of content, use commands.
-     * @param {scenegraph.SceneNode} node Child to add
+     * @param {SceneNode} node Child to add
      * @param {number} index Optional: index to insert child at. Child is appended to end of children list (top of z order) otherwise.
      */
     public addChild(node: SceneNode, index?: number): void;
 
     /**
      * Inserts a child node after the given reference node.
-     * @param {scenegraph.SceneNode} node Child to add
-     * @param {scenegraph.SceneNode} relativeTo New child is added immediately after this existing child
+     * @param {SceneNode} node Child to add
+     * @param {SceneNode} relativeTo New child is added immediately after this existing child
      */
     public addChildAfter(node: SceneNode, relativeTo: SceneNode): void;
 
     /**
      * Inserts a child node before the given reference node.
-     * @param {scenegraph.SceneNode} node Child to add
-     * @param {scenegraph.SceneNode} relativeTo New child is added immediately before this existing child
+     * @param {SceneNode} node Child to add
+     * @param {SceneNode} relativeTo New child is added immediately before this existing child
      */
     public addChildBefore(node: SceneNode, relativeTo: SceneNode): void;
 
@@ -658,22 +656,22 @@ declare class SymbolInstance extends SceneNode {
 
     /**
      * Adds a child node to this container node. You can only add leaf nodes this way; to create structured subtrees of content, use commands.
-     * @param {scenegraph.SceneNode} node Child to add
+     * @param {SceneNode} node Child to add
      * @param {number} index Optional: index to insert child at. Child is appended to end of children list (top of z order) otherwise.
      */
     public addChild(node: SceneNode, index?: number): void;
 
     /**
      * Inserts a child node after the given reference node.
-     * @param {scenegraph.SceneNode} node Child to add
-     * @param {scenegraph.SceneNode} relativeTo New child is added immediately after this existing child
+     * @param {SceneNode} node Child to add
+     * @param {SceneNode} relativeTo New child is added immediately after this existing child
      */
     public addChildAfter(node: SceneNode, relativeTo: SceneNode): void;
 
     /**
      * Inserts a child node before the given reference node.
-     * @param {scenegraph.SceneNode} node Child to add
-     * @param {scenegraph.SceneNode} relativeTo New child is added immediately before this existing child
+     * @param {SceneNode} node Child to add
+     * @param {SceneNode} relativeTo New child is added immediately before this existing child
      */
     public addChildBefore(node: SceneNode, relativeTo: SceneNode): void;
 
@@ -726,22 +724,22 @@ declare class RepeatGrid extends SceneNode {
 
     /**
      * Adds a child node to this container node. You can only add leaf nodes this way; to create structured subtrees of content, use commands.
-     * @param {scenegraph.SceneNode} node Child to add
+     * @param {SceneNode} node Child to add
      * @param {number} index Optional: index to insert child at. Child is appended to end of children list (top of z order) otherwise.
      */
     public addChild(node: SceneNode, index?: number): void;
 
     /**
      * Inserts a child node after the given reference node.
-     * @param {scenegraph.SceneNode} node Child to add
-     * @param {scenegraph.SceneNode} relativeTo New child is added immediately after this existing child
+     * @param {SceneNode} node Child to add
+     * @param {SceneNode} relativeTo New child is added immediately after this existing child
      */
     public addChildAfter(node: SceneNode, relativeTo: SceneNode): void;
 
     /**
      * Inserts a child node before the given reference node.
-     * @param {scenegraph.SceneNode} node Child to add
-     * @param {scenegraph.SceneNode} relativeTo New child is added immediately before this existing child
+     * @param {SceneNode} node Child to add
+     * @param {SceneNode} relativeTo New child is added immediately before this existing child
      */
     public addChildBefore(node: SceneNode, relativeTo: SceneNode): void;
 
@@ -763,22 +761,22 @@ declare class LinkedGraphic extends SceneNode {
 declare class RootNode extends SceneNode {
     /**
      * Adds a child node to this container node. You can only add leaf nodes this way; to create structured subtrees of content, use commands.
-     * @param {scenegraph.SceneNode} node Child to add
+     * @param {SceneNode} node Child to add
      * @param {number} index Optional: index to insert child at. Child is appended to end of children list (top of z order) otherwise.
      */
     public addChild(node: SceneNode, index?: number): void;
 
     /**
      * Inserts a child node after the given reference node.
-     * @param {scenegraph.SceneNode} node Child to add
-     * @param {scenegraph.SceneNode} relativeTo New child is added immediately after this existing child
+     * @param {SceneNode} node Child to add
+     * @param {SceneNode} relativeTo New child is added immediately after this existing child
      */
     public addChildAfter(node: SceneNode, relativeTo: SceneNode): void;
 
     /**
      * Inserts a child node before the given reference node.
-     * @param {scenegraph.SceneNode} node Child to add
-     * @param {scenegraph.SceneNode} relativeTo New child is added immediately before this existing child
+     * @param {SceneNode} node Child to add
+     * @param {SceneNode} relativeTo New child is added immediately before this existing child
      */
     public addChildBefore(node: SceneNode, relativeTo: SceneNode): void;
 
@@ -786,4 +784,27 @@ declare class RootNode extends SceneNode {
      * Removes all children from this node. Equivalent to calling removeFromParent() on each child in turn, but faster.
      */
     public removeAllChildren(): void;
+}
+
+export {
+    RootNode,
+    SceneNode,
+    GraphicsNode,
+    Artboard,
+    Rectangle,
+    Ellipse,
+    Line,
+    Path,
+    BooleanGroup,
+    Text,
+    Group,
+    SymbolInstance,
+    RepeatGrid,
+    LinkedGraphic,
+    Color,
+    BitmapFill,
+    LinearGradientFill,
+    Matrix,
+    Shadow,
+    Blur
 }
