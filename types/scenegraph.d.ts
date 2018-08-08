@@ -63,6 +63,32 @@ declare class BitmapFill {
 }
 
 declare class Shadow {
+    /**
+     * X offset of the shadow relative to the shape it is attached to, in global coordinates (i.e. independent of the shape's rotation or any parent's rotation). May be negative.
+     */
+    public x: number;
+
+    /**
+     * Y offset of the shadow relative to the shape it is attached to, in global coordinates (i.e. independent of the shape's rotation or any parent's rotation). May be negative.
+     */
+    public y: number;
+    public blur: number;
+    public color: Color;
+
+    /**
+     * If false, the shadow is not rendered. The user can toggle this via a checkbox in the Properties panel.
+     */
+    public visible: boolean;
+
+    /**
+     * Creates a drop shadow style object with the given properties.
+     * @param x
+     * @param y
+     * @param blur
+     * @param color
+     * @param visible optional and defaults to true.
+     */
+    public constructor(x: number, y: number, blur: number, color: Color, visible: boolean = true)
 }
 
 declare class Blur {
