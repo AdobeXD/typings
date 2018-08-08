@@ -7,12 +7,12 @@ declare global {
      * Imports classes from a module (e.g. ```const { Text } = require('scenegraph'); ```)
      * @param module The module name
      */
-    declare function require(module: string): void;
+    function require(module: string): void;
 
     /**
      * Represents the children of a scenenode. Typically accessed via the SceneNode.children property.
      */
-    declare class SceneNodeList {
+    class SceneNodeList {
         public items: SceneNode[];
         public readonly length: number;
 
@@ -58,7 +58,7 @@ declare global {
      *
      * Items that are locked cannot be in the selection. If the user or your plugin attempts to select any locked items, they are automatically filtered into a separate list (itemsIncludingLocked) which is generally only used by the Unlock command.
      */
-    declare interface Selection {
+    interface Selection {
         /**
          * Array representing the current selection. Empty array if nothing is selected (never null). Never includes locked nodes.
          *
@@ -99,17 +99,17 @@ declare global {
     /**
      * The developer console
      */
-    declare namespace console {
+    namespace console {
         /**
          * Logs something to the developer console
          * @param args info to be logged
          */
-        declare function log(...args: any);
+        function log(...args: any[]);
 
         /**
          * Logs an error to the developer console
          * @param args info to be logged
          */
-        declare function error(...args: any);
+        function error(...args: any[]);
     }
 }
