@@ -208,7 +208,7 @@ declare abstract class SceneNode {
     /**
      * True if the node should be included in the output of File > declare > Batch and other bulk-declare workflows.
      */
-    public markedFordeclare: boolean;
+    public markedForExport: boolean;
 
     /**
      * True if the node’s appearance comes from a link to an external resource, such as Creative Cloud Libraries.
