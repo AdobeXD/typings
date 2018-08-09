@@ -4,8 +4,9 @@ const shell = require("uxp").shell;
 
 /**
  * @param {Selection} selection
+ * @param {RootNode} documentRoot
  */
-function test(selection) {
+function test(selection, documentRoot) {
     selection.items.forEach(node => {
         console.log("Hello world: ", node);
         if (node instanceof Text) {
