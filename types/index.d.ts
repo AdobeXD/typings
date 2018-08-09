@@ -106,21 +106,4 @@ declare global {
          */
         public openExternal(url: string);
     }
-
-    /**
-     * The developer console
-     */
-    namespace console {
-        /**
-         * Logs something to the developer console
-         * @param args info to be logged
-         */
-        function log(...args: any[]);
-
-        /**
-         * Logs an error to the developer console
-         * @param args info to be logged
-         */
-        function error(...args: any[]);
-    }
 }
