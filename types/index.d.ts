@@ -2,6 +2,28 @@ import {Artboard, SceneNode} from "scenegraph";
 
 export {};
 
+interface InitObject {
+    /**
+     * the HTTP request method.
+     */
+    method: Object;
+
+    /**
+     * the HTTP request headers to add.
+     */
+    headers: Headers;
+
+    /**
+     * the body that is included in the HTTP request body.
+     */
+    body: string;
+
+    /**
+     * indicates whether to send cookies. Possible values and functions are as follows: "omit" : cookies are NOT sent, "same-origin" and "include" : cookies are sent.
+     */
+    credentials: string;
+}
+
 declare global {
     /**
      * Imports classes from a module (e.g. ```const { Text } = require('scenegraph'); ```)
@@ -106,6 +128,17 @@ declare global {
          */
         public openExternal(url: string);
     }
+
+    /**
+     *
+     * @param input either the URL string to connect with or a Request object having the URL and the init option in the below.
+     * @param init custom options for a HTTP request.
+     * @throws TypeError when init.body is set and init.method is either "GET" or "HEAD" or either network error or network time-out occurs after a http request is made.
+     */
+    function fetch(
+        input: string | Request,
+        init?: InitObject
+    ): Promise<Response>;
 
     /**
      * The developer console
