@@ -2,7 +2,7 @@ import {Artboard, SceneNode} from "scenegraph";
 
 export {};
 
-interface InitObject {
+interface RequestInit {
     /**
      * the HTTP request method.
      */
@@ -130,14 +130,14 @@ declare global {
     }
 
     /**
-     *
+     * Fetches a resource from an url
      * @param input either the URL string to connect with or a Request object having the URL and the init option in the below.
      * @param init custom options for a HTTP request.
      * @throws TypeError when init.body is set and init.method is either "GET" or "HEAD" or either network error or network time-out occurs after a http request is made.
      */
     function fetch(
         input: string | Request,
-        init?: InitObject
+        init?: RequestInit
     ): Promise<Response>;
 
     /**
