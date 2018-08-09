@@ -1,5 +1,6 @@
 const {Text, Ellipse, Color} = require("scenegraph");
 const clipboard = require("clipboard");
+const shell = require("uxp").shell;
 
 /**
  * @param {Selection} selection
@@ -11,6 +12,7 @@ function test(selection) {
             clipboard.copyText(node.text);
         } else if (node instanceof Ellipse) {
             node.fill = new Color("#ffaaee");
+            shell.openExternal('https://adobe-xd.gitbook.io/plugin-api-reference/uxp-api-reference/network-apis/shell');
         }
     });
 }

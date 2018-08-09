@@ -97,6 +97,17 @@ declare global {
     }
 
     /**
+     * To get an instance: `require("uxp").shell`
+     */
+    class Shell {
+        /**
+         * Opens the url in an the system browser.
+         * @param url The url which should be opened
+         */
+        public openExternal(url: string);
+    }
+
+    /**
      * The developer console
      */
     namespace console {
