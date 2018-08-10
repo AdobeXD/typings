@@ -1,13 +1,13 @@
 const {Text, Ellipse, Color} = require("scenegraph");
 const clipboard = require("clipboard");
 const shell = require("uxp").shell;
-const storage = require("uxp").storage;
+const fs = require("uxp").storage.localFileSystem;
 
 /**
  * @param {Selection} selection
  * @param {RootNode} documentRoot
  */
-function test(selection, documentRoot) {
+async function test(selection, documentRoot) {
     selection.items.forEach(node => {
         console.log("Hello world: ", node);
         if (node instanceof Text) {
@@ -17,6 +17,9 @@ function test(selection, documentRoot) {
             shell.openExternal('https://adobe-xd.gitbook.io/plugin-api-reference/uxp-api-reference/network-apis/shell');
         }
     });
+    const tempFolder = await fs.getTemporaryFolder();
+    const newFile = await tempFolder.createEntry("tempfile.txt", {overwrite: true});
+    newFile.write("Hello, world!");
 }
 
 module.exports = {

@@ -4,7 +4,7 @@ interface CopyToOptions {
     /**
      * if `true`, allows overwriting existing entries
      */
-    overwrite: boolean;
+    overwrite?: boolean;
 }
 
 interface MoveToOptions {
@@ -15,7 +15,7 @@ interface MoveToOptions {
     /**
      * If specified?, the entry is renamed to this name
      */
-    newName: string;
+    newName?: string;
 }
 
 interface FileReadOptions {
@@ -23,31 +23,31 @@ interface FileReadOptions {
 }
 
 interface FileWriteOptions {
-    format: Symbol;
-    append: boolean;
+    format?: Symbol;
+    append?: boolean;
 }
 
 type GetFileForOpeningOptions = {
-    initialDomain: Symbol;
-    types: string[];
-    allowMultiple: boolean;
+    initialDomain?: Symbol;
+    types?: string[];
+    allowMultiple?: boolean;
 }
 
 interface GetFileForSavingOptions {
-    initialDomain: Symbol;
+    initialDomain?: Symbol;
 }
 
 interface GetFolderOptions {
-    initialDomain: Symbol;
+    initialDomain?: Symbol;
 }
 
 interface CreateEntryOptions {
-    type: Symbol;
-    overwrite: boolean;
+    type?: Symbol;
+    overwrite?: boolean;
 }
 
 interface RenameEntryOptions {
-    overwrite: boolean;
+    overwrite?: boolean;
 }
 
 declare module storage {
