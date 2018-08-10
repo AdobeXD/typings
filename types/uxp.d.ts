@@ -122,8 +122,9 @@ declare module storage {
 
         public getPluginFolder(): Promise<Folder>;
 
-        // TODO: getFsUrl() – waiting for better documentation
-        // TODO: getNativePath() – waiting for better documentation
+        public getFsUrl(entry: Entry): string;
+
+        public getNativePath(entry: Entry): string;
 
         public static isFileSystemProvider(fs: any): boolean;
     }
