@@ -1,6 +1,7 @@
 const {Text, Ellipse, Color} = require("scenegraph");
 const clipboard = require("clipboard");
 const shell = require("uxp").shell;
+const storage = require("uxp").storage;
 
 /**
  * @param {Selection} selection
