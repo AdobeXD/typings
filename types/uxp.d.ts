@@ -90,7 +90,7 @@ declare module storage {
         public readonly isFolder: boolean;
     }
 
-    declare export class File {
+    declare export class File extends Entry {
         // TODO: Is a `File` an entry (i.e. does `File` extend `Entry`?
 
         public readonly isFile: boolean;
