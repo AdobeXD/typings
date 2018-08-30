@@ -131,12 +131,41 @@ declare module storage {
 
     }
 
-    declare export class EntryMetadata {
+    /**
+     * Metadata for an entry. It includes useful information such as:
+     *
+     * * size of the file (if a file)
+     * * date created
+     * * date modified
+     * * name
+     *
+     * You'll not instantiate this directly; use  Entry#getMetadata to do so.
+     * @see {@link Entry.getMetadata}
+     */
+    declare export static class EntryMetadata {
+        /**
+         * The name of the entry.
+         */
         public readonly name: string;
+        /**
+         * The size of the entry, if a file. Zero if a folder.
+         */
         public readonly size: number;
+        /**
+         * The date this entry was created.
+         */
         public readonly dateCreated: Date;
+        /**
+         * The date this entry was modified.
+         */
         public readonly dateModified: Date;
+        /**
+         * Indicates if the entry is a file
+         */
         public readonly isFile: boolean;
+        /**
+         * Indicates if the entry is a folder
+         */
         public readonly isFolder: boolean;
     }
 
