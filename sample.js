@@ -20,6 +20,7 @@ async function test(selection, documentRoot) {
     const tempFolder = await fs.getTemporaryFolder();
     const newFile = await tempFolder.createEntry("tempfile.txt", {overwrite: true});
     newFile.write("Hello, world!");
+    await newFile.moveTo(tempFolder, {overwrite: true});
 }
 
 module.exports = {

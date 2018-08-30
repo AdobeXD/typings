@@ -51,32 +51,82 @@ interface RenameEntryOptions {
 }
 
 declare module storage {
-    declare export class Entry {
+    /**
+     * An Entry is the base class for `File` and `Folder`. You'll typically never instantiate an `Entry` directly, but it provides the common fields and methods that both `File` and `Folder` share.
+     */
+    declare export static class Entry {
+        /**
+         * Creates an instance of Entry.
+         * @param name
+         * @param provider
+         * @param id
+         */
         public constructor(name: any, provider: any, id: any);
 
+        /**
+         * Indicates that this instance is an `Entry`. Useful for type-checking.
+         */
         public isEntry: boolean;
+
+        /**
+         * Indicates that this instance is not a `File`. Useful for type-checking.
+         */
         public readonly isFile: boolean;
+
+        /**
+         * Indicates that this instance is **not** a folder. Useful for type-checking.
+         */
         public readonly isFolder: boolean;
+
+        /**
+         * The name of this entry. Read-only.
+         */
         public readonly name: string;
+
+        /**
+         * The associated provider that services this entry. Read-only.
+         */
         public readonly provider: FileSystemProvider;
+
+        /**
+         * The url of this entry. You can use this url as input to other entities of the extension system like for eg: set as src attribute of a Image widget in UI. Read-only.
+         */
         public readonly url: string;
+
+        /**
+         * The platform native file-system path of this entry. Read-only
+         */
         public readonly nativePath: string;
 
         /**
          * Copies this entry to the specified `folder`.
          * @param folder the folder to which to copy this entry
-         * @param options additional options
+         * @param {object} options additional options
+         * @param {boolean=false} options.overwrite if `true`, allows overwriting existing entries
          *
          * @throws errors.EntryExistsError if the attempt would overwrite an entry and `overwrite` is `false`
          * @throws errors.PermissionDeniedError if the underlying file system rejects the attempt
          * @throws errors.OutOfSpaceError if the file system is out of storage space
          */
-        public copyTo(folder: Folder, options: CopyToOptions = {overwrite: false}): Promise;
+        public copyTo(folder: Folder, options?): Promise;
 
-        public moveTo(folder: Folder, options: MoveToOptions = {overwrite: false}): Promise;
+        /**
+         * Moves this entry to the target folder, optionally specifying a new name.
+         * @param folder the folder to which to move this entry
+         * @param {object} options
+         * @param {boolean=false} options.overwrite If true allows the move to overwrite existing files
+         * @param {string=} options.newName If specified, the entry is renamed to this name
+         */
+        public moveTo(folder: Folder, options?): Promise;
 
+        /**
+         * Removes this entry from the file system. If the entry is a folder, all the contents will also be removed.
+         */
         public delete(): Promise;
 
+        /**
+         * @returns this entry's metadata.
+         */
         public getMetadata(): Promise<EntryMetadata>;
 
     }
