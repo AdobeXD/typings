@@ -169,16 +169,43 @@ declare module storage {
         public readonly isFolder: boolean;
     }
 
-    declare export class File extends Entry {
-        // TODO: Is a `File` an entry (i.e. does `File` extend `Entry`?
-
-        public readonly isFile: boolean;
+    /**
+     * Represents a file on a file system. Provides methods for reading from and writing to the file. You'll never instantiate a File directly; instead you'll get access via a FileSystemProvider.
+     * @see {@link FileSystemProvider}
+     */
+    declare export static class File extends Entry {
+        /**
+         * Indicates whether this file is read-only or read-write. See readOnly and readWrite.
+         * @see {@link modes}
+         */
         public mode: Symbol;
 
-        public read(options: FileReadOptions): Promise<string | ArrayBuffer>;
+        /**
+         * Reads data from the file and returns it. The file format can be specified with the `format` option. If a format is not supplied, the file is assumed to be a text file using UTF8 encoding.
+         * @param {object=} options
+         * @param {Symbol=} options.format The format of the file; see utf8 and blob.
+         * @see {@link formats}
+         */
+        public read(options?): Promise<string | ArrayBuffer>;
 
-        public write(data: string, options: FileWriteOptions): Promise;
+        /**
+         * Writes data to a file, appending if desired. The format of the file is controlled via the `format` option, and defaults to UTF8.
+         *
+         * @throws errors.FileIsReadOnlyError if writing to a read-only file
+         * @throws errors.OutOfSpaceError If writing to the file causes the file system to exceed the available space (or quota)
+         *
+         * @param data the data to write to the file
+         * @param {object=} options
+         * @param {Symbol=} options.format The format of the file; see utf8 and blob.
+         * @param {boolean=false} options.append if `true`, the data is written to the end of the file
+         * @see {@link formats}
+         */
+        public write(data: string | ArrayBuffer, options?): Promise;
 
+        /**
+         * Determines if the entry is a file or not. This is safe to use even if the entry is `null` or `undefined`.
+         * @param entry the entry to check
+         */
         public static isFile(entry: any): boolean;
     }
 
