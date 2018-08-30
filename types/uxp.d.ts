@@ -300,20 +300,50 @@ declare module storage {
         // TODO: Waiting for documentation on `LocalFileSystemProvider`
     }
 
-    declare export class Folder extends Entry {
-        public isFolder(): boolean;
-
+    /**
+     * Represents a folder on a file system. You'll never instantiate this directly, but will get it by calling {@link FileSystemProvider.getTemporaryFolder}, {@link FileSystemProvider.getFolder}, or via {@link Folder.getEntries}.
+     */
+    declare export static class Folder extends Entry {
+        /**
+         * Returns an array of entries contained within this folder.
+         * @returns The entries within the folder.
+         */
         public getEntries(): Promise<Entry[]>;
 
-        public createEntry(name: string, options: CreateEntryOptions = {
-            type: types.file,
-            overwrite: false
-        }): Promise<File | Folder>;
+        /**
+         * Creates an entry within this folder and returns the appropriate instance.
+         * @param {string} name the name of the entry to create
+         * @param {object} options
+         * @param {Symbol=types.file} options.type Indicates which kind of entry to create. Pass {@link types.folder} to create a new folder.
+         * @param {boolean=false} options.overwrite If `true`, the create attempt can overwrite an existing file
+         *
+         * @returns the created entry
+         */
+        public createEntry(name: string, options?): Promise<File | Folder>;
 
+        /**
+         * Gets an entry from within this folder and returns the appropriate instance.
+         * @param {string} filePath the name/path of the entry to fetch
+         *
+         * @returns the fetched entry.
+         */
         public getEntry(filePath: string): Promise<File | Folder>;
 
-        public renameEntry(entry: Entry, newName: string, options: RenameEntryOptions = {overwrite = false}): Promise;
+        /**
+         * Renames an entry to a new name.
+         * @param {Entry} entry the entry to rename
+         * @param {string} newName the new name to assign
+         * @param {object} options
+         * @param {boolean=false} options.overwrite if `true`, renaming can overwrite an existing entry
+         */
+        public renameEntry(entry: Entry, newName: string, options?): Promise;
 
+        /**
+         * Checks if an entry is a folder. Safe to use if entry might be `null` or `undefined`. Useful for type checking.
+         * @param entry the entry to check
+         *
+         * @returns if `true`, the entry is a folder
+         */
         public static isFolder(entry: any): boolean;
     }
 
