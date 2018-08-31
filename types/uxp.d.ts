@@ -1,55 +1,5 @@
 declare const shell: Shell;
 
-interface CopyToOptions {
-    /**
-     * if `true`, allows overwriting existing entries
-     */
-    overwrite?: boolean;
-}
-
-interface MoveToOptions {
-    /**
-     * if `true`, allows overwriting existing entries
-     */
-    overwrite: boolean;
-    /**
-     * If specified?, the entry is renamed to this name
-     */
-    newName?: string;
-}
-
-interface FileReadOptions {
-    format?: Symbol;
-}
-
-interface FileWriteOptions {
-    format?: Symbol;
-    append?: boolean;
-}
-
-type GetFileForOpeningOptions = {
-    initialDomain?: Symbol;
-    types?: string[];
-    allowMultiple?: boolean;
-}
-
-interface GetFileForSavingOptions {
-    initialDomain?: Symbol;
-}
-
-interface GetFolderOptions {
-    initialDomain?: Symbol;
-}
-
-interface CreateEntryOptions {
-    type?: Symbol;
-    overwrite?: boolean;
-}
-
-interface RenameEntryOptions {
-    overwrite?: boolean;
-}
-
 declare module storage {
     /**
      * An Entry is the base class for `File` and `Folder`. You'll typically never instantiate an `Entry` directly, but it provides the common fields and methods that both `File` and `Folder` share.
@@ -259,7 +209,7 @@ declare module storage {
          *
          * @returns the selected folder, or `null` if no folder is selected.
          */
-        public getFolder(options: GetFolderOptions): Promise<Folder>;
+        public getFolder(options?): Promise<Folder>;
 
         /**
          * Returns a temporary folder. The contents of the folder will be removed when the extension is disposed.
