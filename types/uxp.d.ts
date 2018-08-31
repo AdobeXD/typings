@@ -350,76 +350,191 @@ declare module storage {
     declare export const localFileSystem: LocalFileSystemProvider;
 
     namespace errors {
+        /**
+         * Attempted to invoke an abstract method.
+         */
         declare class AbstractMethodInvocationError extends Error {
         }
 
+        /**
+         * Attempted to execute a command that required the providers of all entries to match.
+         */
         declare class ProviderMismatchError extends Error {
         }
 
+        /**
+         * The object passed as an entry is not actually an {@link Entry}.
+         */
         declare class EntryIsNotAnEntryError extends Error {
         }
 
+        /**
+         * The entry is not a folder, but was expected to be a folder.
+         */
         declare class EntryIsNotAFolderError extends Error {
         }
 
+        /**
+         * The entry is not a file, but was expected to be.
+         */
         declare class EntryIsNotAFileError extends Error {
         }
 
+        /**
+         * The instance was expected to be a file system, but wasn't.
+         */
         declare class NotAFileSystemError extends Error {
         }
 
+        /**
+         * The file system is out of space (or quota has been exceeded)
+         */
         declare class OutOfSpaceError extends Error {
         }
 
+        /**
+         * The file system revoked permission to complete the requested action.
+         */
         declare class PermissionDeniedError extends Error {
         }
 
+        /**
+         * An attempt was made to overwrite an entry without indicating that it was safe to do so via `overwrite: true`.
+         */
         declare class EntryExistsError extends Error {
         }
 
+        /**
+         * An attempt was made to write to a file that was opened as read-only.
+         */
         declare class FileIsReadOnlyError extends Error {
         }
 
+        /**
+         * Domain is not supported by the current {@link FileSystemProvider} instance.
+         */
         declare class DomainNotSupportedError extends Error {
         }
 
+        /**
+         * The file name contains invalid characters
+         */
         declare class InvalidFileNameError extends Error {
         }
     }
 
+    /**
+     * Common locations that we can use when displaying a file picker.
+     */
     namespace domains {
+        /**
+         * The user's desktop folder
+         */
         declare const userDesktop: Symbol;
+        /**
+         * The user's documents folder
+         */
         declare const userDocuments: Symbol;
+        /**
+         * The user's pictures folder or library
+         */
         declare const userPictures: Symbol;
+        /**
+         * The user's videos / movies folder or library
+         */
         declare const userVideos: Symbol;
+        /**
+         * The user's music folder or library
+         */
         declare const userMusic: Symbol;
+        /**
+         * Local application data
+         */
         declare const appLocalData: Symbol;
+        /**
+         * Local application library
+         */
         declare const appLocalLibrary: Symbol;
+        /**
+         * Local application cache directory (persistence not guaranteed)
+         */
         declare const appLocalCache: Symbol;
+        /**
+         * Local application shared data folder
+         */
         declare const appLocalShared: Symbol;
+        /**
+         * Local temporary directory
+         */
         declare const appLocalTemporary: Symbol;
+        /**
+         * Roaming application data
+         */
         declare const appRoamingData: Symbol;
+        /**
+         * Roaming application library data
+         */
         declare const appRoamingLibrary: Symbol;
     }
 
+    /**
+     * This namespace describes the various file type extensions that can used be used in some FS file open methods.
+     */
     namespace fileTypes {
+        /**
+         * Text file extensions
+         */
         declare const text: Symbol;
+        /**
+         * Image file extensions
+         */
         declare const images: Symbol;
+        /**
+         *
+         All file types
+         */
         declare const all: Symbol;
     }
 
+    /**
+     * This namespace describes the file content formats supported in FS methods like read and write.
+     */
     namespace formats {
+        /**
+         * UTF8 File encoding
+         */
         declare const utf8: Symbol;
+        /**
+         * Binary file encoding
+         */
         declare const binary: Symbol;
     }
 
+    /**
+     * This namespace describes the file open modes. for eg: open file in read-only or both read-write
+     */
     namespace modes {
+        /**
+         * The file is read-only; attempts to write will fail.
+         */
         declare const readOnly: Symbol;
+        /**
+         * The file is read-write.
+         */
         declare const readWrite: Symbol;
     }
 
+    /**
+     * This namespace describes the type of the entry. Whether file or folder etc.
+     */
     namespace types {
+        /**
+         * A file; used when creating an entity
+         */
         declare const file: Symbol;
+        /**
+         * A folder; used when creating an entity
+         */
         declare const folder: Symbol;
     }
 }
