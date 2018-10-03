@@ -207,7 +207,7 @@ declare class LinearGradientFill {
     /**
      * Array of objects representing each color and its position along the gradient line. The position (stop value) is a number 0.0 - 1.0.
      */
-    public colorStops: Color[];
+    public colorStops: {color:Color,stop:number}[];
 
     /**
      * X position of the start of the gradient line, as a multiple of the object's bounding box: X=0 indicates the left edge of the bounding box and X=1 indicates the right edge. The gradient line may start or end outside the object's bounding box, so values may be < 0 or > 1.
