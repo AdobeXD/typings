@@ -178,7 +178,7 @@ declare module storage {
          * Multiple files can be returned if the `allowMultiple` option is `true`.
          * @param {object} options
          * @param {Symbol} options.initialDomain the preferred initial location of the file picker. If not defined, the most recently used domain from a file picker is used instead.
-         * @param {string[]=['.*']} options.types the allowed file types
+         * @param {string[]} options.types the allowed file types
          * @param {boolean=false} options.allowMultiple if `true`, multiple files can be returned (as an array)
          *
          * @returns the selected files, or empty if no file were selected.
