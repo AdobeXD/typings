@@ -183,7 +183,7 @@ declare module storage {
          *
          * @returns the selected files, or empty if no file were selected.
          */
-        public getFileForOpening(options?): Promise<File[]>;
+        public getFileForOpening(options?): Promise<File[] | File>;
 
         /**
          * Gets a file reference suitable for saving. The file is read-write. Any file picker displayed will be of the "save" variety.
