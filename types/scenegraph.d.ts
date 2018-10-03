@@ -439,7 +439,7 @@ declare abstract class SceneNode {
      * Returns a fresh Matrix each time, so this can be mutated by the caller without interfering with anything. Mutating the returned Matrix does not change the node’s transform - only invoking the ‘transform’ setter changes the node. To modify an existing transform, always be sure to re-invoke the transform setter rather than just changing the Matrix object’s properties inline. See “Properties with object values”.
      * For an overview of node transforms & coordinate systems, see Coordinate spaces.
      */
-    public transform: Matrix;
+    public readonly transform: Matrix;
 
     /**
      * The translate component of this node’s transform. Since translation is applied after any rotation in the transform Matrix, translation occurs along the parent’s X/Y axes, not the node’s own local X/Y axes. This is equivalent to the e & f fields in the transform Matrix.
