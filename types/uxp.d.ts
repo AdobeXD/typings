@@ -178,12 +178,12 @@ declare module storage {
          * Multiple files can be returned if the `allowMultiple` option is `true`.
          * @param {object} options
          * @param {Symbol} options.initialDomain the preferred initial location of the file picker. If not defined, the most recently used domain from a file picker is used instead.
-         * @param {string[]=['.*']} options.types the allowed file types
+         * @param {string[]} options.types the allowed file types
          * @param {boolean=false} options.allowMultiple if `true`, multiple files can be returned (as an array)
          *
          * @returns the selected files, or empty if no file were selected.
          */
-        public getFileForOpening(options?): Promise<File[]>;
+        public getFileForOpening(options?): Promise<File[] | File>;
 
         /**
          * Gets a file reference suitable for saving. The file is read-write. Any file picker displayed will be of the "save" variety.
@@ -270,6 +270,23 @@ declare module storage {
          * @returns the created entry
          */
         public createEntry(name: string, options?): Promise<File | Folder>;
+
+        /**
+         * Creates a File Entry object within this folder and returns the appropriate instance. Note that this method just create a file entry object and not the actual file on the disk. The file actually gets created when you call for eg: write method on the file entry object.
+         * @param {string} name the name of the file to create
+         * @param {object} options
+         * @param {boolean=false} options.overwrite If `true`, the create attempt can overwrite an existing file
+         *
+         * @returns the created entry
+         */
+        public createFile(name: string, options?): Promise<File>;
+
+        /**
+         * Creates a Folder within this folder and returns the appropriate instance.
+         * @param {string} name the name of the folder to create
+         * @returns the created entry
+         */
+        public createFolder(name: string): Promise<Folder>;
 
         /**
          * Gets an entry from within this folder and returns the appropriate instance.

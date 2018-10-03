@@ -97,15 +97,16 @@ declare class commands {
      */
     public static alignToPixelGrid(): void;
 
-    /**
-     * Flips the object horizontally. Some objects such as Symbols cannot be flipped. Equivalent to Object > Flip > Horizontally.
-     */
-    public static filpHorizontal(): void;
 
-    /**
-     * Flips the object vertically. Some objects such as Symbols cannot be flipped. Equivalent to Object > Flip > Vertically.
-     */
-    public static flipVertical(): void;
+    // /**
+    //* Flips the object horizontally. Some objects such as Symbols cannot be flipped. Equivalent to Object > Flip > Horizontally.
+    //*/
+    //public static filpHorizontal(): void;
+//
+    //  /**
+    // * Flips the object vertically. Some objects such as Symbols cannot be flipped. Equivalent to Object > Flip > Vertically.
+    //*/
+    //public static flipVertical(): void;
 }
 
 export = commands;

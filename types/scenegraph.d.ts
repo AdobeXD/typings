@@ -258,35 +258,20 @@ declare class RadialGradientFill {
     // TODO: Waiting for documentation to arrive
 }
 
-declare class BitmapFill {
+declare class ImageFill {
     /**
      * The image is stretched (distorting its aspect ratio) so its edges line up exactly with the edges of the shape. (Similar to `object-fit: fill` in CSS).
      */
-    public static SCALE_NORMAL: string;
+    public static SCALE_STRETCH: string;
     /**
      * The image's aspect ratio is preserved and it it scaled to completely cover the area of the shape. This means on one axis the image's edges line up exactly with the edges of the shape, and on the other axis the image extends beyond the shape's bounds and is cropped. (Similar to `object-fit: cover` in CSS).
      */
     public static SCALE_COVER: string;
 
     /**
-     * Pixel dimensions of the underlying bitmap image data.
-     */
-    public width: number;
-
-    /**
-     * Pixel dimensions of the underlying bitmap image data.
-     */
-    public height: number;
-
-    /**
-     * Indicates the format the image data was originally encoded in, such as image/gif or image/jpeg.
-     */
-    public imageMIMEType: string;
-
-    /**
      * How the image is scaled when the aspect ratio of the shape does not match the aspect ratio of the image:
-     * * BitmapFill.SCALE_NORMAL - The image is stretched (distorting its aspect ratio) so its edges line up exactly with the edges of the shape. (Similar to `object-fit: fill` in CSS).
-     * * BitmapFill.SCALE_COVER - The image's aspect ratio is preserved and it it scaled to completely cover the area of the shape. This means on one axis the image's edges line up exactly with the edges of the shape, and on the other axis the image extends beyond the shape's bounds and is cropped. (Similar to `object-fit: cover` in CSS).
+     * * ImageFill.SCALE_STRETCH - The image is stretched (distorting its aspect ratio) so its edges line up exactly with the edges of the shape. (Similar to `object-fit: fill` in CSS).
+     * * ImageFill.SCALE_COVER - The image's aspect ratio is preserved and it it scaled to completely cover the area of the shape. This means on one axis the image's edges line up exactly with the edges of the shape, and on the other axis the image extends beyond the shape's bounds and is cropped. (Similar to `object-fit: cover` in CSS).
      *
      * Image size and scaling are also affected by cropping settings, but these are not yet exposed to plugins.
      *
@@ -295,50 +280,35 @@ declare class BitmapFill {
     public scaleBehaviour: string;
 
     /**
+     * Format the image data was originally encoded in, such as `image/gif` or `image/jpeg`.
+     */
+    public readonly mimeType: string;
+
+    /**
      * True if the image comes from a link to an external resource, such as Creative Cloud Libraries.
      */
-    public linked: boolean;
+    public readonly isLinkedContent: boolean;
 
     /**
-     * Create a new BitmapFill object with the given properties. These properties cannot be modified after the BitmapFill is created, but you can create a new BitmapFill with changed properties via cloneWithOverrides. Any properties not specified in the properties argument are left at default values.
-     *
-     * After creating a BitmapFill with create(), you must call loadFromURL or loadBase64Image to attach image data to the object.
-     * @param properties `properties.scaleBehaviour`: Default is BitmapFill.SCALE_NORMAL
+     * Pixel dimensions of the underlying bitmap image data.
      */
-    public static create(properties: { scaleBehaviour: string }): BitmapFill;
+    public readonly naturalWidth: number;
 
     /**
-     * Returns a copy of this BitmapFill, with the given properties changed to new values. These properties cannot be modified after the cloned BitmapFill has been created. Any properties not specified in the properties argument are copied unchanged from the original BitmapFill object.
-     * @param properties
+     * Pixel dimensions of the underlying bitmap image data.
      */
-    public cloneWithOverrides(properties: { scaleBehaviour: string }): BitmapFill;
+    public readonly naturalHeight: number;
 
     /**
-     * **This is a temporary API.** The same capability will be exposed with a cleaner API in the future.
      *
-     * Loads a file from disk and initializes this BitmapFill to display it. Despite the function name, you must pass this function a local filesystem path - it does not support URLs from the network or even file: local URLs. Given a File object, use file.nativePath to get a local path suitable for use with this function.
-     *
-     * Only call this method on a freshly-created "blank" BitmapFill (from create). Do not call it on an existing BitmapFill or a clone of an existing fill.
-     * @param path Local filesystem path to the image file.
-     *
-     * @return  true if the image data was successfully loaded
+     * @param fileOrDataURI File object pointing to an image file; or a string containing a data: URI with a base-64 encoded image.
      */
-    public loadFromURL(path: string): boolean;
+    public constructor(fileOrDataURI: string | uxp.storage.File);
 
     /**
-     * Parses the given Base64-encoded image data and initializes this BitmapFill to display it.
-     *
-     * Only call this method on a freshly-created "blank" BitmapFill (from create). Do not call it on an existing BitmapFill or a clone of an existing fill.
-     *
-     * @param dataURI A data: URI pointing to a Base64-encoded image
-     * @return true if the image data was successfully loaded
+     * @returns a new copy of this ImageFill.
      */
-    public loadBase64Image(dataURI): boolean;
-
-    /**
-     * Encodes the image as a Base64 string and returns it. You can use this in conjunction with the imageMIMEType property to build a data: URI representing this image.
-     */
-    public getBase64Representation(): string;
+    public clone(): ImageFill;
 }
 
 
@@ -469,7 +439,7 @@ declare abstract class SceneNode {
      * Returns a fresh Matrix each time, so this can be mutated by the caller without interfering with anything. Mutating the returned Matrix does not change the node’s transform - only invoking the ‘transform’ setter changes the node. To modify an existing transform, always be sure to re-invoke the transform setter rather than just changing the Matrix object’s properties inline. See “Properties with object values”.
      * For an overview of node transforms & coordinate systems, see Coordinate spaces.
      */
-    public transform: Matrix;
+    public readonly transform: Matrix;
 
     /**
      * The translate component of this node’s transform. Since translation is applied after any rotation in the transform Matrix, translation occurs along the parent’s X/Y axes, not the node’s own local X/Y axes. This is equivalent to the e & f fields in the transform Matrix.
@@ -596,7 +566,7 @@ declare class GraphicsNode extends SceneNode {
         | Color
         | LinearGradientFill
         | RadialGradientFill
-        | BitmapFill;
+        | ImageFill;
 
     /**
      * If false, the fill is not rendered. The user can toggle this via a checkbox in the Properties panel.
@@ -1006,8 +976,8 @@ declare class SymbolInstance extends SceneNode {
 }
 
 /**
- * Repeat Grid container node containing multiple grid cells, each one a child Group. Changes within one cell are automatically synced to all the other cells, with certain exceptions (called “overrides”). A Repeat Grid also defines a rectangular clipping mask which determines how may cells are visible (new cells are automatically generated as needed if the Repeat Grid is resized larger).
- *
+ * Repeat Grid container node containing multiple grid cells, each one a child Group. Changes within one cell are automatically synced to all the other cells - with certain exceptions, called "overrides." A Repeat Grid also defines a rectangular clipping mask which determines how may cells are visible (new cells are automatically generated as needed if the Repeat Grid is resized larger).
+ * Each grid cell is a Group that is an immediate child of the RepeatGrid. These groups are automatically created and destroyed as needed when the RepeatGrid is resized.
  * It is not currently possible for plugins to create a new RepeatGrid node, aside from using commands.duplicate to clone existing RepeatGrids.
  */
 declare class RepeatGrid extends SceneNode {
@@ -1045,6 +1015,26 @@ declare class RepeatGrid extends SceneNode {
      * The size of each grid cell. The size of each cell’s content can vary slightly due to text overrides; the cell size is always set to the width of the widest cell content and the height of the tallest cell content.
      */
     public cellSize: { width: number; height: number };
+
+    /**
+     * Attach a sequence of text values to the instances of a given text node across all the cells of a Repeat Grid. The sequence is repeated as necessary to cover all the grid cells. This is a persistent data binding, so if the Repeat Grid is resized later to increase the number of grid cells, items from this sequence will be used to fill the text values of the new cells.
+     * You can call this API from either of two different edit contexts:
+     * - Edit context is the parent node of this RepeatGrid (i.e. a context where the RepeatGrid could be selected)
+     * - Edit context is the RepeatGrid cell which is the parent of textNode (i.e. a context where textNode could be selected)
+     * @param {Text} textNode A Text node exemplar that is an immediate child of one of this RepeatGrid's cells. The data series will be bound to this text node and all corresponding copies of it in the other grid cells.
+     * @param {string[]} textValues Array of one or more strings. Empty strings are ignored.
+     */
+    public attachTextDataSeries(textNode: Text, textValues: string[]): void;
+
+    /**
+     * Attach a sequence of image fills to the instances of a given shape node across all the cells of a Repeat Grid. The sequence is repeated as necessary to cover all the grid cells. This is a persistent data binding, so if the Repeat Grid is resized later to increase the number of grid cells, items from this sequence will be used to set the image fill in the new cells.
+     * You can call this API from either of two different edit contexts:
+     * - Edit context is the parent node of this RepeatGrid (i.e. a context where the RepeatGrid could be selected)
+     * - Edit context is the RepeatGrid cell which is the parent of shapeNode (i.e. a context where shapeNode could be selected)
+     * @param {GraphicsNode} shapeNode A shape node exemplar that is an immediate child of one of this RepeatGrid's cells. The image series will be bound to this node and all corresponding copies of it in the other grid cells. Must be a node type that supports image fills (e.g. Rectangle, but not Text or Line).
+     * @param {string[]} images Array of one or more ImageFills.
+     */
+    attachImageDataSeries(shapeNode: GraphicsNode, images: string[]): void;
 
     /**
      * Adds a child node to this container node. You can only add leaf nodes this way; to create structured subtrees of content, use commands.
@@ -1126,7 +1116,7 @@ export {
     RepeatGrid,
     LinkedGraphic,
     Color,
-    BitmapFill,
+    ImageFill,
     LinearGradientFill,
     Matrix,
     Shadow,
