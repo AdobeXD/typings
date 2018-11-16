@@ -1,0 +1,28 @@
+{
+  "name": "@types/adobexd",
+  "version": "0.0.1",
+  "types": "./lib/index.d.ts",
+  "description": "Typings for adobexd",
+  "main": "sample.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tato123/typings.git"
+  },
+  "keywords": [
+    "Typings",
+    "for",
+    "adobexd"
+  ],
+  "author": "Jonathan Fontanez <fontanezj1@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/tato123/typings/issues"
+  },
+  "homepage": "https://github.com/tato123/typings#readme",
+  "dependencies": {
+    "typescript": "next"
+  }
+}
