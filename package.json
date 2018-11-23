@@ -17,7 +17,11 @@
     "url": "https://github.com/AdobeXD/typings/issues"
   },
   "homepage": "https://github.com/AdobeXD/typings#readme",
-  "devDependencies": {
-    "typescript": "next"
-  }
+  "contributors": [
+    {
+      "name": "Jonathan Fontanez",
+      "email": "fontanezj1@gmail.com",
+      "url": "https://github.com/tato123"
+    }
+  ]
 }
