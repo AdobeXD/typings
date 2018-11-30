@@ -1,0 +1,37 @@
+{
+  "name": "@adobexd/typings",
+  "version": "1.0.1",
+  "typings": "./types/index.d.ts",
+  "description": "Typings for Adobe XD CC",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:AdobeXD/typings.git"
+  },
+  "keywords": [
+    "Typings",
+    "for",
+    "adobexd"
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/AdobeXD/typings/issues"
+  },
+  "homepage": "https://github.com/AdobeXD/typings#readme",
+  "contributors": [
+    {
+      "name": "Jonathan Fontanez",
+      "email": "fontanezj1@gmail.com",
+      "url": "https://github.com/tato123"
+    },
+    {
+      "name": "Pablo Klaschka",
+      "email": "xdplugins@pabloklaschka.de",
+      "url": "https://github.com/pklaschka"
+    },
+    {
+      "name": "Kerri Shotts",
+      "email": "kerrishotts@gmail.com",
+      "url": "https://github.com/kerrishotts"
+    }
+  ]
+}
