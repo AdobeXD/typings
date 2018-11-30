@@ -177,9 +177,8 @@ declare module storage {
          *
          * Multiple files can be returned if the `allowMultiple` option is `true`.
          * @param {object} options
-         * @param {Symbol} options.initialDomain the preferred initial location of the file picker. If not defined, the most recently used domain from a file picker is used instead.
          * @param {string[]} options.types the allowed file types
-         * @param {boolean=false} options.allowMultiple if `true`, multiple files can be returned (as an array)
+         * @param {boolean} [options.allowMultiple=false] if `true`, multiple files can be returned (as an array)
          *
          * @returns the selected files, or empty if no file were selected.
          */
@@ -193,8 +192,7 @@ declare module storage {
          * If the act of writing to the file would overwrite it, the file picker should prompt the user if they are OK with that action. If not, the file should not be returned.
          *
          * @param {object} options
-         * @param {Symbol} options.initialDomain the preferred initial location of the file picker. If not defined, the most recently used domain from a file picker is used instead.
-         *
+         * @param {string[]} options.types Required. Allowed file extensions, with no "." prefix.
          * @returns the selected file, or `null` if no file were selected.
          */
         public getFileForSaving(options?): Promise<File>;
@@ -204,12 +202,9 @@ declare module storage {
          *
          * If the user dismisses the picker, `null` is returned instead.
          *
-         * @param {object} options
-         * @param {Symbol} options.initialDomain the preferred initial location of the file picker. If not defined, the most recently used domain from a file picker is used instead.
-         *
          * @returns the selected folder, or `null` if no folder is selected.
          */
-        public getFolder(options?): Promise<Folder>;
+        public getFolder(): Promise<Folder>;
 
         /**
          * Returns a temporary folder. The contents of the folder will be removed when the extension is disposed.
@@ -391,76 +386,22 @@ declare module storage {
     }
 
     /**
-     * Common locations that we can use when displaying a file picker.
-     */
-    namespace domains {
-        /**
-         * The user's desktop folder
-         */
-        declare const userDesktop: Symbol;
-        /**
-         * The user's documents folder
-         */
-        declare const userDocuments: Symbol;
-        /**
-         * The user's pictures folder or library
-         */
-        declare const userPictures: Symbol;
-        /**
-         * The user's videos / movies folder or library
-         */
-        declare const userVideos: Symbol;
-        /**
-         * The user's music folder or library
-         */
-        declare const userMusic: Symbol;
-        /**
-         * Local application data
-         */
-        declare const appLocalData: Symbol;
-        /**
-         * Local application library
-         */
-        declare const appLocalLibrary: Symbol;
-        /**
-         * Local application cache directory (persistence not guaranteed)
-         */
-        declare const appLocalCache: Symbol;
-        /**
-         * Local application shared data folder
-         */
-        declare const appLocalShared: Symbol;
-        /**
-         * Local temporary directory
-         */
-        declare const appLocalTemporary: Symbol;
-        /**
-         * Roaming application data
-         */
-        declare const appRoamingData: Symbol;
-        /**
-         * Roaming application library data
-         */
-        declare const appRoamingLibrary: Symbol;
-    }
-
-    /**
      * This namespace describes the various file type extensions that can used be used in some FS file open methods.
      */
     namespace fileTypes {
         /**
          * Text file extensions
          */
-        declare const text: Symbol;
+        declare const text: string[];
         /**
          * Image file extensions
          */
-        declare const images: Symbol;
+        declare const images: string[];
         /**
          *
          All file types
          */
-        declare const all: Symbol;
+        declare const all: string[];
     }
 
     /**
