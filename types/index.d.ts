@@ -9,6 +9,8 @@ declare global {
      */
     function require(module: string): void;
 
+    let module: {exports:any};
+
     /**
      * Represents the children of a scenenode. Typically accessed via the SceneNode.children property.
      */
