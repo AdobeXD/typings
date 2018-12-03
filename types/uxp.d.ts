@@ -4,15 +4,7 @@ declare module storage {
     /**
      * An Entry is the base class for `File` and `Folder`. You'll typically never instantiate an `Entry` directly, but it provides the common fields and methods that both `File` and `Folder` share.
      */
-    declare export static class Entry {
-        /**
-         * Creates an instance of Entry.
-         * @param name
-         * @param provider
-         * @param id
-         */
-        public constructor(name: any, provider: any, id: any);
-
+     export class Entry {
         /**
          * Indicates that this instance is an `Entry`. Useful for type-checking.
          */
@@ -58,7 +50,7 @@ declare module storage {
          * @throws errors.PermissionDeniedError if the underlying file system rejects the attempt
          * @throws errors.OutOfSpaceError if the file system is out of storage space
          */
-        public copyTo(folder: Folder, options?): Promise;
+        public copyTo(folder: Folder, options?): Promise<void>;
 
         /**
          * Moves this entry to the target folder, optionally specifying a new name.
@@ -67,12 +59,12 @@ declare module storage {
          * @param {boolean=false} options.overwrite If true allows the move to overwrite existing files
          * @param {string=} options.newName If specified, the entry is renamed to this name
          */
-        public moveTo(folder: Folder, options?): Promise;
+        public moveTo(folder: Folder, options?): Promise<void>;
 
         /**
          * Removes this entry from the file system. If the entry is a folder, all the contents will also be removed.
          */
-        public delete(): Promise;
+        public delete(): Promise<void>;
 
         /**
          * @returns this entry's metadata.
@@ -92,7 +84,7 @@ declare module storage {
      * You'll not instantiate this directly; use  Entry#getMetadata to do so.
      * @see {@link Entry.getMetadata}
      */
-    declare export static class EntryMetadata {
+     export class EntryMetadata {
         /**
          * The name of the entry.
          */
@@ -123,7 +115,7 @@ declare module storage {
      * Represents a file on a file system. Provides methods for reading from and writing to the file. You'll never instantiate a File directly; instead you'll get access via a FileSystemProvider.
      * @see {@link FileSystemProvider}
      */
-    declare export static class File extends Entry {
+     export class File extends Entry {
         /**
          * Indicates whether this file is read-only or read-write. See readOnly and readWrite.
          * @see {@link modes}
@@ -150,7 +142,7 @@ declare module storage {
          * @param {boolean=false} options.append if `true`, the data is written to the end of the file
          * @see {@link formats}
          */
-        public write(data: string | ArrayBuffer, options?): Promise;
+        public write(data: string | ArrayBuffer, options?): Promise<void>;
 
         /**
          * Determines if the entry is a file or not. This is safe to use even if the entry is `null` or `undefined`.
@@ -162,7 +154,7 @@ declare module storage {
     /**
      * Provides access to files and folders on a file system. You'll typically not instantiate this directly; instead you'll use an instance of one that has already been created for you. This class is abstract, meaning that you'll need to provide your own implementation in order to use it effectively.
      */
-    declare export static class FileSystemProvider {
+     export class FileSystemProvider {
         /**
          * Indicates that this is a {@link FileSystemProvider}. Useful for type-checking.
          */
@@ -241,14 +233,14 @@ declare module storage {
         public static isFileSystemProvider(fs: any): boolean;
     }
 
-    declare export class LocalFileSystemProvider extends FileSystemProvider {
+     export class LocalFileSystemProvider extends FileSystemProvider {
         // TODO: Waiting for documentation on `LocalFileSystemProvider`
     }
 
     /**
      * Represents a folder on a file system. You'll never instantiate this directly, but will get it by calling {@link FileSystemProvider.getTemporaryFolder}, {@link FileSystemProvider.getFolder}, or via {@link Folder.getEntries}.
      */
-    declare export static class Folder extends Entry {
+     export class Folder extends Entry {
         /**
          * Returns an array of entries contained within this folder.
          * @returns The entries within the folder.
@@ -298,7 +290,7 @@ declare module storage {
          * @param {object} options
          * @param {boolean=false} options.overwrite if `true`, renaming can overwrite an existing entry
          */
-        public renameEntry(entry: Entry, newName: string, options?): Promise;
+        public renameEntry(entry: Entry, newName: string, options?): Promise<void>;
 
         /**
          * Checks if an entry is a folder. Safe to use if entry might be `null` or `undefined`. Useful for type checking.
@@ -309,79 +301,79 @@ declare module storage {
         public static isFolder(entry: any): boolean;
     }
 
-    declare export const localFileSystem: LocalFileSystemProvider;
+     export const localFileSystem: LocalFileSystemProvider;
 
     namespace errors {
         /**
          * Attempted to invoke an abstract method.
          */
-        declare class AbstractMethodInvocationError extends Error {
+         class AbstractMethodInvocationError extends Error {
         }
 
         /**
          * Attempted to execute a command that required the providers of all entries to match.
          */
-        declare class ProviderMismatchError extends Error {
+         class ProviderMismatchError extends Error {
         }
 
         /**
          * The object passed as an entry is not actually an {@link Entry}.
          */
-        declare class EntryIsNotAnEntryError extends Error {
+         class EntryIsNotAnEntryError extends Error {
         }
 
         /**
          * The entry is not a folder, but was expected to be a folder.
          */
-        declare class EntryIsNotAFolderError extends Error {
+         class EntryIsNotAFolderError extends Error {
         }
 
         /**
          * The entry is not a file, but was expected to be.
          */
-        declare class EntryIsNotAFileError extends Error {
+         class EntryIsNotAFileError extends Error {
         }
 
         /**
          * The instance was expected to be a file system, but wasn't.
          */
-        declare class NotAFileSystemError extends Error {
+         class NotAFileSystemError extends Error {
         }
 
         /**
          * The file system is out of space (or quota has been exceeded)
          */
-        declare class OutOfSpaceError extends Error {
+         class OutOfSpaceError extends Error {
         }
 
         /**
          * The file system revoked permission to complete the requested action.
          */
-        declare class PermissionDeniedError extends Error {
+         class PermissionDeniedError extends Error {
         }
 
         /**
          * An attempt was made to overwrite an entry without indicating that it was safe to do so via `overwrite: true`.
          */
-        declare class EntryExistsError extends Error {
+         class EntryExistsError extends Error {
         }
 
         /**
          * An attempt was made to write to a file that was opened as read-only.
          */
-        declare class FileIsReadOnlyError extends Error {
+         class FileIsReadOnlyError extends Error {
         }
 
         /**
          * Domain is not supported by the current {@link FileSystemProvider} instance.
          */
-        declare class DomainNotSupportedError extends Error {
+        class DomainNotSupportedError extends Error {
         }
 
         /**
          * The file name contains invalid characters
          */
-        declare class InvalidFileNameError extends Error {
+        class InvalidFileNameError extends Error {
         }
     }
 
@@ -392,16 +384,16 @@ declare module storage {
         /**
          * Text file extensions
          */
-        declare const text: string[];
+         const text: string[];
         /**
          * Image file extensions
          */
-        declare const images: string[];
+         const images: string[];
         /**
          *
          All file types
          */
-        declare const all: string[];
+         const all: string[];
     }
 
     /**
@@ -411,11 +403,11 @@ declare module storage {
         /**
          * UTF8 File encoding
          */
-        declare const utf8: Symbol;
+         const utf8: Symbol;
         /**
          * Binary file encoding
          */
-        declare const binary: Symbol;
+         const binary: Symbol;
     }
 
     /**
@@ -425,11 +417,11 @@ declare module storage {
         /**
          * The file is read-only; attempts to write will fail.
          */
-        declare const readOnly: Symbol;
+         const readOnly: Symbol;
         /**
          * The file is read-write.
          */
-        declare const readWrite: Symbol;
+         const readWrite: Symbol;
     }
 
     /**
@@ -439,12 +431,12 @@ declare module storage {
         /**
          * A file; used when creating an entity
          */
-        declare const file: Symbol;
+         const file: Symbol;
         /**
          * A folder; used when creating an entity
          */
-        declare const folder: Symbol;
+         const folder: Symbol;
     }
 }
 
-export = {shell, storage};
+export {shell, storage};
