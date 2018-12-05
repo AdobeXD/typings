@@ -1,5 +1,5 @@
 import {Color, SceneNode} from "./scenegraph";
-import {File, File} from "./uxp";
+import {} from "uxp";
 
 /**
  * All rendition settings fields are required (for a given rendition type) unless otherwise specified.
@@ -62,7 +62,7 @@ declare class application {
      * @param renditions List of renditions to generate
      * @return Promise<Array<RenditionResult>, string> - Promise which is fulfilled with an array of RenditionResults (pointing to the same outputFiles that were originally passed in, or rejected with an error string if one or more renditions failed for any reason.
      */
-    public static createRenditions(renditions: RenditionSettings[]): Promise<RenditionResult[], string>;
+    public static createRenditions(renditions: RenditionSettings[]): Promise<RenditionResult[] | string>;
 
     /**
      * Adobe XD version number in the form "major.minor.patch.build"

@@ -303,7 +303,7 @@ declare class ImageFill {
      *
      * @param fileOrDataURI File object pointing to an image file; or a string containing a data: URI with a base-64 encoded image.
      */
-    public constructor(fileOrDataURI: string | uxp.storage.File);
+    public constructor(fileOrDataURI: string | File);
 
     /**
      * @returns a new copy of this ImageFill.
@@ -338,7 +338,7 @@ declare class Shadow {
      * @param color
      * @param visible optional and defaults to true.
      */
-    public constructor(x: number, y: number, blur: number, color: Color, visible: boolean = true)
+    public constructor(x: number, y: number, blur: number, color: Color, visible: boolean)
 }
 
 declare class Blur {
