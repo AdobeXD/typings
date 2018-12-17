@@ -510,6 +510,16 @@ declare abstract class SceneNode {
     public readonly hasLinkedContent: boolean;
 
     /**
+     * **Since:** XD 14
+     * Metadata specific to your plugin. Must be a value which can be converted to a JSON string, or undefined to clear the stored metadata on this node.
+     *
+     * Metadata is persisted with the document when it is saved. Duplicating a node (including across documents, via copy-paste) will duplicate the metadata with it. If the node lies within a Symbol or Repeat Grid, all instances of the node will have identical metadata (changes in one copy will automatically be synced to the other copy). Metadata stored by this plugin cannot be accessed by other plugins - each plugin has its own isolated metadata storage.
+     *
+     * To store general metadata for the document overall, set pluginData on the root node of the scenegraph. Metadata on the root node can be changed from any edit context.
+     */
+    public pluginData: any;
+
+    /**
      * Remove this node from its parent, effectively deleting it from the document.
      */
     public removeFromParent(): void;
@@ -713,7 +723,9 @@ declare class Rectangle extends GraphicsNode {
     public height: number;
 
     /**
-     * To set all corners to the same value, use setAllCornerRadii.
+     * Default: `{topLeft:0, topRight:0, bottomRight:0, bottomLeft:0}`
+     * The actual corner radius that is rendered is capped based on the size of the rectangle even if the radius value set here is higher (see {@link effectiveCornerRadii})
+     * To set all corners to the same value, use {@link setAllCornerRadii}
      */
     public cornerRadii: {
         topLeft: number;
@@ -726,8 +738,9 @@ declare class Rectangle extends GraphicsNode {
      * True if any of the Rectangle’s four corners is rounded (corner radius > 0).
      */
     public readonly hasRoundedCorners: boolean;
+
     /**
-     * The actual corner radius that is rendered may be capped by the size of the rectangle. Returns the actual radii that are currently in effect, which may be smaller than the cornerRadii values as a result.
+     * The actual corner radius that is rendered may be capped by the size of the rectangle. Returns the actual radii that are currently in effect, which may be smaller than the {@link cornerRadii} values as a result.
      */
     public effectiveCornerRadii: {
         topLeft: number;
@@ -737,8 +750,8 @@ declare class Rectangle extends GraphicsNode {
     };
 
     /**
-     * Set the rounding radius of all four corners of the Rectangle to the same value. To set the corners to different radius values, use cornerRadii.
-     * @param {number} radius New radius of all corners
+     * Set the rounding radius of all four corners of the Rectangle to the same value. The actual corner radius that is rendered is capped based on the size of the rectangle even if the radius value set here is higher (see {@link effectiveCornerRadii})
+     * To set the corners to different radius values, use {@link cornerRadii}.
      */
     public setAllCornerRadii(radius: number): void;
 }

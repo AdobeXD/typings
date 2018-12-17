@@ -17,6 +17,7 @@ declare class viewport {
 
     /**
      * Smoothly pan the viewport to bring the entire given region into view. If the region is already fully in view, does nothing. If the given region is too large to fit entirely in view, it is simply centered (zoom remains unchanged).
+     *
      * The region can be defined by passing a {@link SceneNode}, or by explicitly specifying a rectangle in global coordinates.
      * @param {!SceneNode} node The node that gets scrolled into view
      */
@@ -24,6 +25,7 @@ declare class viewport {
 
     /**
      * Smoothly pan the viewport to bring the entire given region into view. If the region is already fully in view, does nothing. If the given region is too large to fit entirely in view, it is simply centered (zoom remains unchanged).
+     *
      * The region can be defined by passing a {@link SceneNode}, or by explicitly specifying a rectangle in global coordinates.
      * @param x
      * @param y
@@ -41,6 +43,7 @@ declare class viewport {
 
     /**
      * Zoom & pan the view as needed so the given region fills the viewport (with some padding). If the region is large, zooms out as needed so it fits entirely in view. If the region is smaller, zooms in so the region fills the entire viewport - may zoom in past 100% to achieve this.
+     *
      * The region can be defined by passing a {@link SceneNode}, or by explicitly specifying a rectangle in global coordinates.
      * @param {!SceneNode} node
      */
@@ -48,6 +51,7 @@ declare class viewport {
 
     /**
      * Zoom & pan the view as needed so the given region fills the viewport (with some padding). If the region is large, zooms out as needed so it fits entirely in view. If the region is smaller, zooms in so the region fills the entire viewport - may zoom in past 100% to achieve this.
+     *
      * The region can be defined by passing a {@link SceneNode}, or by explicitly specifying a rectangle in global coordinates.
      * @param {number} x
      * @param {number} y
