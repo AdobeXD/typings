@@ -1113,6 +1113,18 @@ declare class RootNode extends SceneNode {
     public removeAllChildren(): void;
 }
 
+/**
+ * **Since:** XD 14
+ * Object representing the current selection state and edit context. Also available as the first argument passed to your plugin command handler function.
+ */
+const selection: Selection;
+
+/**
+ * **Since:** XD 14
+ * Root node of the current document's scenegraph. Also available as the second argument passed to your plugin command handler function.
+ */
+const root: RootNode;
+
 export {
     RootNode,
     SceneNode,
@@ -1133,5 +1145,7 @@ export {
     LinearGradientFill,
     Matrix,
     Shadow,
-    Blur
+    Blur,
+    selection,
+    root
 }
