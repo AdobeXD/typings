@@ -510,6 +510,16 @@ declare abstract class SceneNode {
     public readonly hasLinkedContent: boolean;
 
     /**
+     * **Since:** XD 14
+     * Metadata specific to your plugin. Must be a value which can be converted to a JSON string, or undefined to clear the stored metadata on this node.
+     *
+     * Metadata is persisted with the document when it is saved. Duplicating a node (including across documents, via copy-paste) will duplicate the metadata with it. If the node lies within a Symbol or Repeat Grid, all instances of the node will have identical metadata (changes in one copy will automatically be synced to the other copy). Metadata stored by this plugin cannot be accessed by other plugins - each plugin has its own isolated metadata storage.
+     *
+     * To store general metadata for the document overall, set pluginData on the root node of the scenegraph. Metadata on the root node can be changed from any edit context.
+     */
+    public pluginData: any;
+
+    /**
      * Remove this node from its parent, effectively deleting it from the document.
      */
     public removeFromParent(): void;
@@ -713,7 +723,9 @@ declare class Rectangle extends GraphicsNode {
     public height: number;
 
     /**
-     * To set all corners to the same value, use setAllCornerRadii.
+     * Default: `{topLeft:0, topRight:0, bottomRight:0, bottomLeft:0}`
+     * The actual corner radius that is rendered is capped based on the size of the rectangle even if the radius value set here is higher (see {@link effectiveCornerRadii})
+     * To set all corners to the same value, use {@link setAllCornerRadii}
      */
     public cornerRadii: {
         topLeft: number;
@@ -726,8 +738,9 @@ declare class Rectangle extends GraphicsNode {
      * True if any of the Rectangle’s four corners is rounded (corner radius > 0).
      */
     public readonly hasRoundedCorners: boolean;
+
     /**
-     * The actual corner radius that is rendered may be capped by the size of the rectangle. Returns the actual radii that are currently in effect, which may be smaller than the cornerRadii values as a result.
+     * The actual corner radius that is rendered may be capped by the size of the rectangle. Returns the actual radii that are currently in effect, which may be smaller than the {@link cornerRadii} values as a result.
      */
     public effectiveCornerRadii: {
         topLeft: number;
@@ -737,8 +750,8 @@ declare class Rectangle extends GraphicsNode {
     };
 
     /**
-     * Set the rounding radius of all four corners of the Rectangle to the same value. To set the corners to different radius values, use cornerRadii.
-     * @param {number} radius New radius of all corners
+     * Set the rounding radius of all four corners of the Rectangle to the same value. The actual corner radius that is rendered is capped based on the size of the rectangle even if the radius value set here is higher (see {@link effectiveCornerRadii})
+     * To set the corners to different radius values, use {@link cornerRadii}.
      */
     public setAllCornerRadii(radius: number): void;
 }
@@ -873,7 +886,61 @@ declare class Text extends GraphicsNode {
     public flipY: boolean;
 
     /**
-     * Horizontal alignment: Text.ALIGN_LEFT, ALIGN_CENTER, or ALIGN_RIGHT. This setting affects the layout of multiline text, and it also affects what direction text grows when edited on canvas.
+     * **Since:** XD 14
+     * Set the font family across all style ranges, or get the font family of the last style range (font family of all the text if one range covers all the text). Plugins should not assume any particular default value for fontFamily.
+     */
+    public fontFamily: string;
+
+    /**
+     * **Since:** XD 14
+     * Set the font style across all style ranges, or get the font style of the last style range (font style of all the text if one range covers all the text).
+     * @default non-italic normal weight style
+     */
+    public fontStyle: string;
+
+    /**
+     * **Since:** XD 14
+     * Font size in document pixels. Set the font size across all style ranges, or get the font size of the last style range (font size of all the text if one range covers all the text). Plugins should not assume any particular default value for fontSize.
+     */
+    public fontSize: number;
+
+    /**
+     * Set the text color across all style ranges, or get the color of the last style range (color of all the text if one range covers all the text). Unlike most other nodes, text only allows a solid color fill - gradients and image fills are not supported.
+     * @default null
+     */
+    public fill: Color | null;
+
+    /**
+     * **Since:** XD 14
+     * Character spacing in increments of 1/1000th of the fontSize, in addition to the font's default character kerning. May be negative.
+     *
+     * Set the character spacing across all style ranges, or get the character spacing of the last style range (character spacing of all the text if one range covers all the text).
+     * @default 0
+     */
+    public charSpacing: number;
+
+    /**
+     * **Since:** XD 14
+     * Set underline across all style ranges, or get the underline of the last style range (underline of all the text if one range covers all the text).
+     * @default false
+     */
+    public underline: boolean;
+
+    public static readonly ALIGN_LEFT: string;
+    public static readonly ALIGN_CENTER: string;
+    public static readonly ALIGN_RIGHT: string;
+
+    /**
+     * Horizontal alignment: Text.ALIGN_LEFT, ALIGN_CENTER, or ALIGN_RIGHT. This setting affects the layout of multiline text, and for point text it also affects how the text is positioned relative to its anchor point (x=0 in local coordinates) and what direction the text grows when edited by the user.
+     *
+     * Changing textAlign on existing point text will cause it to shift horizontally. To change textAlign while keeping the text in a fixed position, shift the text horizontally (moving its anchor point) to compensate:
+     * @example ```javascript
+     * let originalBounds = textNode.localBounds;
+     * textNode.textAlign = newAlignValue;
+     * let newBounds = textNode.localBounds;
+     * textNode.moveInParentCoordinates(originalBounds.x - newBounds.x, 0);
+     *
+     * @default Text.ALIGN_LEFT
      */
     public textAlign: string;
 
@@ -881,13 +948,30 @@ declare class Text extends GraphicsNode {
      * Distance between baselines in multiline text, in document pixels. The special value 0 causes XD to use the default line spacing defined by the font given the current font size & style.
      *
      * This property is not automatically adjusted when fontSize changes, if line spacing is not set to 0, the line spacing will stay fixed while the font size changes, shifting the spacing’s proportional relationship to font size. If the value is 0, then the rendered line spacing will change to match the new font size, since 0 means the spacing is dynamically calculated from the current font settings.
+     *
+     * @default 0
      */
     public lineSpacing: number;
 
     /**
-     * Null for point text. For area text, specifies the size of the rectangle within which text is wrapped and clipped.
+     * **Since:** XD 14
+     *
+     * Additional distance between paragraphs, in document pixels, added to the lineSpacing amount (soft line breaks in area text are separated only by lineSpacing, while hard line breaks are separated by lineSpacing + paragraphSpacing). Unlike lineSpacing, 0 is not a special value; it just means no added spacing.
+     *
+     * Similar to {@link lineSpacing}, this property is not automatically adjusted when fontSize changes. The paragraph spacing amount will stay fixed while the font size changes, shifting the spacing's proportional relationship to font size.
+     *
+     * @default 0
      */
-    public readonly areaBox: null | { width: number; height: number };
+    public paragraphSpacing: number;
+
+    /**
+     * `Null` for point text. For area text, specifies the size of the rectangle within which text is wrapped and clipped.
+     *
+     * Changing point text to area text or vice versa will change the origin / anchor point of the text, thus changing its localBounds, but it will also automatically change the node's transform so its globalBounds and boundsInParent origins remain unchanged.
+     *
+     * Changing area text to point text will also automatically insert hard line breaks ("\n") into the text to match the previous line wrapping's appearance exactly.
+     */
+    public areaBox: null | { width: number; height: number };
 
     /**
      * Always false for point text. For area text, true if the text does not fit in the content box and its bottom is being clipped.
@@ -1100,6 +1184,18 @@ declare class RootNode extends SceneNode {
     public removeAllChildren(): void;
 }
 
+/**
+ * **Since:** XD 14
+ * Object representing the current selection state and edit context. Also available as the first argument passed to your plugin command handler function.
+ */
+const selection: Selection;
+
+/**
+ * **Since:** XD 14
+ * Root node of the current document's scenegraph. Also available as the second argument passed to your plugin command handler function.
+ */
+const root: RootNode;
+
 export {
     RootNode,
     SceneNode,
@@ -1120,5 +1216,7 @@ export {
     LinearGradientFill,
     Matrix,
     Shadow,
-    Blur
+    Blur,
+    selection,
+    root
 }

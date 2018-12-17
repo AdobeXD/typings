@@ -1,5 +1,4 @@
 import {Color, SceneNode} from "./scenegraph";
-import {} from "uxp";
 
 /**
  * All rendition settings fields are required (for a given rendition type) unless otherwise specified.
