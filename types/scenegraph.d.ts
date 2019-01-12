@@ -561,7 +561,7 @@ declare abstract class SceneNode {
 /**
  * Base class for nodes that have a stroke and/or fill. This includes leaf nodes such as Rectangle, as well as BooleanGroup which is a container node. If you create a shape node, it will not be visible unless you explicitly give it either a stroke or a fill.
  */
-declare class GraphicsNode extends SceneNode {
+declare class GraphicNode extends SceneNode {
     /**
      * The fill applied to this shape, if any. If this property is null or fillEnabled is false, no fill is drawn. Freshly created nodes have no fill by default.
      *
@@ -663,7 +663,7 @@ declare class GraphicsNode extends SceneNode {
  *
  * If a node is changed to overlap an Artboard, it will automatically become a child of the artboard when the operation finishes, and similar if a node is changed to no longer overlap an Artboard. It is not possible to have a node overlapping an Artboard that does not become a child of the artboard, or vice versa, a node that falls entirely outside an Artboard’s bounds but remains its child.
  */
-declare class Artboard extends GraphicsNode {
+declare class Artboard extends GraphicNode {
     /**
      * value must be >= 0
      */
@@ -711,7 +711,7 @@ declare class Artboard extends GraphicsNode {
 /**
  * Rectangle leaf node shape, with or without rounded corners. Like all shape nodes, has no fill or stroke by default unless you set one.
  */
-declare class Rectangle extends GraphicsNode {
+declare class Rectangle extends GraphicNode {
     /**
      * value must be >= 0
      */
@@ -759,7 +759,7 @@ declare class Rectangle extends GraphicsNode {
 /**
  * Ellipse leaf node shape.
  */
-declare class Ellipse extends GraphicsNode {
+declare class Ellipse extends GraphicNode {
     public radiusX: number;
     public radiusY: number;
     /**
@@ -771,7 +771,7 @@ declare class Ellipse extends GraphicsNode {
 /**
  * Line leaf node shape.
  */
-declare class Line extends GraphicsNode {
+declare class Line extends GraphicNode {
     /**
      * Start point of the Line in local coordinate space.TEMP: To change the start point, use setStartEnd.
      */
@@ -801,7 +801,7 @@ declare class Line extends GraphicsNode {
  *
  * The path may not start at (0,0) in local coordinates, for example if it starts with a move (“M”)
  */
-declare class Path extends GraphicsNode {
+declare class Path extends GraphicNode {
     /**
      * Representation of the path outline in SVG <path> syntax. Unlike other node types, pathData is writable here. Syntax is automatically normalized, so the getter may return a slightly different string than what you passed to the setter.
      */
@@ -813,7 +813,7 @@ declare class Path extends GraphicsNode {
  *
  * It is not currently possible for plugins to create a new BooleanGroup node, aside from using commands.duplicate to clone existing BooleanGroups.
  */
-declare class BooleanGroup extends GraphicsNode {
+declare class BooleanGroup extends GraphicNode {
     /**
      * Which boolean operation is used to generate the path: BooleanGroup.PATH_OP_ADD, PATH_OP_SUBTRACT, PATH_OP_INTERSECT, or PATH_OP_EXCLUDE_OVERLAP.
      */
@@ -857,7 +857,7 @@ declare class BooleanGroup extends GraphicsNode {
  *
  * The bounds reported for a Text object leave enough space for descenders, uppercase letters, and accent marks, even if the current string does not contain any of those characters. This makes aligning text based on its bounds behave more consistently.
  */
-declare class Text extends GraphicsNode {
+declare class Text extends GraphicNode {
     /**
      * The plaintext content of the node, including any hard line breaks but excluding soft line wrap breaks.
      *
@@ -1115,10 +1115,10 @@ declare class RepeatGrid extends SceneNode {
      * You can call this API from either of two different edit contexts:
      * - Edit context is the parent node of this RepeatGrid (i.e. a context where the RepeatGrid could be selected)
      * - Edit context is the RepeatGrid cell which is the parent of shapeNode (i.e. a context where shapeNode could be selected)
-     * @param {GraphicsNode} shapeNode A shape node exemplar that is an immediate child of one of this RepeatGrid's cells. The image series will be bound to this node and all corresponding copies of it in the other grid cells. Must be a node type that supports image fills (e.g. Rectangle, but not Text or Line).
+     * @param {GraphicNode} shapeNode A shape node exemplar that is an immediate child of one of this RepeatGrid's cells. The image series will be bound to this node and all corresponding copies of it in the other grid cells. Must be a node type that supports image fills (e.g. Rectangle, but not Text or Line).
      * @param {string[]} images Array of one or more ImageFills.
      */
-    attachImageDataSeries(shapeNode: GraphicsNode, images: string[]): void;
+    attachImageDataSeries(shapeNode: GraphicNode, images: string[]): void;
 
     /**
      * Adds a child node to this container node. You can only add leaf nodes this way; to create structured subtrees of content, use commands.
@@ -1199,7 +1199,7 @@ const root: RootNode;
 export {
     RootNode,
     SceneNode,
-    GraphicsNode,
+    GraphicNode,
     Artboard,
     Rectangle,
     Ellipse,
