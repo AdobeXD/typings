@@ -1214,6 +1214,7 @@ export {
     Color,
     ImageFill,
     LinearGradientFill,
+    RadialGradientFill,
     Matrix,
     Shadow,
     Blur,
