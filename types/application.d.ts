@@ -1,4 +1,4 @@
-import {Color, SceneNode} from "./scenegraph";
+import {SceneNode} from "./scenegraph";
 
 /**
  * All rendition settings fields are required (for a given rendition type) unless otherwise specified.
