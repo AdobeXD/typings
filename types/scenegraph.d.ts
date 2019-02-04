@@ -254,6 +254,9 @@ declare class LinearGradientFill {
     public setEndPoints(startX: number, startY: number, endX: number, endY: number);
 }
 
+/**
+ * **The RadialGradientFill type is not documented and its API may change. Plugins currently cannot modify or otherwise work with radial gradients.**
+ */
 declare class RadialGradientFill {
     // TODO: Waiting for documentation to arrive
 }
