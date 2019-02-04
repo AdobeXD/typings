@@ -1,4 +1,4 @@
-export module cloud {
+declare namespace cloud {
     /**
      * Interactive prototype view generated via "Share for Review."
      */
@@ -101,5 +101,7 @@ export module cloud {
      *
      * @return {!Array<!PrototypeArtifact|SpecsArtifact>}
      */
-    declare function getSharedArtifacts(): Array<PrototypeArtifact | SpecsArtifact>;
+    function getSharedArtifacts(): Array<PrototypeArtifact | SpecsArtifact>;
 }
+
+export = cloud;
