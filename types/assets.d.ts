@@ -1,3 +1,5 @@
+import {Color, LinearGradientFill, RadialGradientFill} from "./scenegraph";
+
 /**
  * Represents the document styles listed in the Assets panel. Styles can be added and removed manually by the user, so there's no guarantee that these styles are currently used anywhere in the document's content.
  * **Since: ** XD 15
