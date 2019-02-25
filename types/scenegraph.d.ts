@@ -203,7 +203,7 @@ declare class Color {
     public clone(): Color;
 }
 
-declare class LinearGradientFill {
+declare class LinearGradient {
     /**
      * Array of objects representing each color and its position along the gradient line. The position (stop value) is a number 0.0 - 1.0.
      */
