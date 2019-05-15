@@ -1096,6 +1096,11 @@ declare class SymbolInstance extends SceneNode {
     public readonly symbolId: string;
 
     /**
+     * Reports if this symbol is a master symbol or not.
+     */
+    public readonly isMaster: boolean;
+
+    /**
      * Adds a child node to this container node. You can only add leaf nodes this way; to create structured subtrees of content, use commands.
      * @param {SceneNode} node Child to add
      * @param {number} index Optional: index to insert child at. Child is appended to end of children list (top of z order) otherwise.
