@@ -980,6 +980,23 @@ declare class Text extends GraphicNode {
      * Always false for point text. For area text, true if the text does not fit in the content box and its bottom is being clipped.
      */
     public readonly clippedByArea: boolean;
+
+    /**
+     * **Since:** XD 19
+     *
+     * Set strikethrough across all style ranges, or get the strikethrough of the last style range (strikethrough of all the text if one range covers all the text).
+     * @default false
+     */
+    public strikethrough: boolean;
+
+    /**
+     * **Since:** XD 19
+     *
+     * Set textTransform ("none" or "uppercase" or "lowercase" or "titlecase") across all style ranges, or get the textTransform of the last style range.
+     *
+     * @default 'none'
+     */
+    public textTransform: 'none' | 'uppercase' | 'lowercase' | 'titlecase';
 }
 
 /**
