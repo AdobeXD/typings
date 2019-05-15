@@ -1268,6 +1268,7 @@ export {
     Ellipse,
     Line,
     Path,
+    Polygon,
     BooleanGroup,
     Text,
     Group,
