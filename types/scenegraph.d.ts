@@ -812,6 +812,49 @@ declare class Path extends GraphicNode {
 }
 
 /**
+ * Polygon leaf node shape.
+ *
+ * @example ```javascript
+ *let polygon = new Polygon();
+ polygon.width = 100;
+ polygon.height = 25;
+ polygon.fill = new Color("red");
+ polygon.cornerCount = 5;
+ polygon.setAllCornerRadii(10);
+ selection.insertionParent.addChild(polygon);
+ selection.items = [polygon];
+ * ```
+ */
+declare class Polygon extends GraphicNode {
+    public width: number;
+    public height: number;
+    /**
+     * Number of vertices of a polygon.
+     */
+    public cornerCount: number;
+
+    /**
+     * True if any of the Polygon's corners is rounded (corner radius > 0).
+     */
+    public readonly hasRoundedCorners: boolean;
+
+    /**
+     * To set all corners to the same value, use setAllCornerRadii.
+     *
+     * All numbers must be >= 0
+     *
+     * @default [0,0,...,0]
+     */
+    public cornerRadii: number[];
+
+    /**
+     * Set the rounding radius of all corners of the Polygon to the same value.
+     * @param {number} radius The radius that'll get used for all corners
+     */
+    public setAllCornerRadii(radius: number): void;
+}
+
+/**
  * BooleanGroup container node - although it has fill/stroke/etc. properties like a leaf shape node, it is a container with children. Its visual appearance is determined by generating a path via a nondestructive boolean operation on all its children’s paths.
  *
  * It is not currently possible for plugins to create a new BooleanGroup node, aside from using commands.duplicate to clone existing BooleanGroups.
