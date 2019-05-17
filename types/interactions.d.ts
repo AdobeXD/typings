@@ -1,4 +1,4 @@
-import {SceneNode} from "./scenegraph";
+import {Artboard, SceneNode} from "./scenegraph";
 
 /**
  * The `interactions` module represents all document interactions.
@@ -23,7 +23,7 @@ declare class interactions {
     /**
      * The home artboard of the interaction model. This is a special designation indicating this is the first artboard to display in a shared prototype.
      */
-    public static readonly homeArtboard?: SceneNode;
+    public static readonly homeArtboard?: Artboard;
 
     /**
      * Get all interactions by serializing the document interactions to JSON. An array of all the interactions is returned.
