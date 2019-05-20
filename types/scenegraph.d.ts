@@ -812,6 +812,49 @@ declare class Path extends GraphicNode {
 }
 
 /**
+ * Polygon leaf node shape.
+ *
+ * @example ```javascript
+ *let polygon = new Polygon();
+ polygon.width = 100;
+ polygon.height = 25;
+ polygon.fill = new Color("red");
+ polygon.cornerCount = 5;
+ polygon.setAllCornerRadii(10);
+ selection.insertionParent.addChild(polygon);
+ selection.items = [polygon];
+ * ```
+ */
+declare class Polygon extends GraphicNode {
+    public width: number;
+    public height: number;
+    /**
+     * Number of vertices of a polygon.
+     */
+    public cornerCount: number;
+
+    /**
+     * True if any of the Polygon's corners is rounded (corner radius > 0).
+     */
+    public readonly hasRoundedCorners: boolean;
+
+    /**
+     * To set all corners to the same value, use setAllCornerRadii.
+     *
+     * All numbers must be >= 0
+     *
+     * @default [0,0,...,0]
+     */
+    public cornerRadii: number[];
+
+    /**
+     * Set the rounding radius of all corners of the Polygon to the same value.
+     * @param {number} radius The radius that'll get used for all corners
+     */
+    public setAllCornerRadii(radius: number): void;
+}
+
+/**
  * BooleanGroup container node - although it has fill/stroke/etc. properties like a leaf shape node, it is a container with children. Its visual appearance is determined by generating a path via a nondestructive boolean operation on all its children’s paths.
  *
  * It is not currently possible for plugins to create a new BooleanGroup node, aside from using commands.duplicate to clone existing BooleanGroups.
@@ -980,6 +1023,23 @@ declare class Text extends GraphicNode {
      * Always false for point text. For area text, true if the text does not fit in the content box and its bottom is being clipped.
      */
     public readonly clippedByArea: boolean;
+
+    /**
+     * **Since:** XD 19
+     *
+     * Set strikethrough across all style ranges, or get the strikethrough of the last style range (strikethrough of all the text if one range covers all the text).
+     * @default false
+     */
+    public strikethrough: boolean;
+
+    /**
+     * **Since:** XD 19
+     *
+     * Set textTransform ("none" or "uppercase" or "lowercase" or "titlecase") across all style ranges, or get the textTransform of the last style range.
+     *
+     * @default 'none'
+     */
+    public textTransform: 'none' | 'uppercase' | 'lowercase' | 'titlecase';
 }
 
 /**
@@ -1034,6 +1094,11 @@ declare class SymbolInstance extends SceneNode {
      * An identifier unique within this document that is shared by all instances of the same Symbol.
      */
     public readonly symbolId: string;
+
+    /**
+     * Reports if this symbol is a master symbol or not.
+     */
+    public readonly isMaster: boolean;
 
     /**
      * Adds a child node to this container node. You can only add leaf nodes this way; to create structured subtrees of content, use commands.
@@ -1208,6 +1273,7 @@ export {
     Ellipse,
     Line,
     Path,
+    Polygon,
     BooleanGroup,
     Text,
     Group,

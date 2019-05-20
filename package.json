@@ -1,6 +1,6 @@
 {
   "name": "@adobexd/typings",
-  "version": "15.0.0",
+  "version": "19.0.0",
   "typings": "./types/index.d.ts",
   "description": "Typings for Adobe XD CC",
   "repository": {
