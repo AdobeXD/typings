@@ -4,7 +4,7 @@ declare module storage {
     /**
      * An Entry is the base class for `File` and `Folder`. You'll typically never instantiate an `Entry` directly, but it provides the common fields and methods that both `File` and `Folder` share.
      */
-     export class Entry {
+     static class Entry {
         /**
          * Indicates that this instance is an `Entry`. Useful for type-checking.
          */
@@ -84,7 +84,7 @@ declare module storage {
      * You'll not instantiate this directly; use  Entry#getMetadata to do so.
      * @see {@link Entry.getMetadata}
      */
-     export class EntryMetadata {
+     static class EntryMetadata {
         /**
          * The name of the entry.
          */
@@ -115,7 +115,7 @@ declare module storage {
      * Represents a file on a file system. Provides methods for reading from and writing to the file. You'll never instantiate a File directly; instead you'll get access via a FileSystemProvider.
      * @see {@link FileSystemProvider}
      */
-     export class File extends Entry {
+     static class File extends Entry {
         /**
          * Indicates whether this file is read-only or read-write. See readOnly and readWrite.
          * @see {@link modes}
@@ -154,7 +154,7 @@ declare module storage {
     /**
      * Provides access to files and folders on a file system. You'll typically not instantiate this directly; instead you'll use an instance of one that has already been created for you. This class is abstract, meaning that you'll need to provide your own implementation in order to use it effectively.
      */
-     export class FileSystemProvider {
+     static class FileSystemProvider {
         /**
          * Indicates that this is a {@link FileSystemProvider}. Useful for type-checking.
          */
@@ -233,14 +233,14 @@ declare module storage {
         public static isFileSystemProvider(fs: any): boolean;
     }
 
-     export class LocalFileSystemProvider extends FileSystemProvider {
+     static class LocalFileSystemProvider extends FileSystemProvider {
         // TODO: Waiting for documentation on `LocalFileSystemProvider`
     }
 
     /**
      * Represents a folder on a file system. You'll never instantiate this directly, but will get it by calling {@link FileSystemProvider.getTemporaryFolder}, {@link FileSystemProvider.getFolder}, or via {@link Folder.getEntries}.
      */
-     export class Folder extends Entry {
+     static class Folder extends Entry {
         /**
          * Returns an array of entries contained within this folder.
          * @returns The entries within the folder.
