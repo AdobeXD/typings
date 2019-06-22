@@ -62,6 +62,10 @@ declare module assets {
 
     /**
      * Character style properties. See documentation for the Text node type for more details.
+     *
+     * When creating a new character style, all properties are mandatory except those with default values specified here. When deleting
+     an existing character style, always pass the exact object returned by [`characterStyles.get()`](#module_assets-characterStyles-get) (with all properties fully
+     specified) to avoid any ambiguity.
      */
     type CharacterStyle = {
         /**
@@ -92,6 +96,21 @@ declare module assets {
          * whether underline is turned on
          */
         underline: boolean;
+        /**
+         * (**Since**: XD 19)
+         * Default `false`; whether strikethrough is turned on
+         */
+        strikethrough?: boolean;
+        /**
+         * (**Since**: XD 19)
+         * Default "none"; one of "none", "uppercase", "lowercase", or "titlecase"
+         */
+        textTransform?: 'none' | 'uppercase' | 'lowercase' | 'titlecase';
+        /**
+         * (**Since**: XD 20)
+         * Default "none"; one of "none", "superscript", or "subscript"
+         */
+        textScript?: 'none' | 'superscript' | 'subscript';
     }
 
     /**
@@ -159,7 +178,9 @@ declare module assets {
         /**
          * Delete one or more character style assets from the collection.
          *
-         * Assets with the same character style are removed even if their names differ. Assets that already don't exist in the collection are silently ignored. All character style properties must be fully specified (no properties are optional). Typically you will pass asset objects returned from `get()` directly to this function.
+         * Assets with the same character style are removed *even if their names differ*. Assets that already don't exist in the
+         * collection are silently ignored. All character style properties must be fully specified (no properties are optional).
+         * To avoid ambiguity, pass the exact asset objects returned from [`get()`](#module_assets-characterStyles-get) directlyto this function.
          *
          * @returns {number} number of assets deleted (may be less than requested if some didn't exist)
          * @param charStyleAssets The character styles
