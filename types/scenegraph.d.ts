@@ -508,7 +508,34 @@ declare abstract class SceneNode {
     public markedForExport: boolean;
 
     /**
-     * True if the node’s appearance comes from a link to an external resource, such as Creative Cloud Libraries.
+     * **Since**: XD 19
+     *
+     * True if the node stays in a fixed position while the Artboard's content is scrolling (when viewed in an interactive prototype). _Only applicable for nodes whose immediate parent is an Artboard._
+     *
+     * For other nodes, this property returns undefined and cannot be set. To determine whether those nodes scroll or remain fixed, walk up the parent chain and check this property on the topmost ancestor in the Artboard.
+     */
+    public fixedWhenScrolling?: boolean;
+
+    /**
+     * Get all interactions that are triggered by this node in the document's interactive prototype. Each element in the array is an Interaction object which describes a gesture/event plus the action it produces.
+     *
+     * Note: If this node (or one of its ancestors) has `visible` = false, tap and drag interactions on it will not be triggered.
+     *
+     * Currently, this API excludes any keyboard/gamepad interactions on this node.
+     *
+     * @example ```javascript
+ // Print all the interactions triggered by a node
+ node.triggeredInteractions.forEach(interaction => {
+    console.log("Trigger: " + interaction.trigger.type + " -> Action: " + interaction.action.type);
+});
+     * ```
+     *
+     * @see interactions.allInteractions
+     */
+    public readonly triggeredInteractions?: Array<Interaction>;
+
+    /**
+     * True if the node's appearance comes from a link to an external resource, such as Creative Cloud Libraries or a separate XD document (in the case of a Linked Component instance).
      */
     public readonly hasLinkedContent: boolean;
 
@@ -516,7 +543,8 @@ declare abstract class SceneNode {
      * **Since:** XD 14
      * Metadata specific to your plugin. Must be a value which can be converted to a JSON string, or undefined to clear the stored metadata on this node.
      *
-     * Metadata is persisted with the document when it is saved. Duplicating a node (including across documents, via copy-paste) will duplicate the metadata with it. If the node lies within a Symbol or Repeat Grid, all instances of the node will have identical metadata (changes in one copy will automatically be synced to the other copy). Metadata stored by this plugin cannot be accessed by other plugins - each plugin has its own isolated metadata storage.
+     * Metadata is persisted with the document when it is saved. Duplicating a node (including across documents, via copy-paste) will duplicate the metadata with it. If the node lies within a Component or Repeat Grid, all instances of the node will have identical metadata (changes in one copy will automatically be synced to the other copy). Metadata stored by this plugin cannot be accessed by other plugins - each plugin has its own isolated metadata storage.
+
      *
      * To store general metadata for the document overall, set pluginData on the root node of the scenegraph. Metadata on the root node can be changed from any edit context.
      */
@@ -607,6 +635,7 @@ declare class GraphicNode extends SceneNode {
     public strokeWidth: number;
 
     /**
+     * @default `CENTER_STROKE` for most shapes, `INNER_STROKE` for Rectangle, Ellipse & Polygon
      * Position of the stroke relative to the shape’s path outline: GraphicNode.INNER_STROKE, OUTER_STROKE, or CENTER_STROKE.
      */
     public strokePosition: string;
@@ -683,6 +712,31 @@ declare class Artboard extends GraphicNode {
      * If Artboard is scrollable, this is the height of the viewport (e.g. mobile device screen size). Null if Artboard isn’t scrollable.
      */
     public viewportHeight: null | number;
+
+    /**
+     * **Since**: XD 19
+     *
+     * Get all interactions whose destination is this artboard (either navigating the entire view, i.e. a `"goToArtboard"` action, or
+     * showing this artboard as an overlay, i.e. an `"overlay"` action). Each element in the array is an [Interaction object](
+     * /interactions.md#Interaction)
+     * which describes a gesture/event plus the action it produces.
+     *
+     * May include interactions that are impossible to trigger because the trigger node (or one of its ancestors) has `visible` = false.
+     *
+     * Note: currently, this API excludes any applicable keyboard/gamepad interactions.
+     * @see SceneNode.triggeredInteractions
+     * @see interactions.allInteractions
+     */
+    public readonly incomingInteractions: Array<{triggerNode: SceneNode, interactions: Array<Interaction>}>;
+
+    /**
+     * **Since**: XD 19
+     *
+     * True if this is the starting Artboard seen when the interactive prototype is launched.
+     *
+     * @see interactions.homeArtboard
+     */
+    public readonly isHomeArtboard: boolean;
 
     /**
      * Adds a child node to this container node. You can only add leaf nodes this way; to create structured subtrees of content, use commands.
@@ -812,26 +866,48 @@ declare class Path extends GraphicNode {
 }
 
 /**
- * Polygon leaf node shape.
+ * **Since**: XD 19
+ * Leaf node shape that is a polygon with 3 or more sides. May also have rounded corners. The sides are not necessarily all equal in length: this is true only when the Polygon's width and height matches the aspect ratio of a regular (equilateral) polygon with the given number of sides.
+ *
+ * When unrotated, the Polygon always has its bottommost side as a perfectly horizontal line - with the exception of the 4-sided Polygon, which is a diamond shape instead.
+ *
+ * Like all shape nodes, has no size, fill, or stroke by default unless you set one.
  *
  * @example ```javascript
- *let polygon = new Polygon();
- polygon.width = 100;
- polygon.height = 25;
+ // Add a red triangle to the document and select it
+ var polygon = new Polygon();
+ polygon.cornerCount = 3;
+ polygon.width = 50;
+ polygon.height = 100;
  polygon.fill = new Color("red");
- polygon.cornerCount = 5;
- polygon.setAllCornerRadii(10);
  selection.insertionParent.addChild(polygon);
  selection.items = [polygon];
  * ```
  */
 declare class Polygon extends GraphicNode {
-    public width: number;
-    public height: number;
     /**
-     * Number of vertices of a polygon.
+     * > 0
      */
-    public cornerCount: number;
+    public width: number;
+
+    /**
+     * > 0
+     */
+    public height: number;
+
+    /**
+     * @default 3
+     * Number of corners (vertices), and also therefore number of sides.
+     *
+     * Setting cornerCount on an existing Polygon behaves in one of two different ways:
+     * * If the shape's aspect ratio gives it equilateral sides, the sides remain equilateral while the size and aspect ratio of the shape is changed to accomodate.
+     * * Otherwise, the size and aspect ratio of the shape remains unchanged.
+     *
+     * This matches how changing the corner count in XD's UI behaves.
+     *
+     * To change corner count while guaranteeing the shape will not change size, save its original size first, set `cornerCount`, and      then set size back to the saved values.
+     */
+    public cornerCount: number = 3;
 
     /**
      * True if any of the Polygon's corners is rounded (corner radius > 0).
@@ -839,17 +915,13 @@ declare class Polygon extends GraphicNode {
     public readonly hasRoundedCorners: boolean;
 
     /**
-     * To set all corners to the same value, use setAllCornerRadii.
-     *
-     * All numbers must be >= 0
-     *
-     * @default [0,0,...,0]
+     * List of corner radius for each corner of the polygon. To set corner radius, use [<code>setAllCornerRadii()</code>](#Polygon-setAllCornerRadii).
      */
     public cornerRadii: number[];
 
     /**
-     * Set the rounding radius of all corners of the Polygon to the same value.
-     * @param {number} radius The radius that'll get used for all corners
+     * Set the corner radius of all corners of the Polygon to the same value.
+     * @param {number} radius
      */
     public setAllCornerRadii(radius: number): void;
 }
@@ -896,8 +968,8 @@ declare class BooleanGroup extends GraphicNode {
  * Text leaf node shape. Text can have a fill and/or stroke, but only a solid-color fill is allowed (gradient or image will will be rejected).
  *
  * There are two types of Text nodes:
- * - Point Text - Expands to fit the full width of the text content. Only uses multiple lines if the text content contains hard line breaks ("\n").
- * - Area Text - Fixed width and height. Text is automatically wrapped (soft line wrapping) to fit the width. If it does not fit the height, any remaining text is clipped. Check whether areaBox is null to determine the type of a Text node.
+ * - **Point Text** - Expands to fit the full width of the text content. Only uses multiple lines if the text content contains hard line breaks ("\n").
+ * - **Area Text** - Fixed width and height. Text is automatically wrapped (soft line wrapping) to fit the width. If it does not fit the height, any remaining text is clipped. Check whether areaBox is null to determine the type of a Text node.
  *
  * The baseline of a Point Text node is at y=0 in its own local coordinate system. Horizontally, local x=0 is the anchor point that the text grows from / shrinks toward when edited. This anchor depends on the justification: for example, if the text is centered, x=0 is the horizontal centerpoint of the text.
  *
@@ -924,6 +996,9 @@ declare class Text extends GraphicNode {
         fill: Color;
         charSpacing: number;
         underline: boolean;
+        strikethrough: boolean;
+        textTransform: string;
+        textScript: string;
     }>;
 
     /**
@@ -971,6 +1046,30 @@ declare class Text extends GraphicNode {
      * @default false
      */
     public underline: boolean;
+
+    /**
+     * @default false
+     * **Since**: XD 19
+     *
+     * Set strikethrough across all style ranges, or get the strikethrough of the last style range (strikethrough of all the text if one range covers all the text).
+     */
+    public strikethrough: boolean = false;
+
+    /**
+     * @default "none"
+     * **Since**: XD 19
+     *
+     * Set textTransform ("none", "uppercase", "lowercase", or "titlecase") across all style ranges, or get the textTransform of the last style range.
+     */
+    public textTransform: 'none' | 'uppercase' | 'lowercase' | 'titlecase' = 'none';
+
+    /**
+     * @default "none"
+     * **Since**: XD 20
+     *
+     * Set textScript ("none" or "superscript" or "subscript") across all style ranges, or get the textScript of the last style range.
+     */
+    public textScript: 'none' | 'superscript' | 'subscript' = 'none';
 
     public static readonly ALIGN_LEFT: string;
     public static readonly ALIGN_CENTER: string;
@@ -1085,18 +1184,25 @@ declare class Group extends SceneNode {
 }
 
 /**
- * Container node representing one instance of a Symbol. Changes within a symbol instance are automatically synced to all other instances of the symbol, with certain exceptions (called “overrides”).
+ * Container node representing one instance of a Component (previously known as "Symbols" in XD's UI). Changes made to the contents of a SymbolInstance are treated in one of two ways:
+ * * If `isMaster` is **false**: The changes affect _only_ this one instance. This creates an "override": changes made to the corresponding part of the master later will no longer get synced to this particular instance.
+ * * If `isMaster` is **true**: The changes are automatically synced to all other other instances of the component - _except_ for instances where the affected nodes have instance-specific overrides. As a result, your plugin's batch of edits **may not be applied atomically** in some instances.
  *
- * It is not currently possible for plugins to create a new Symbol definition or a new SymbolInstance node, aside from using commands.duplicate to clone existing SymbolInstances.
+ * To elaborate: if your plugin command makes edits to more than one property or more than one node as part of a single gesture, and the  user invokes your plugin while editing a component master, other instances of the component may receive only a _partial application_  of your plugin's changes. In many cases this will feel like a natural consequence of the overrides the user has created, but if this  partial application of your plugin's intended changes feels too confusing in your use case, you may opt to warn users or disable some  of your plugin's functionality when `selection.editContext` is (or is inside of) a component with `isMaster` true.
+ *
+ * Note that overrides vary somewhat in granularity. In some but not all cases, overriding one property may also prevent other properties on the same node from receiving future updates from the master instance.
+ *
+ * It is not currently possible for plugins to *create* a new component definition or a new SymbolInstance node, aside from using {@link commands.duplicate} to clone existing SymbolInstances.
  */
 declare class SymbolInstance extends SceneNode {
     /**
-     * An identifier unique within this document that is shared by all instances of the same Symbol.
+     * An identifier unique within this document that is shared by all instances of the same component.
      */
     public readonly symbolId: string;
 
     /**
-     * Reports if this symbol is a master symbol or not.
+     * True if this is the "master" instance of the component, which forms the template for all new instances. When the user edits the master, those changes are synced to all other instances of the component (unless blocked by "overrides"
+     * @see SymbolInstance
      */
     public readonly isMaster: boolean;
 
