@@ -8,7 +8,7 @@ declare class commands {
     public static group(): void;
 
     /**
-     * Ungroups any of the selected objects that are ungroupable containers (Groups, Symbols, Repeat Grids, etc.). Equivalent to Object > Ungroup.
+     * Ungroups any of the selected objects that are ungroupable containers (Group, SymbolInstance, RepeatGrid, etc.). Equivalent to _Object > Ungroup_.
      */
     public static ungroup(): void;
 
