@@ -31,7 +31,7 @@ declare class interactions {
      * The starting Artboard seen when the interactive prototype is launched.
      * @see Artboard.isHomeArtboard
      */
-    public static readonly homeArtboard?: Artboard;
+    static readonly homeArtboard?: Artboard;
 
     /**
      * Returns a collection of *all* interactions across the entire document, grouped by triggering scenenode. Each entry in this array specifies a `triggerNode` and the result of getting [`triggerNode.triggeredInteractions`](./scenegraph.md#SceneNode-triggeredInteractions).
@@ -40,7 +40,7 @@ declare class interactions {
      *
      * Note: currently, this API excludes all of the document's keyboard/gamepad interactions.
      */
-    public static readonly allInteractions: Array<{ triggerNode: SceneNode, interactions: Array<Interaction> }>;
+    static readonly allInteractions: Array<{ triggerNode: SceneNode, interactions: Array<Interaction> }>;
 }
 
 /**

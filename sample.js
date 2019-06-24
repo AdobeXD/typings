@@ -1,6 +1,5 @@
 const {Text, Ellipse, Color, RootNode} = require("scenegraph");
 const clipboard = require("clipboard");
-const application = require("application");
 const shell = require("uxp").shell;
 const fs = require("uxp").storage.localFileSystem;
 
@@ -19,9 +18,16 @@ async function test(selection, documentRoot) {
         }
     });
     const tempFolder = await fs.getTemporaryFolder();
-    const newFile = await tempFolder.createEntry("tempfile.txt", {overwrite: true});
-    newFile.write("Hello, world!");
+    const newFile = await tempFolder.createFile("tempfile.txt", {overwrite: true});
+    await newFile.write("Hello, world!");
     await newFile.moveTo(tempFolder, {overwrite: true});
+
+    const anotherFile = await tempFolder.getEntry('tempfile.txt');
+    if (anotherFile.isFile) {
+        anotherFile.write("Good day");
+    } else if (anotherFile.isFolder) {
+        console.log("That's a folder. It shouldn't be a folder. What have you done?")
+    }
 }
 
 module.exports = {

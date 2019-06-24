@@ -61,22 +61,22 @@ declare class application {
      * @param renditions List of renditions to generate
      * @return Promise<Array<RenditionResult>, string> - Promise which is fulfilled with an array of RenditionResults (pointing to the same outputFiles that were originally passed in, or rejected with an error string if one or more renditions failed for any reason.
      */
-    public static createRenditions(renditions: RenditionSettings[]): Promise<RenditionResult[] | string>;
+    static createRenditions(renditions: RenditionSettings[]): Promise<RenditionResult[] | string>;
 
     /**
      * Adobe XD version number in the form "major.minor.patch.build"
      */
-    public static readonly version: string;
+    static readonly version: string;
 
     /**
      * Current language the application UI is using. This may not equal the user's OS locale setting: it is the closest locale supported by XD - use this when you want your plugin's UI to be consistent with XD's UI. Specifies language only, with no region info (e.g. "fr", not "fr_FR").
      */
-    public static readonly appLanguage: string;
+    static readonly appLanguage: string;
 
     /**
      * User's OS-wide locale setting. May not match the XD UI, since XD does not support all world languages. Includes both language and region (e.g. "fr_CA" or "en_US").
      */
-    public static readonly systemLocale: string;
+    static readonly systemLocale: string;
 }
 
 export = application;

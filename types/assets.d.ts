@@ -127,7 +127,7 @@ declare module assets {
          *  allColors = assets.colors.get();
          *
          */
-        public static get(): Array<ColorAsset | GradientAsset>;
+        static get(): Array<ColorAsset | GradientAsset>;
 
         /**
          * Add color/gradient assets to the collection.
@@ -136,7 +136,7 @@ declare module assets {
          * @param colorAssets The color assets
          * @returns {number} number of assets added (may be less than requested if duplicates already exist)
          */
-        public static add(colorAssets: Color | ColorAsset | LinearGradientFill | RadialGradientFill | GradientAsset | Array<Color | ColorAsset | LinearGradientFill | RadialGradientFill | GradientAsset>): number;
+        static add(colorAssets: Color | ColorAsset | LinearGradientFill | RadialGradientFill | GradientAsset | Array<Color | ColorAsset | LinearGradientFill | RadialGradientFill | GradientAsset>): number;
 
         /**
          * Delete color/gradient assets from the collection.
@@ -146,7 +146,7 @@ declare module assets {
          * @param colorAssets The color assets
          * @returns {number} number of assets deleted (may be less than requested if some didn't exist)
          */
-        public static delete(colorAssets: Color | ColorAsset | LinearGradientFill | RadialGradientFill | GradientAsset | Array<Color | ColorAsset | LinearGradientFill | RadialGradientFill | GradientAsset>): number;
+        static delete(colorAssets: Color | ColorAsset | LinearGradientFill | RadialGradientFill | GradientAsset | Array<Color | ColorAsset | LinearGradientFill | RadialGradientFill | GradientAsset>): number;
     }
 
     /**
@@ -163,7 +163,7 @@ declare module assets {
          *  allCharacterStyles = assets.characterStyles.get();
          *
          */
-        public static get(): Array<CharacterStyleAsset>;
+        static get(): Array<CharacterStyleAsset>;
 
         /**
          * Add one or more character style assets to the collection.
@@ -173,7 +173,7 @@ declare module assets {
          * @param charStyleAssets The character style assets
          * @returns {number} number of assets added (may be less than requested if duplicates already exist)
          */
-        public static add(charStyleAssets: CharacterStyleAsset | Array<CharacterStyleAsset>): number;
+        static add(charStyleAssets: CharacterStyleAsset | Array<CharacterStyleAsset>): number;
 
         /**
          * Delete one or more character style assets from the collection.
@@ -185,7 +185,7 @@ declare module assets {
          * @returns {number} number of assets deleted (may be less than requested if some didn't exist)
          * @param charStyleAssets The character styles
          */
-        public static delete(charStyleAssets: CharacterStyleAsset | Array<CharacterStyleAsset>): number;
+        static delete(charStyleAssets: CharacterStyleAsset | Array<CharacterStyleAsset>): number;
     }
 }
 

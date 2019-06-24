@@ -15,35 +15,35 @@ declare global {
      * Represents the children of a scenenode. Typically accessed via the SceneNode.children property.
      */
     class SceneNodeList {
-        public items: SceneNode[];
-        public readonly length: number;
+        items: SceneNode[];
+        readonly length: number;
 
-        public forEach(
+        forEach(
             callback: (sceneNode: SceneNode, index: number) => void,
             thisArg?: object
         ): void;
 
-        public forEachRight(
+        forEachRight(
             callback: (sceneNode: SceneNode, index: number) => void,
             thisArg?: object
         ): void;
 
-        public filter(
+        filter(
             callback: (sceneNode: SceneNode, index: number) => boolean,
             thisArg?: object
         ): Array<SceneNode>;
 
-        public map(
+        map(
             callback: (sceneNode: SceneNode, index: number) => any,
             thisArg?: object
         ): Array<any>;
 
-        public some(
+        some(
             callback: (sceneNode: SceneNode, index: number) => boolean,
             thisArg?: object
         ): boolean;
 
-        public at(index: number): SceneNode | null;
+        at(index: number): SceneNode | null;
     }
 
     /**
@@ -106,6 +106,6 @@ declare global {
          * Opens the url in an the system browser.
          * @param url The url which should be opened
          */
-        public openExternal(url: string);
+        openExternal(url: string);
     }
 }
