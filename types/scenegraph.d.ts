@@ -29,18 +29,18 @@ declare class Matrix {
      * @param e
      * @param f
      */
-    public constructor(a: number, b: number, c: number, d: number, e: number, f: number);
+    constructor(a: number, b: number, c: number, d: number, e: number, f: number);
 
     /**
      * Copies another matrix's values into this matrix.
      * @param otherMatrix The matrix to copy values from.
      */
-    public setFrom(otherMatrix: Matrix);
+    setFrom(otherMatrix: Matrix);
 
     /**
      * Returns a copy of the matrix
      */
-    public clone(): Matrix;
+    clone(): Matrix;
 
     /**
      * Multiplies a passed affine transform to the right: this * M. The result effectively applies the transform of the passed in matrix first, followed by the transform of this matrix second. Modifies this matrix object and also returns it so calls can be chained.
@@ -51,13 +51,13 @@ declare class Matrix {
      * @param e The e component of an affine transform.
      * @param f The f component of an affine transform.
      */
-    public add(aOrOtherMatrix: number, b: number, c: number, d: number, e: number, f: number);
+    add(aOrOtherMatrix: number, b: number, c: number, d: number, e: number, f: number);
 
     /**
      * Multiplies a passed affine transform to the right: this * M. The result effectively applies the transform of the passed in matrix first, followed by the transform of this matrix second. Modifies this matrix object and also returns it so calls can be chained.
      * @param aOrOtherMatrix A Matrix or the a component of an affine transform.
      */
-    public add(aOrOtherMatrix: Matrix);
+    add(aOrOtherMatrix: Matrix);
 
     /**
      * Multiplies a passed affine transform to the left: M * this. The result effectively applies the transform of this matrix first, followed by the transform of the passed in matrix second. Modifies this matrix object and also returns it so calls can be chained.
@@ -68,25 +68,25 @@ declare class Matrix {
      * @param e The e component of an affine transform.
      * @param f The f component of an affine transform.
      */
-    public multLeft(aOrOtherMatrix: number, b: number, c: number, d: number, e: number, f: number);
+    multLeft(aOrOtherMatrix: number, b: number, c: number, d: number, e: number, f: number);
 
     /**
      * Multiplies a passed affine transform to the left: M * this. The result effectively applies the transform of this matrix first, followed by the transform of the passed in matrix second. Modifies this matrix object and also returns it so calls can be chained.
      * @param aOrOtherMatrix A Matrix or the a component of an affine transform.
      */
-    public multLeft(aOrOtherMatrix: Matrix);
+    multLeft(aOrOtherMatrix: Matrix);
 
     /**
      * Returns an inverted version of the matrix. Returns a brand new matrix - does not modify this matrix object.
      */
-    public invert(): Matrix;
+    invert(): Matrix;
 
     /**
      * Applies translation before the current transform of this matrix, as if using the add() method. Modifies this matrix object and also returns it so calls can be chained.
      * @param tx horizontal offset distance
      * @param ty vertical offset distance
      */
-    public translate(tx: number, ty: number): Matrix;
+    translate(tx: number, ty: number): Matrix;
 
     /**
      * Applies scaling before the current transform of this matrix, as if using the add() method. Modifies this matrix object and also returns it so calls can be chained.
@@ -97,7 +97,7 @@ declare class Matrix {
      * @param cx horizontal origin point from which to scale (if unspecified, scales from the local coordinates' origin point)
      * @param cy vertical origin point from which to scale
      */
-    public scale(sx: number, sy?: number, cx?: number, cy?: number): Matrix;
+    scale(sx: number, sy?: number, cx?: number, cy?: number): Matrix;
 
     /**
      * Applies clockwise rotation before the current transform of this matrix, as if using the add() method. Modifies this matrix object and also returns it so calls can be chained.
@@ -105,43 +105,43 @@ declare class Matrix {
      * @param cx horizontal origin point from which to rotate (if unspecified, scales from the local coordinates' origin point)
      * @param cy vertical origin point from which to rotate
      */
-    public rotate(angle: number, cx?: number, cy?: number): Matrix;
+    rotate(angle: number, cx?: number, cy?: number): Matrix;
 
     /**
      * Returns x coordinate of the given point after transformation described by this matrix. See also Matrix.y and Matrix.transformPoint.
      * @param x
      * @param y
      */
-    public x(x: number, y: number): number;
+    x(x: number, y: number): number;
 
     /**
      * Returns y coordinate of the given point after transformation described by this matrix. See also Matrix.x and Matrix.transformPoint.
      * @param x
      * @param y
      */
-    public y(x: number, y: number): number;
+    y(x: number, y: number): number;
 
     /**
      * Returns x & y coordinates of the given point after transformation described by this matrix.
      * @param point
      */
-    public transformPoint(point: Point): Point;
+    transformPoint(point: Point): Point;
 
     /**
      * Transforms a rectangle using this matrix, returning the axis-aligned bounds of the resulting rectangle. If this matrix has rotation, then the result will have different width & height from the original rectangle, due to axis alignment. See "Coordinate Spaces" for some illustrations of this.
      * @param rect
      */
-    public transformRect(rect: Bounds): Bounds;
+    transformRect(rect: Bounds): Bounds;
 
     /**
      * @return The translation component of this matrix: [tx, ty]. Equals the `e` and `f` components of this matrix.
      */
-    public getTranslate(): number[];
+    getTranslate(): number[];
 
     /**
      * Split the matrix into scale factors. This method assumes that there is no skew in the matrix.
      */
-    public scaleFactors(): ScaleFactor;
+    scaleFactors(): ScaleFactor;
 
     /**
      * Returns a new matrix that contains only the translate and rotate components of the current matrix, with the given scale factors stripped out. Must be passed the exact scale factors returned by scaleFactors() for this matrix, and this matrix must have no skew/shear component.
@@ -150,99 +150,99 @@ declare class Matrix {
      * @param scaleX horizontal scale component to remove
      * @param scaleY vertical scale component to remove
      */
-    public removedScaleMatrix(scaleX: number, scaleY: number): Matrix;
+    removedScaleMatrix(scaleX: number, scaleY: number): Matrix;
 
     /**
      * @return true, if the matrix includes any skew (shear)
      */
-    public hasSkew(): boolean;
+    hasSkew(): boolean;
 }
 
 declare class Color {
     /**
      * Integer 0-255. Get/set the alpha channel value.
      */
-    public a: number;
+    a: number;
 
     /**
      * Integer 0-255. Get/set the red channel value.
      */
-    public r: number;
+    r: number;
 
     /**
      * Integer 0-255. Get/set the green channel value.
      */
-    public g: number;
+    g: number;
 
     /**
      * Integer 0-255. Get/set the blue channel value.
      */
-    public b: number;
+    b: number;
 
     /**
      * Creates a new color instance.
      * @param value String in CSS color format (hex, rgb, rgba, hsl, hsla, hsv, hsva, or color name); or ARGB numeric value (unsigned 32-bit integer); or object with r, g, b, a keys all set to integers from 0 - 255 (if a is omitted, 255 is used).
      * @param opacity Optional, floating-point value from 0 - 1. Use when value parameter doesn't specify an opacity and you don't want the default 1.0 (100%) opacity.
      */
-    public constructor(value: string | { r: number, g: number, b: number, a?: number }, opacity?: number);
+    constructor(value: string | { r: number, g: number, b: number, a?: number }, opacity?: number);
 
     /**
      * Convert to an object with r, g, b, a keys where r, g, b, a range from 0 - 255.
      */
-    public toRgba(): { r: number, g: number, b: number, a: number };
+    toRgba(): { r: number, g: number, b: number, a: number };
 
     /**
      * Convert to hex string with "#" prefix. Ignores the Color's alpha value. Returns a 3-digit string if possible, otherwise returns a 6-digit string.
      * @param forceSixDigits True if you want the result to always have 6 digits.
      */
-    public toHex(forceSixDigits: boolean): string;
+    toHex(forceSixDigits: boolean): string;
 
     /**
      * Returns a clone of the current color object
      */
-    public clone(): Color;
+    clone(): Color;
 }
 
 declare class LinearGradientFill {
     /**
      * Array of objects representing each color and its position along the gradient line. The position (stop value) is a number 0.0 - 1.0.
      */
-    public colorStops: {color:Color,stop:number}[];
+    colorStops: {color:Color,stop:number}[];
 
     /**
      * X position of the start of the gradient line, as a multiple of the object's bounding box: X=0 indicates the left edge of the bounding box and X=1 indicates the right edge. The gradient line may start or end outside the object's bounding box, so values may be < 0 or > 1.
      */
-    public startX: number;
+    startX: number;
 
     /**
      * Y position of the start of the gradient line, as a multiple of the object's bounding box: Y=0 indicates the top edge of the bounding box and Y=1 indicates the bottom edge. The gradient line may start or end outside the object's bounding box, so values may be < 0 or > 1.
      */
-    public startY: number;
+    startY: number;
 
     /**
      * X position of the end of the gradient line, as a multiple of the object's bounding box: X=0 indicates the left edge of the bounding box and X=1 indicates the right edge. The gradient line may start or end outside the object's bounding box, so values may be < 0 or > 1.
      */
-    public endX: number;
+    endX: number;
 
     /**
      * Y position of the end of the gradient line, as a multiple of the object's bounding box: Y=0 indicates the top edge of the bounding box and Y=1 indicates the bottom edge. The gradient line may start or end outside the object's bounding box, so values may be < 0 or > 1.
      */
-    public endY: number;
+    endY: number;
 
     /**
      * Create a new LinearGradientFill instance.
      */
-    public constructor();
+    constructor();
 
     /**
      * Returns a copy of this instance.
      */
-    public clone(): LinearGradientFill;
+    clone(): LinearGradientFill;
 
     /**
      * Returns an array of [startX, startY, endX, endY].
      */
-    public getEndPoints(): number[];
+    getEndPoints(): number[];
 
     /**
      * Shorthand for setting all four start/endpoint properties.
@@ -251,7 +251,7 @@ declare class LinearGradientFill {
      * @param endX
      * @param endY
      */
-    public setEndPoints(startX: number, startY: number, endX: number, endY: number);
+    setEndPoints(startX: number, startY: number, endX: number, endY: number);
 }
 
 /**
@@ -265,11 +265,11 @@ declare class ImageFill {
     /**
      * The image is stretched (distorting its aspect ratio) so its edges line up exactly with the edges of the shape. (Similar to `object-fit: fill` in CSS).
      */
-    public static SCALE_STRETCH: string;
+    static SCALE_STRETCH: string;
     /**
      * The image's aspect ratio is preserved and it it scaled to completely cover the area of the shape. This means on one axis the image's edges line up exactly with the edges of the shape, and on the other axis the image extends beyond the shape's bounds and is cropped. (Similar to `object-fit: cover` in CSS).
      */
-    public static SCALE_COVER: string;
+    static SCALE_COVER: string;
 
     /**
      * How the image is scaled when the aspect ratio of the shape does not match the aspect ratio of the image:
@@ -280,38 +280,38 @@ declare class ImageFill {
      *
      * To change this property, use cloneWithOverrides.
      */
-    public scaleBehaviour: string;
+    scaleBehaviour: string;
 
     /**
      * Format the image data was originally encoded in, such as `image/gif` or `image/jpeg`.
      */
-    public readonly mimeType: string;
+    readonly mimeType: string;
 
     /**
      * True if the image comes from a link to an external resource, such as Creative Cloud Libraries.
      */
-    public readonly isLinkedContent: boolean;
+    readonly isLinkedContent: boolean;
 
     /**
      * Pixel dimensions of the underlying bitmap image data.
      */
-    public readonly naturalWidth: number;
+    readonly naturalWidth: number;
 
     /**
      * Pixel dimensions of the underlying bitmap image data.
      */
-    public readonly naturalHeight: number;
+    readonly naturalHeight: number;
 
     /**
      *
      * @param fileOrDataURI File object pointing to an image file; or a string containing a data: URI with a base-64 encoded image.
      */
-    public constructor(fileOrDataURI: string | File);
+    constructor(fileOrDataURI: string | File);
 
     /**
      * @returns a new copy of this ImageFill.
      */
-    public clone(): ImageFill;
+    clone(): ImageFill;
 }
 
 
@@ -319,19 +319,19 @@ declare class Shadow {
     /**
      * X offset of the shadow relative to the shape it is attached to, in global coordinates (i.e. independent of the shape's rotation or any parent's rotation). May be negative.
      */
-    public x: number;
+    x: number;
 
     /**
      * Y offset of the shadow relative to the shape it is attached to, in global coordinates (i.e. independent of the shape's rotation or any parent's rotation). May be negative.
      */
-    public y: number;
-    public blur: number;
-    public color: Color;
+    y: number;
+    blur: number;
+    color: Color;
 
     /**
      * If false, the shadow is not rendered. The user can toggle this via a checkbox in the Properties panel.
      */
-    public visible: boolean;
+    visible: boolean;
 
     /**
      * Creates a drop shadow style object with the given properties.
@@ -341,7 +341,7 @@ declare class Shadow {
      * @param color
      * @param visible optional and defaults to true.
      */
-    public constructor(x: number, y: number, blur: number, color: Color, visible: boolean)
+    constructor(x: number, y: number, blur: number, color: Color, visible: boolean)
 }
 
 declare class Blur {
@@ -350,13 +350,13 @@ declare class Blur {
      *
      * (0 - 50)
      */
-    public blurAmount: number;
+    blurAmount: number;
     /**
      * For background blur effects, the amount to increase or decrease the brightness of the background. Ignored for object blur effects.
      *
      * (-50 - 50)
      */
-    public brightnessAmount: number;
+    brightnessAmount: number;
 
     /**
      * For background blur effects, the a multiplier on the opacity of the object's fill drawn over top of the blurred background. Useful to create a color tint on top of the blurred background. Does not affect stroke opacity.
@@ -365,18 +365,18 @@ declare class Blur {
      *
      * (0.0 - 1.0)
      */
-    public fillOpacity: number;
+    fillOpacity: number;
     /**
      * If true, renders a background blur effect: all objects beneath the shape are blurred (modulated by brightnessAmount), but the shape itself is still rendered with crisp edges (with its fill modulated by fillOpacity).
      *
      * If false, renders an object blur effect: the shape itself is blurred, and objects beneath it are unaffected.
      */
-    public isBackgroundEffect: boolean;
+    isBackgroundEffect: boolean;
 
     /**
      * If false, the blur effect is not rendered. The user can toggle this via a checkbox in the Properties panel.
      */
-    public visible: boolean;
+    visible: boolean;
 
     /**
      * Creates an object blur or background blur effect object with the given properties.
@@ -403,129 +403,157 @@ declare abstract class SceneNode {
     /**
      * Returns a unique identifier for this node that stays the same when the file is closed & reopened, or if the node is moved to a different part of the document. Cut-Paste will result in a new guid, however.
      */
-    public readonly guid: string;
+    readonly guid: string;
     /**
      * Returns the parent node. Null if this is the root node, or a freshly constructed node which has not been added to a parent yet.
      */
-    public readonly parent: SceneNode | null;
+    readonly parent: SceneNode | null;
     /**
      * Returns a list of this node’s children. List is length 0 if the node has no children. The first child is lowest in the z order.
      * This list is not an Array, so you must use at(i) instead of [i] to access children by index. It has a number of Array-like methods such as forEach() for convenience, however.
      * The list is immutable. Use removeFromParent and addChild to add/remove child nodes.
      */
-    public readonly children: SceneNodeList;
+    readonly children: SceneNodeList;
     /**
      * True if the node’s parent chain connects back to the document root node.
      */
-    public readonly isInArtworkTree: boolean;
+    readonly isInArtworkTree: boolean;
     /**
      * True if this node is a type that could have children (e.g. an Artboard, Group, Boolean Group, etc.).
      */
-    public readonly isContainer: boolean;
+    readonly isContainer: boolean;
     /**
      * True if this node is part of the current selection. To change which nodes are selected, use selection.
      */
-    public readonly selected: boolean;
+    readonly selected: boolean;
 
     /**
      * False if this node has been hidden by the user (eyeball toggle in Layers panel). If true, the node may still be invisible for other reasons: a parent or grandparent has visible=false, the node has opacity=0%, the node is clipped by a mask, etc.
      */
-    public visible: boolean;
+    visible: boolean;
 
     /**
      * (0.0-1.0)Node’s opacity setting. The overall visual opacity seen on canvas is determined by combining this value with the opacity of the node’s entire parent chain, as well as the opacity settings of its fill/stroke properties if this is a leaf node.
      */
-    public opacity: number;
+    opacity: number;
 
     /**
      * Affine transform matrix that converts from the node’s local coordinate space to its parent’s coordinate space. The matrix never has skew or scale components, and if this node is an Artboard the matrix never has rotation either. Rather than working with the raw matrix directly, it may be easier to use methods such as placeInParentCoordinates or rotateAround.
      * Returns a fresh Matrix each time, so this can be mutated by the caller without interfering with anything. Mutating the returned Matrix does not change the node’s transform - only invoking the ‘transform’ setter changes the node. To modify an existing transform, always be sure to re-invoke the transform setter rather than just changing the Matrix object’s properties inline. See “Properties with object values”.
      * For an overview of node transforms & coordinate systems, see Coordinate spaces.
      */
-    public readonly transform: Matrix;
+    readonly transform: Matrix;
 
     /**
      * The translate component of this node’s transform. Since translation is applied after any rotation in the transform Matrix, translation occurs along the parent’s X/Y axes, not the node’s own local X/Y axes. This is equivalent to the e & f fields in the transform Matrix.
      * For an overview of node positioning & coordinate systems, see Coordinate spaces.
      */
-    public translation: Point;
+    translation: Point;
 
     /**
      * The rotation component of this node’s transform, in clockwise degrees.
      * For an overview of node transforms & coordinate systems, see Coordinate spaces.
      */
-    public readonly rotation: number;
+    readonly rotation: number;
 
     /**
      * The node’s path bounds in document-global coordinate space (represented by a bounding box aligned with global X/Y axes). Path bounds match the selection outline seen in the XD, but exclude some visual parts of the node (outer stroke, drop shadow / blur, etc.).
      */
-    public readonly globalBounds: Bounds;
+    readonly globalBounds: Bounds;
 
     /**
      * The node’s path bounds in its own local coordinate space. This coordinate space may be rotated and translated relative to the parent’s coordinate space. Path bounds match the selection outline seen in XD, but exclude some visual parts of the node (outerstroke, drop shadow / blur, etc.).
      * The visual top-left of a node’s path bounds is located at (localBounds.x, localBounds.y). This value is not necessarily (0,0) in the local coordinate space: for example, a text node’s baseline is at y=0 in local coordinates, so the top of the text has a negative y value.
      */
-    public readonly localBounds: Bounds;
+    readonly localBounds: Bounds;
 
     /**
      * The node’s path bounds in its parent’s coordinate space (represented by a bounding box aligned with the parent’s X/Y axes - so if the node has rotation, the top-left of the node is not necessarily located at the top-left of boundsInParent). Path bounds match the selection outline seen in XD, but exclude some visual parts of the node (outer stroke, drop shadow / blur, etc.).
      */
-    public readonly boundsInParent: Bounds;
+    readonly boundsInParent: Bounds;
 
     /**
      * The position of the node’s upper-left corner (localBounds.x, localBounds.y) in its parent’s coordinate space. If the node is rotated, this is not the same as the top-left corner of boundsInParent. This is a shortcut for node.transform.transformPoint({x: node.localBounds.x, y: node.localBounds.y})
      */
-    public readonly topLeftInParent: Point;
+    readonly topLeftInParent: Point;
 
     /**
      * The position of the node’s centerpoint in its own local coordinate space. Useful as an argument to rotateAround. This is a shortcut for {x: localBounds.x + localBounds.width/2, y: localBounds.y + localBounds.height/2})
      */
-    public readonly localCenterPoint: Point;
+    readonly localCenterPoint: Point;
 
     /**
      * The node’s draw bounds in document-global coordinate space. Draw bounds are larger than the selection outline seen in XD, including outer stroke, drop shadow / blur, etc. - every visible pixel of the node is encompassed by these bounds. This matches the image dimensions if the node is exported as a PNG/JPEG bitmap.
      */
-    public readonly globalDrawBounds: Bounds;
+    readonly globalDrawBounds: Bounds;
 
     /**
      * Node name as seen in the Layers panel. Also used as filename during export.
      */
-    public name: string;
+    name: string;
 
     /**
      * True if name is a generic, auto-generated string (e.g. “Rectangle 5”). False if name has been explicitly set.
      */
-    public readonly hasDefaultName: boolean;
+    readonly hasDefaultName: boolean;
 
     /**
      * True if the node is locked, meaning it cannot normally be selected.
      */
-    public locked: boolean;
+    locked: boolean;
 
     /**
      * True if the node should be included in the output of File > export > Batch and other bulk-export workflows.
      */
-    public markedForExport: boolean;
+    markedForExport: boolean;
 
     /**
-     * True if the node’s appearance comes from a link to an external resource, such as Creative Cloud Libraries.
+     * **Since**: XD 19
+     *
+     * True if the node stays in a fixed position while the Artboard's content is scrolling (when viewed in an interactive prototype). _Only applicable for nodes whose immediate parent is an Artboard._
+     *
+     * For other nodes, this property returns undefined and cannot be set. To determine whether those nodes scroll or remain fixed, walk up the parent chain and check this property on the topmost ancestor in the Artboard.
      */
-    public readonly hasLinkedContent: boolean;
+    fixedWhenScrolling?: boolean;
+
+    /**
+     * Get all interactions that are triggered by this node in the document's interactive prototype. Each element in the array is an Interaction object which describes a gesture/event plus the action it produces.
+     *
+     * Note: If this node (or one of its ancestors) has `visible` = false, tap and drag interactions on it will not be triggered.
+     *
+     * Currently, this API excludes any keyboard/gamepad interactions on this node.
+     *
+     * @example ```javascript
+ // Print all the interactions triggered by a node
+ node.triggeredInteractions.forEach(interaction => {
+    console.log("Trigger: " + interaction.trigger.type + " -> Action: " + interaction.action.type);
+});
+     * ```
+     *
+     * @see interactions.allInteractions
+     */
+    readonly triggeredInteractions?: Array<Interaction>;
+
+    /**
+     * True if the node's appearance comes from a link to an external resource, such as Creative Cloud Libraries or a separate XD document (in the case of a Linked Component instance).
+     */
+    readonly hasLinkedContent: boolean;
 
     /**
      * **Since:** XD 14
      * Metadata specific to your plugin. Must be a value which can be converted to a JSON string, or undefined to clear the stored metadata on this node.
      *
-     * Metadata is persisted with the document when it is saved. Duplicating a node (including across documents, via copy-paste) will duplicate the metadata with it. If the node lies within a Symbol or Repeat Grid, all instances of the node will have identical metadata (changes in one copy will automatically be synced to the other copy). Metadata stored by this plugin cannot be accessed by other plugins - each plugin has its own isolated metadata storage.
+     * Metadata is persisted with the document when it is saved. Duplicating a node (including across documents, via copy-paste) will duplicate the metadata with it. If the node lies within a Component or Repeat Grid, all instances of the node will have identical metadata (changes in one copy will automatically be synced to the other copy). Metadata stored by this plugin cannot be accessed by other plugins - each plugin has its own isolated metadata storage.
+
      *
      * To store general metadata for the document overall, set pluginData on the root node of the scenegraph. Metadata on the root node can be changed from any edit context.
      */
-    public pluginData: any;
+    pluginData: any;
 
     /**
      * Remove this node from its parent, effectively deleting it from the document.
      */
-    public removeFromParent(): void;
+    removeFromParent(): void;
 
     /**
      * Move the node by the given number of pixels along the parent’s X/Y axes (if this node has no rotation, this is identical to moving the node along its own local X/Y axes). This is equivalent to modifying the value returned by ‘translation’ and then setting it back.
@@ -533,7 +561,7 @@ declare abstract class SceneNode {
      * @param {number} deltaX
      * @param {number} deltaY
      */
-    public moveInParentCoordinates(deltaX: number, deltaY: number): void;
+    moveInParentCoordinates(deltaX: number, deltaY: number): void;
 
     /**
      * Move the node so the given point in its local coordinates is placed at the given point in its parent’s coordinates (taking into account any rotation on this node, etc.).
@@ -541,7 +569,7 @@ declare abstract class SceneNode {
      * @param {Point} registrationPoint Point in this node’s local coordinate space to align with parentPoint
      * @param {Point} parentPoint Point in this node’s parent’s coordinate space to move registrationPoint to
      */
-    public placeInParentCoordinates(
+    placeInParentCoordinates(
         registrationPoint: Point,
         parentPoint: Point
     ): void;
@@ -551,14 +579,14 @@ declare abstract class SceneNode {
      * @param {number} deltaAngle In degrees.
      * @param {Point} rotationCenter Point to rotate around, in node’s local coordinates.
      */
-    public rotateAround(deltaAngle: number, rotationCenter: Point): void;
+    rotateAround(deltaAngle: number, rotationCenter: Point): void;
 
     /**
      * Attempts to change localBounds.width & height to match the specified sizes. This operation may not succeed, since some nodes are not resizable. Resizing one dimension may affect the other, if the node’s aspect ratio is locked.
      * @param {number} width
      * @param {number} height
      */
-    public resize(width: number, height: number): void;
+    resize(width: number, height: number): void;
 }
 
 /**
@@ -574,7 +602,7 @@ declare class GraphicNode extends SceneNode {
      *
      * Known issue: When modifying a gradient fill object specifically, you must clone the gradient returned by the getter before modifying it, to avoid issues with Undo history.
      */
-    public fill:
+    fill:
         | null
         | Color
         | LinearGradientFill
@@ -584,7 +612,7 @@ declare class GraphicNode extends SceneNode {
     /**
      * If false, the fill is not rendered. The user can toggle this via a checkbox in the Properties panel.
      */
-    public fillEnabled: boolean;
+    fillEnabled: boolean;
 
     /**
      * The stroke color applied to this shape, if any. If this property is null or strokeEnabled is false, no stroke is drawn. Freshly created nodes have no stroke by default. Artboard objects ignore stroke settings.
@@ -593,70 +621,71 @@ declare class GraphicNode extends SceneNode {
      *
      * To modify an existing stroke, always be sure to re-invoke the stroke setter rather than just changing the Color object’s properties inline. See “Properties with object values”.
      */
-    public stroke: null | Color;
+    stroke: null | Color;
 
     /**
      * If false, the stroke is not rendered. The user can toggle this via a checkbox in the Properties panel.
      */
-    public strokeEnabled: boolean;
+    strokeEnabled: boolean;
 
     /**
      * Thickness in pixels of the stroke.
      * value must be >= 0
      */
-    public strokeWidth: number;
+    strokeWidth: number;
 
     /**
+     * @default `CENTER_STROKE` for most shapes, `INNER_STROKE` for Rectangle, Ellipse & Polygon
      * Position of the stroke relative to the shape’s path outline: GraphicNode.INNER_STROKE, OUTER_STROKE, or CENTER_STROKE.
      */
-    public strokePosition: string;
+    strokePosition: string;
 
     /**
      * For Lines and non-closed Paths, how the dangling ends of the stroke are rendered: GraphicNode.STROKE_CAP_NONE, STROKE_CAP_SQUARE, or STROKE_CAP_ROUND.
      */
-    public strokeEndCaps: string;
+    strokeEndCaps: string;
 
     /**
      * How sharp corners in the shape are rendered: GraphicNode.STROKE_JOIN_BEVEL, STROKE_JOIN_ROUND, or STROKE_JOIN_MITER.
      */
-    public strokeJoins: string;
+    strokeJoins: string;
 
     /**
      * value must be >= 0
      */
-    public strokeMiterLimit: number;
+    strokeMiterLimit: number;
 
     /**
      * Empty array indicates a solid stroke. If non-empty, values represent the lengths of rendered and blank segments of the stroke’s dash pattern, repeated along the length of the stroke. The first value is the length of the first solid segment. If the array is odd length, the items are copied to double the array length. For example, [3] produces the same effect as [3, 3].
      *
      * The appearance of each segment’s start/end follows the strokeEndCaps setting.
      */
-    public strokeDashArray: Array<number>;
+    strokeDashArray: Array<number>;
 
     /**
      * Ignored unless strokeDashArray is non-empty. Shifts the “phase” of the repeating dash pattern along the length of the stroke.
      */
-    public strokeDashOffset: number;
+    strokeDashOffset: number;
 
     /**
      * The node’s dropshadow, if any. If there is no shadow applied, this property may be null or shadow.visible may be false.
      */
-    public shadow: null | Shadow;
+    shadow: null | Shadow;
 
     /**
      * The node’s object blur or background blur settings, if applicable. If there is no blur effect applied, this property may be null or blur.visible may be false.
      */
-    public blur: null | Blur;
+    blur: null | Blur;
 
     /**
      * Returns a representation of the node’s outline in SVG <path> syntax. Note that only nodes with strokePosition == GraphicNode.CENTER_STROKE can be faithfully rendered in actual SVG using the exact pathData shown here.
      */
-    public readonly pathData: string;
+    readonly pathData: string;
 
     /**
      * True if the node’s image fill comes from a link to an external resource, such as Creative Cloud Libraries.
      */
-    public readonly hasLinkedGraphicFill: boolean;
+    readonly hasLinkedGraphicFill: boolean;
 }
 
 /**
@@ -670,45 +699,70 @@ declare class Artboard extends GraphicNode {
     /**
      * value must be >= 0
      */
-    public width: number;
+    width: number;
 
     /**
      * For scrollable Artboards, this is the total height encompassing all content - not just the viewport size (i.e. screen height).
      *
      * value must be >= 0
      */
-    public height: number;
+    height: number;
 
     /**
      * If Artboard is scrollable, this is the height of the viewport (e.g. mobile device screen size). Null if Artboard isn’t scrollable.
      */
-    public viewportHeight: null | number;
+    viewportHeight: null | number;
+
+    /**
+     * **Since**: XD 19
+     *
+     * Get all interactions whose destination is this artboard (either navigating the entire view, i.e. a `"goToArtboard"` action, or
+     * showing this artboard as an overlay, i.e. an `"overlay"` action). Each element in the array is an [Interaction object](
+     * /interactions.md#Interaction)
+     * which describes a gesture/event plus the action it produces.
+     *
+     * May include interactions that are impossible to trigger because the trigger node (or one of its ancestors) has `visible` = false.
+     *
+     * Note: currently, this API excludes any applicable keyboard/gamepad interactions.
+     * @see SceneNode.triggeredInteractions
+     * @see interactions.allInteractions
+     */
+    readonly incomingInteractions: Array<{triggerNode: SceneNode, interactions: Array<Interaction>}>;
+
+    /**
+     * **Since**: XD 19
+     *
+     * True if this is the starting Artboard seen when the interactive prototype is launched.
+     *
+     * @see interactions.homeArtboard
+     */
+    readonly isHomeArtboard: boolean;
 
     /**
      * Adds a child node to this container node. You can only add leaf nodes this way; to create structured subtrees of content, use commands.
      * @param {SceneNode} node Child to add
      * @param {number} index Optional: index to insert child at. Child is appended to end of children list (top of z order) otherwise.
      */
-    public addChild(node: SceneNode, index?: number): void;
+    addChild(node: SceneNode, index?: number): void;
 
     /**
      * Inserts a child node after the given reference node.
      * @param {SceneNode} node Child to add
      * @param {SceneNode} relativeTo New child is added immediately after this existing child
      */
-    public addChildAfter(node: SceneNode, relativeTo: SceneNode): void;
+    addChildAfter(node: SceneNode, relativeTo: SceneNode): void;
 
     /**
      * Inserts a child node before the given reference node.
      * @param {SceneNode} node Child to add
      * @param {SceneNode} relativeTo New child is added immediately before this existing child
      */
-    public addChildBefore(node: SceneNode, relativeTo: SceneNode): void;
+    addChildBefore(node: SceneNode, relativeTo: SceneNode): void;
 
     /**
      * Removes all children from this node. Equivalent to calling removeFromParent() on each child in turn, but faster.
      */
-    public removeAllChildren(): void;
+    removeAllChildren(): void;
 }
 
 /**
@@ -718,19 +772,19 @@ declare class Rectangle extends GraphicNode {
     /**
      * value must be >= 0
      */
-    public width: number;
+    width: number;
 
     /**
      * value must be >= 0
      */
-    public height: number;
+    height: number;
 
     /**
      * Default: `{topLeft:0, topRight:0, bottomRight:0, bottomLeft:0}`
      * The actual corner radius that is rendered is capped based on the size of the rectangle even if the radius value set here is higher (see {@link effectiveCornerRadii})
      * To set all corners to the same value, use {@link setAllCornerRadii}
      */
-    public cornerRadii: {
+    cornerRadii: {
         topLeft: number;
         topRight: number;
         bottomRight: number;
@@ -740,12 +794,12 @@ declare class Rectangle extends GraphicNode {
     /**
      * True if any of the Rectangle’s four corners is rounded (corner radius > 0).
      */
-    public readonly hasRoundedCorners: boolean;
+    readonly hasRoundedCorners: boolean;
 
     /**
      * The actual corner radius that is rendered may be capped by the size of the rectangle. Returns the actual radii that are currently in effect, which may be smaller than the {@link cornerRadii} values as a result.
      */
-    public effectiveCornerRadii: {
+    effectiveCornerRadii: {
         topLeft: number;
         topRight: number;
         bottomRight: number;
@@ -756,19 +810,19 @@ declare class Rectangle extends GraphicNode {
      * Set the rounding radius of all four corners of the Rectangle to the same value. The actual corner radius that is rendered is capped based on the size of the rectangle even if the radius value set here is higher (see {@link effectiveCornerRadii})
      * To set the corners to different radius values, use {@link cornerRadii}.
      */
-    public setAllCornerRadii(radius: number): void;
+    setAllCornerRadii(radius: number): void;
 }
 
 /**
  * Ellipse leaf node shape.
  */
 declare class Ellipse extends GraphicNode {
-    public radiusX: number;
-    public radiusY: number;
+    radiusX: number;
+    radiusY: number;
     /**
      * True if the Ellipse is a circle (i.e., has a 1:1 aspect ratio).
      */
-    public isCircle: boolean;
+    isCircle: boolean;
 }
 
 /**
@@ -778,11 +832,11 @@ declare class Line extends GraphicNode {
     /**
      * Start point of the Line in local coordinate space.TEMP: To change the start point, use setStartEnd.
      */
-    public readonly start: Point;
+    readonly start: Point;
     /**
      * Endpoint of the Line in local coordinate space.TEMP: To change the endpoint, use setStartEnd.
      */
-    public readonly end: Point;
+    readonly end: Point;
 
     /**
      * Set the start and end points of the Line in local coordinate space. The values may be normalized by this setter, shifting the node’s translation and counter-shifting the start/end points. So the start/end setters may return values different from the values you passed this setter, even though the line’s visual bounds and appearance are the same.
@@ -791,7 +845,7 @@ declare class Line extends GraphicNode {
      * @param {number} endX
      * @param {number} endY
      */
-    public setSTartEnd(
+    setSTartEnd(
         startX: number,
         startY: number,
         endX: number,
@@ -808,50 +862,68 @@ declare class Path extends GraphicNode {
     /**
      * Representation of the path outline in SVG <path> syntax. Unlike other node types, pathData is writable here. Syntax is automatically normalized, so the getter may return a slightly different string than what you passed to the setter.
      */
-    public pathData: string;
+    pathData: string;
 }
 
 /**
- * Polygon leaf node shape.
+ * **Since**: XD 19
+ * Leaf node shape that is a polygon with 3 or more sides. May also have rounded corners. The sides are not necessarily all equal in length: this is true only when the Polygon's width and height matches the aspect ratio of a regular (equilateral) polygon with the given number of sides.
+ *
+ * When unrotated, the Polygon always has its bottommost side as a perfectly horizontal line - with the exception of the 4-sided Polygon, which is a diamond shape instead.
+ *
+ * Like all shape nodes, has no size, fill, or stroke by default unless you set one.
  *
  * @example ```javascript
- *let polygon = new Polygon();
- polygon.width = 100;
- polygon.height = 25;
+ // Add a red triangle to the document and select it
+ var polygon = new Polygon();
+ polygon.cornerCount = 3;
+ polygon.width = 50;
+ polygon.height = 100;
  polygon.fill = new Color("red");
- polygon.cornerCount = 5;
- polygon.setAllCornerRadii(10);
  selection.insertionParent.addChild(polygon);
  selection.items = [polygon];
  * ```
  */
 declare class Polygon extends GraphicNode {
-    public width: number;
-    public height: number;
     /**
-     * Number of vertices of a polygon.
+     * > 0
      */
-    public cornerCount: number;
+    width: number;
+
+    /**
+     * > 0
+     */
+    height: number;
+
+    /**
+     * @default 3
+     * Number of corners (vertices), and also therefore number of sides.
+     *
+     * Setting cornerCount on an existing Polygon behaves in one of two different ways:
+     * * If the shape's aspect ratio gives it equilateral sides, the sides remain equilateral while the size and aspect ratio of the shape is changed to accomodate.
+     * * Otherwise, the size and aspect ratio of the shape remains unchanged.
+     *
+     * This matches how changing the corner count in XD's UI behaves.
+     *
+     * To change corner count while guaranteeing the shape will not change size, save its original size first, set `cornerCount`, and      then set size back to the saved values.
+     */
+    cornerCount: number = 3;
 
     /**
      * True if any of the Polygon's corners is rounded (corner radius > 0).
      */
-    public readonly hasRoundedCorners: boolean;
+    readonly hasRoundedCorners: boolean;
 
     /**
-     * To set all corners to the same value, use setAllCornerRadii.
-     *
-     * All numbers must be >= 0
-     *
-     * @default [0,0,...,0]
+     * List of corner radius for each corner of the polygon. To set corner radius, use [<code>setAllCornerRadii()</code>](#Polygon-setAllCornerRadii).
      */
-    public cornerRadii: number[];
+    cornerRadii: number[];
 
     /**
-     * Set the rounding radius of all corners of the Polygon to the same value.
-     * @param {number} radius The radius that'll get used for all corners
+     * Set the corner radius of all corners of the Polygon to the same value.
+     * @param {number} radius
      */
-    public setAllCornerRadii(radius: number): void;
+    setAllCornerRadii(radius: number): void;
 }
 
 /**
@@ -863,41 +935,41 @@ declare class BooleanGroup extends GraphicNode {
     /**
      * Which boolean operation is used to generate the path: BooleanGroup.PATH_OP_ADD, PATH_OP_SUBTRACT, PATH_OP_INTERSECT, or PATH_OP_EXCLUDE_OVERLAP.
      */
-    public readonly pathOp: string;
+    readonly pathOp: string;
 
     /**
      * Adds a child node to this container node. You can only add leaf nodes this way; to create structured subtrees of content, use commands.
      * @param {SceneNode} node Child to add
      * @param {number} index Optional: index to insert child at. Child is appended to end of children list (top of z order) otherwise.
      */
-    public addChild(node: SceneNode, index?: number): void;
+    addChild(node: SceneNode, index?: number): void;
 
     /**
      * Inserts a child node after the given reference node.
      * @param {SceneNode} node Child to add
      * @param {SceneNode} relativeTo New child is added immediately after this existing child
      */
-    public addChildAfter(node: SceneNode, relativeTo: SceneNode): void;
+    addChildAfter(node: SceneNode, relativeTo: SceneNode): void;
 
     /**
      * Inserts a child node before the given reference node.
      * @param {SceneNode} node Child to add
      * @param {SceneNode} relativeTo New child is added immediately before this existing child
      */
-    public addChildBefore(node: SceneNode, relativeTo: SceneNode): void;
+    addChildBefore(node: SceneNode, relativeTo: SceneNode): void;
 
     /**
      * Removes all children from this node. Equivalent to calling removeFromParent() on each child in turn, but faster.
      */
-    public removeAllChildren(): void;
+    removeAllChildren(): void;
 }
 
 /**
  * Text leaf node shape. Text can have a fill and/or stroke, but only a solid-color fill is allowed (gradient or image will will be rejected).
  *
  * There are two types of Text nodes:
- * - Point Text - Expands to fit the full width of the text content. Only uses multiple lines if the text content contains hard line breaks ("\n").
- * - Area Text - Fixed width and height. Text is automatically wrapped (soft line wrapping) to fit the width. If it does not fit the height, any remaining text is clipped. Check whether areaBox is null to determine the type of a Text node.
+ * - **Point Text** - Expands to fit the full width of the text content. Only uses multiple lines if the text content contains hard line breaks ("\n").
+ * - **Area Text** - Fixed width and height. Text is automatically wrapped (soft line wrapping) to fit the width. If it does not fit the height, any remaining text is clipped. Check whether areaBox is null to determine the type of a Text node.
  *
  * The baseline of a Point Text node is at y=0 in its own local coordinate system. Horizontally, local x=0 is the anchor point that the text grows from / shrinks toward when edited. This anchor depends on the justification: for example, if the text is centered, x=0 is the horizontal centerpoint of the text.
  *
@@ -909,14 +981,14 @@ declare class Text extends GraphicNode {
      *
      * Setting text does not change styleRanges, so styles aligned with the old text’s string indices will continue to be applied to the new string’s indices unless you explicitly change styleRanges as well.
      */
-    public text: string;
+    text: string;
 
     /**
      * Array of text ranges and their character style settings. Each range covers a set number of characters in the text content. Ranges are contiguous, with each one starting immediately after the previous one. Any characters past the end of the last range use the same style as the last range.
      *
      * When setting styleRanges, any fields missing from a given range default to the existing values from the last range in the old value of styleRanges. The styleRanges getter always returns fully realized range objects with all fields specified.
      */
-    public styleRanges: Array<{
+    styleRanges: Array<{
         length: number;
         fontFamily: string;
         fontStyle: string;
@@ -924,37 +996,40 @@ declare class Text extends GraphicNode {
         fill: Color;
         charSpacing: number;
         underline: boolean;
+        strikethrough: boolean;
+        textTransform: string;
+        textScript: string;
     }>;
 
     /**
      * If true, the text is drawn upside down.
      */
-    public flipY: boolean;
+    flipY: boolean;
 
     /**
      * **Since:** XD 14
      * Set the font family across all style ranges, or get the font family of the last style range (font family of all the text if one range covers all the text). Plugins should not assume any particular default value for fontFamily.
      */
-    public fontFamily: string;
+    fontFamily: string;
 
     /**
      * **Since:** XD 14
      * Set the font style across all style ranges, or get the font style of the last style range (font style of all the text if one range covers all the text).
      * @default non-italic normal weight style
      */
-    public fontStyle: string;
+    fontStyle: string;
 
     /**
      * **Since:** XD 14
      * Font size in document pixels. Set the font size across all style ranges, or get the font size of the last style range (font size of all the text if one range covers all the text). Plugins should not assume any particular default value for fontSize.
      */
-    public fontSize: number;
+    fontSize: number;
 
     /**
      * Set the text color across all style ranges, or get the color of the last style range (color of all the text if one range covers all the text). Unlike most other nodes, text only allows a solid color fill - gradients and image fills are not supported.
      * @default null
      */
-    public fill: Color | null;
+    fill: Color | null;
 
     /**
      * **Since:** XD 14
@@ -963,18 +1038,42 @@ declare class Text extends GraphicNode {
      * Set the character spacing across all style ranges, or get the character spacing of the last style range (character spacing of all the text if one range covers all the text).
      * @default 0
      */
-    public charSpacing: number;
+    charSpacing: number;
 
     /**
      * **Since:** XD 14
      * Set underline across all style ranges, or get the underline of the last style range (underline of all the text if one range covers all the text).
      * @default false
      */
-    public underline: boolean;
+    underline: boolean;
 
-    public static readonly ALIGN_LEFT: string;
-    public static readonly ALIGN_CENTER: string;
-    public static readonly ALIGN_RIGHT: string;
+    /**
+     * @default false
+     * **Since**: XD 19
+     *
+     * Set strikethrough across all style ranges, or get the strikethrough of the last style range (strikethrough of all the text if one range covers all the text).
+     */
+    strikethrough: boolean = false;
+
+    /**
+     * @default "none"
+     * **Since**: XD 19
+     *
+     * Set textTransform ("none", "uppercase", "lowercase", or "titlecase") across all style ranges, or get the textTransform of the last style range.
+     */
+    textTransform: 'none' | 'uppercase' | 'lowercase' | 'titlecase' = 'none';
+
+    /**
+     * @default "none"
+     * **Since**: XD 20
+     *
+     * Set textScript ("none" or "superscript" or "subscript") across all style ranges, or get the textScript of the last style range.
+     */
+    textScript: 'none' | 'superscript' | 'subscript' = 'none';
+
+    static readonly ALIGN_LEFT: string;
+    static readonly ALIGN_CENTER: string;
+    static readonly ALIGN_RIGHT: string;
 
     /**
      * Horizontal alignment: Text.ALIGN_LEFT, ALIGN_CENTER, or ALIGN_RIGHT. This setting affects the layout of multiline text, and for point text it also affects how the text is positioned relative to its anchor point (x=0 in local coordinates) and what direction the text grows when edited by the user.
@@ -988,7 +1087,7 @@ declare class Text extends GraphicNode {
      *
      * @default Text.ALIGN_LEFT
      */
-    public textAlign: string;
+    textAlign: string;
 
     /**
      * Distance between baselines in multiline text, in document pixels. The special value 0 causes XD to use the default line spacing defined by the font given the current font size & style.
@@ -997,7 +1096,7 @@ declare class Text extends GraphicNode {
      *
      * @default 0
      */
-    public lineSpacing: number;
+    lineSpacing: number;
 
     /**
      * **Since:** XD 14
@@ -1008,7 +1107,7 @@ declare class Text extends GraphicNode {
      *
      * @default 0
      */
-    public paragraphSpacing: number;
+    paragraphSpacing: number;
 
     /**
      * `Null` for point text. For area text, specifies the size of the rectangle within which text is wrapped and clipped.
@@ -1017,12 +1116,12 @@ declare class Text extends GraphicNode {
      *
      * Changing area text to point text will also automatically insert hard line breaks ("\n") into the text to match the previous line wrapping's appearance exactly.
      */
-    public areaBox: null | { width: number; height: number };
+    areaBox: null | { width: number; height: number };
 
     /**
      * Always false for point text. For area text, true if the text does not fit in the content box and its bottom is being clipped.
      */
-    public readonly clippedByArea: boolean;
+    readonly clippedByArea: boolean;
 
     /**
      * **Since:** XD 19
@@ -1030,7 +1129,7 @@ declare class Text extends GraphicNode {
      * Set strikethrough across all style ranges, or get the strikethrough of the last style range (strikethrough of all the text if one range covers all the text).
      * @default false
      */
-    public strikethrough: boolean;
+    strikethrough: boolean;
 
     /**
      * **Since:** XD 19
@@ -1039,7 +1138,7 @@ declare class Text extends GraphicNode {
      *
      * @default 'none'
      */
-    public textTransform: 'none' | 'uppercase' | 'lowercase' | 'titlecase';
+    textTransform: 'none' | 'uppercase' | 'lowercase' | 'titlecase';
 }
 
 /**
@@ -1055,76 +1154,83 @@ declare class Group extends SceneNode {
     /**
      * The mask shape applied to this group, if any. This object is also present in the group’s children list. Though it has no direct visual appearance of its own, the mask affects the entire groups’s appearance by clipping all its other content.
      */
-    public readonly mask: SceneNode | null;
+    readonly mask: SceneNode | null;
 
     /**
      * Adds a child node to this container node. You can only add leaf nodes this way; to create structured subtrees of content, use commands.
      * @param {SceneNode} node Child to add
      * @param {number} index Optional: index to insert child at. Child is appended to end of children list (top of z order) otherwise.
      */
-    public addChild(node: SceneNode, index?: number): void;
+    addChild(node: SceneNode, index?: number): void;
 
     /**
      * Inserts a child node after the given reference node.
      * @param {SceneNode} node Child to add
      * @param {SceneNode} relativeTo New child is added immediately after this existing child
      */
-    public addChildAfter(node: SceneNode, relativeTo: SceneNode): void;
+    addChildAfter(node: SceneNode, relativeTo: SceneNode): void;
 
     /**
      * Inserts a child node before the given reference node.
      * @param {SceneNode} node Child to add
      * @param {SceneNode} relativeTo New child is added immediately before this existing child
      */
-    public addChildBefore(node: SceneNode, relativeTo: SceneNode): void;
+    addChildBefore(node: SceneNode, relativeTo: SceneNode): void;
 
     /**
      * Removes all children from this node. Equivalent to calling removeFromParent() on each child in turn, but faster.
      */
-    public removeAllChildren(): void;
+    removeAllChildren(): void;
 }
 
 /**
- * Container node representing one instance of a Symbol. Changes within a symbol instance are automatically synced to all other instances of the symbol, with certain exceptions (called “overrides”).
+ * Container node representing one instance of a Component (previously known as "Symbols" in XD's UI). Changes made to the contents of a SymbolInstance are treated in one of two ways:
+ * * If `isMaster` is **false**: The changes affect _only_ this one instance. This creates an "override": changes made to the corresponding part of the master later will no longer get synced to this particular instance.
+ * * If `isMaster` is **true**: The changes are automatically synced to all other other instances of the component - _except_ for instances where the affected nodes have instance-specific overrides. As a result, your plugin's batch of edits **may not be applied atomically** in some instances.
  *
- * It is not currently possible for plugins to create a new Symbol definition or a new SymbolInstance node, aside from using commands.duplicate to clone existing SymbolInstances.
+ * To elaborate: if your plugin command makes edits to more than one property or more than one node as part of a single gesture, and the  user invokes your plugin while editing a component master, other instances of the component may receive only a _partial application_  of your plugin's changes. In many cases this will feel like a natural consequence of the overrides the user has created, but if this  partial application of your plugin's intended changes feels too confusing in your use case, you may opt to warn users or disable some  of your plugin's functionality when `selection.editContext` is (or is inside of) a component with `isMaster` true.
+ *
+ * Note that overrides vary somewhat in granularity. In some but not all cases, overriding one property may also prevent other properties on the same node from receiving future updates from the master instance.
+ *
+ * It is not currently possible for plugins to *create* a new component definition or a new SymbolInstance node, aside from using {@link commands.duplicate} to clone existing SymbolInstances.
  */
 declare class SymbolInstance extends SceneNode {
     /**
-     * An identifier unique within this document that is shared by all instances of the same Symbol.
+     * An identifier unique within this document that is shared by all instances of the same component.
      */
-    public readonly symbolId: string;
+    readonly symbolId: string;
 
     /**
-     * Reports if this symbol is a master symbol or not.
+     * True if this is the "master" instance of the component, which forms the template for all new instances. When the user edits the master, those changes are synced to all other instances of the component (unless blocked by "overrides"
+     * @see SymbolInstance
      */
-    public readonly isMaster: boolean;
+    readonly isMaster: boolean;
 
     /**
      * Adds a child node to this container node. You can only add leaf nodes this way; to create structured subtrees of content, use commands.
      * @param {SceneNode} node Child to add
      * @param {number} index Optional: index to insert child at. Child is appended to end of children list (top of z order) otherwise.
      */
-    public addChild(node: SceneNode, index?: number): void;
+    addChild(node: SceneNode, index?: number): void;
 
     /**
      * Inserts a child node after the given reference node.
      * @param {SceneNode} node Child to add
      * @param {SceneNode} relativeTo New child is added immediately after this existing child
      */
-    public addChildAfter(node: SceneNode, relativeTo: SceneNode): void;
+    addChildAfter(node: SceneNode, relativeTo: SceneNode): void;
 
     /**
      * Inserts a child node before the given reference node.
      * @param {SceneNode} node Child to add
      * @param {SceneNode} relativeTo New child is added immediately before this existing child
      */
-    public addChildBefore(node: SceneNode, relativeTo: SceneNode): void;
+    addChildBefore(node: SceneNode, relativeTo: SceneNode): void;
 
     /**
      * Removes all children from this node. Equivalent to calling removeFromParent() on each child in turn, but faster.
      */
-    public removeAllChildren(): void;
+    removeAllChildren(): void;
 }
 
 /**
@@ -1136,37 +1242,37 @@ declare class RepeatGrid extends SceneNode {
     /**
      * Defines size of the RepeatGrid. Cells are created and destroyed as necessary to fill the current size. Cells that only partially fit will be clipped.
      */
-    public width: number;
+    width: number;
 
     /**
      * Defines size of the RepeatGrid. Cells are created and destroyed as necessary to fill the current size. Cells that only partially fit will be clipped.
      */
-    public height: number;
+    height: number;
 
     /**
      * Number of grid columns
      */
-    public numColumns: number;
+    numColumns: number;
 
     /**
      * Number of grid rows
      */
-    public numRows: number;
+    numRows: number;
 
     /**
      * Horizontal spacing between grid cells/columns
      */
-    public paddingX: number;
+    paddingX: number;
 
     /**
      * Vertical spacing between grid cells/rows
      */
-    public paddingY: number;
+    paddingY: number;
 
     /**
      * The size of each grid cell. The size of each cell’s content can vary slightly due to text overrides; the cell size is always set to the width of the widest cell content and the height of the tallest cell content.
      */
-    public cellSize: { width: number; height: number };
+    cellSize: { width: number; height: number };
 
     /**
      * Attach a sequence of text values to the instances of a given text node across all the cells of a Repeat Grid. The sequence is repeated as necessary to cover all the grid cells. This is a persistent data binding, so if the Repeat Grid is resized later to increase the number of grid cells, items from this sequence will be used to fill the text values of the new cells.
@@ -1176,7 +1282,7 @@ declare class RepeatGrid extends SceneNode {
      * @param {Text} textNode A Text node exemplar that is an immediate child of one of this RepeatGrid's cells. The data series will be bound to this text node and all corresponding copies of it in the other grid cells.
      * @param {string[]} textValues Array of one or more strings. Empty strings are ignored.
      */
-    public attachTextDataSeries(textNode: Text, textValues: string[]): void;
+    attachTextDataSeries(textNode: Text, textValues: string[]): void;
 
     /**
      * Attach a sequence of image fills to the instances of a given shape node across all the cells of a Repeat Grid. The sequence is repeated as necessary to cover all the grid cells. This is a persistent data binding, so if the Repeat Grid is resized later to increase the number of grid cells, items from this sequence will be used to set the image fill in the new cells.
@@ -1193,26 +1299,26 @@ declare class RepeatGrid extends SceneNode {
      * @param {SceneNode} node Child to add
      * @param {number} index Optional: index to insert child at. Child is appended to end of children list (top of z order) otherwise.
      */
-    public addChild(node: SceneNode, index?: number): void;
+    addChild(node: SceneNode, index?: number): void;
 
     /**
      * Inserts a child node after the given reference node.
      * @param {SceneNode} node Child to add
      * @param {SceneNode} relativeTo New child is added immediately after this existing child
      */
-    public addChildAfter(node: SceneNode, relativeTo: SceneNode): void;
+    addChildAfter(node: SceneNode, relativeTo: SceneNode): void;
 
     /**
      * Inserts a child node before the given reference node.
      * @param {SceneNode} node Child to add
      * @param {SceneNode} relativeTo New child is added immediately before this existing child
      */
-    public addChildBefore(node: SceneNode, relativeTo: SceneNode): void;
+    addChildBefore(node: SceneNode, relativeTo: SceneNode): void;
 
     /**
      * Removes all children from this node. Equivalent to calling removeFromParent() on each child in turn, but faster.
      */
-    public removeAllChildren(): void;
+    removeAllChildren(): void;
 }
 
 /**
@@ -1230,26 +1336,26 @@ declare class RootNode extends SceneNode {
      * @param {SceneNode} node Child to add
      * @param {number} index Optional: index to insert child at. Child is appended to end of children list (top of z order) otherwise.
      */
-    public addChild(node: SceneNode, index?: number): void;
+    addChild(node: SceneNode, index?: number): void;
 
     /**
      * Inserts a child node after the given reference node.
      * @param {SceneNode} node Child to add
      * @param {SceneNode} relativeTo New child is added immediately after this existing child
      */
-    public addChildAfter(node: SceneNode, relativeTo: SceneNode): void;
+    addChildAfter(node: SceneNode, relativeTo: SceneNode): void;
 
     /**
      * Inserts a child node before the given reference node.
      * @param {SceneNode} node Child to add
      * @param {SceneNode} relativeTo New child is added immediately before this existing child
      */
-    public addChildBefore(node: SceneNode, relativeTo: SceneNode): void;
+    addChildBefore(node: SceneNode, relativeTo: SceneNode): void;
 
     /**
      * Removes all children from this node. Equivalent to calling removeFromParent() on each child in turn, but faster.
      */
-    public removeAllChildren(): void;
+    removeAllChildren(): void;
 }
 
 /**

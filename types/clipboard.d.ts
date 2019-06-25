@@ -6,7 +6,7 @@ declare class clipboard {
      * Write plain text to the clipboard.
      * @param text Will be automatically converted to string if a different type is passed
      */
-    public static copyText(text: string | any): void;
+    static copyText(text: string | any): void;
 }
 
 export = clipboard;
