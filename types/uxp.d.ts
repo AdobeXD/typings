@@ -269,14 +269,14 @@ declare module storage {
         getNativePath(entry: Entry): string;
     }
 
-     static class LocalFileSystemProvider extends FileSystemProvider {
+     interface LocalFileSystemProvider extends FileSystemProvider {
         // TODO: Waiting for documentation on `LocalFileSystemProvider`
     }
 
     /**
      * Represents a folder on a file system. You'll never instantiate this directly, but will get it by calling {@link FileSystemProvider.getTemporaryFolder}, {@link FileSystemProvider.getFolder}, or via {@link Folder.getEntries}.
      */
-     static class Folder extends Entry {
+     interface Folder extends Entry {
         /**
          * Indicates if the entry is a file
          */
@@ -337,7 +337,7 @@ declare module storage {
         }): Promise<void>;
     }
 
-     export const localFileSystem: LocalFileSystemProvider;
+     const localFileSystem: LocalFileSystemProvider;
 
     namespace errors {
         /**
