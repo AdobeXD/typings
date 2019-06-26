@@ -157,7 +157,7 @@ declare module storage {
 
         /**
          * Reads data from the file and returns it. The file format can be specified with the `format` option. If a format is not supplied, the file is assumed to be a text file using UTF8 encoding.
-         * @param {object} options additional options
+         * @param options additional options
          * @see {@link formats}
          */
         read(options?: {
@@ -174,7 +174,7 @@ declare module storage {
          * @throws errors.OutOfSpaceError If writing to the file causes the file system to exceed the available space (or quota)
          *
          * @param data the data to write to the file
-         * @param {object} options additional options
+         * @param options additional options
          * @see {@link formats}
          */
         write(data: string | ArrayBuffer, options?: {
@@ -194,7 +194,7 @@ declare module storage {
          * Gets a file (or files) suitable for reading by displaying an "Open" file picker dialog to the user. File entries returned by this API are read-only - use getFileForSaving to get a File entry you can write to.
          *
          * The user can select multiple files only if the `allowMultiple` option is `true`.
-         * @param {object} options additional options
+         * @param options additional options
          *
          * @returns the selected files, or empty if no file were selected.
          */
@@ -222,7 +222,7 @@ declare module storage {
          * If the act of writing to the file would overwrite it, the file picker should prompt the user if they are OK with that action. If not, the file should not be returned.
          *
          * @param suggestedName Required. The file extension should match one of the options specified in the `types` option.
-         * @param {object} options additional options
+         * @param options additional options
          * @returns the selected file, or `null` if no file were selected.
          */
         getFileForSaving(suggestedName: string, options: {
@@ -295,7 +295,7 @@ declare module storage {
         /**
          * Creates a File Entry object within this folder and returns the appropriate instance. Note that this method just create a file entry object and not the actual file on the disk. The file actually gets created when you call for eg: write method on the file entry object.
          * @param {string} name the name of the file to create
-         * @param {object} options additional options
+         * @param options additional options
          *
          * @returns the created entry
          */
@@ -326,7 +326,7 @@ declare module storage {
          * Renames an item on disk to a new name within the same folder. The Entry object passed to this function is automatically updated to reference the new name, however any other Entry objects referencing the original item will not be updated, and will thus no longer point to an item that exists on disk.
          * @param {Entry} entry entry to rename (File or Folder). Must exist.
          * @param {string} newName the new name to assign
-         * @param {object} options additional options
+         * @param options additional options
          */
         renameEntry(entry: Entry, newName: string, options?: {
             /**
