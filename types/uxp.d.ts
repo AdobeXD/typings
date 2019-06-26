@@ -42,24 +42,44 @@ declare module storage {
 
         /**
          * Copies this entry to the specified `folder`.
+         *
+         * The Entry object passed to this function will continue to reference the original item - it is not updated to reference the copy.
+         *
          * @param folder the folder to which to copy this entry
-         * @param {object} options additional options
-         * @param {boolean=false} options.overwrite if `true`, allows overwriting existing entries
+         * @param options additional options
          *
          * @throws errors.EntryExistsError if the attempt would overwrite an entry and `overwrite` is `false`
          * @throws errors.PermissionDeniedError if the underlying file system rejects the attempt
          * @throws errors.OutOfSpaceError if the file system is out of storage space
          */
-        copyTo(folder: Folder, options?): Promise<void>;
+        copyTo(folder: Folder, options?: {
+            /**
+             * if `true`, allows overwriting existing entries
+             * @default false
+             */
+            overwrite?: boolean;
+        }): Promise<void>;
 
         /**
          * Moves this entry to the target folder, optionally specifying a new name.
+         *
+         * The Entry object passed to this function is automatically updated to reference the new location, however any other Entry objects referencing the original item will not be updated, and will thus no longer point to an item that exists on disk.
+         *
          * @param folder the folder to which to move this entry
-         * @param {object} options
-         * @param {boolean=false} options.overwrite If true allows the move to overwrite existing files
-         * @param {string=} options.newName If specified, the entry is renamed to this name
+         * @param options additional options
          */
-        moveTo(folder: Folder, options?): Promise<void>;
+        moveTo(folder: Folder, options?: {
+            /**
+             * If true allows the move to overwrite existing files
+             * @default false
+             */
+            overwrite?: boolean;
+            /**
+             * If specified, the entry is renamed to this name
+             * @default undefined
+             */
+            newName?: string;
+        }): Promise<void>;
 
         /**
          * Removes this entry from the file system. If the entry is a folder, all the contents will also be removed.
@@ -137,11 +157,15 @@ declare module storage {
 
         /**
          * Reads data from the file and returns it. The file format can be specified with the `format` option. If a format is not supplied, the file is assumed to be a text file using UTF8 encoding.
-         * @param {object=} options
-         * @param {Symbol=} options.format The format of the file; see utf8 and blob.
+         * @param {object} options additional options
          * @see {@link formats}
          */
-        read(options?): Promise<string | ArrayBuffer>;
+        read(options?: {
+            /**
+             * Optional. Format to read: one of `storage.formats.utf8` or `storage.formats.binary`.
+             */
+            format?: typeof formats.utf8 | typeof formats.binary;
+        }): Promise<string | ArrayBuffer>;
 
         /**
          * Writes data to a file, appending if desired. The format of the file is controlled via the `format` option, and defaults to UTF8.
@@ -150,12 +174,16 @@ declare module storage {
          * @throws errors.OutOfSpaceError If writing to the file causes the file system to exceed the available space (or quota)
          *
          * @param data the data to write to the file
-         * @param {object=} options
-         * @param {Symbol=} options.format The format of the file; see utf8 and blob.
-         * @param {boolean=false} options.append if `true`, the data is written to the end of the file
+         * @param {object} options additional options
          * @see {@link formats}
          */
-        write(data: string | ArrayBuffer, options?): Promise<void>;
+        write(data: string | ArrayBuffer, options?: {
+            /**
+             * Optional. Format to write: one of `storage.formats.utf8` or `storage.formats.binary`.
+             * @default formats.utf8
+             */
+            format?: typeof formats.utf8 | typeof formats.binary;
+        }): Promise<void>;
     }
 
     /**
@@ -163,16 +191,28 @@ declare module storage {
      */
      interface FileSystemProvider {
         /**
-         * Gets a file (or files) from the file system provider for the purpose of opening them. Files are read-only.
+         * Gets a file (or files) suitable for reading by displaying an "Open" file picker dialog to the user. File entries returned by this API are read-only - use getFileForSaving to get a File entry you can write to.
          *
-         * Multiple files can be returned if the `allowMultiple` option is `true`.
-         * @param {object} options
-         * @param {string[]} options.types the allowed file types
-         * @param {boolean} [options.allowMultiple=false] if `true`, multiple files can be returned (as an array)
+         * The user can select multiple files only if the `allowMultiple` option is `true`.
+         * @param {object} options additional options
          *
          * @returns the selected files, or empty if no file were selected.
          */
-        getFileForOpening(options?): Promise<File[] | File>;
+        getFileForOpening(options?: {
+            /**
+             * Optional. Allowed file extensions, with no "." prefix; use `storage.fileTypes.all` to allow any file to be picked
+             * @default ['*']
+             */
+            types?: string[];
+            /**
+             * Optional. If `true`, multiple files can be selected and this API returns `Array<File>`.
+             *
+             * If `false`, only one file can be selected and this API returns a File directly.
+             *
+             * @default false
+             */
+            allowMultiple?: boolean;
+        }): Promise<File[] | File>;
 
         /**
          * Gets a file reference suitable for saving. The file is read-write. Any file picker displayed will be of the "save" variety.
@@ -181,11 +221,16 @@ declare module storage {
          *
          * If the act of writing to the file would overwrite it, the file picker should prompt the user if they are OK with that action. If not, the file should not be returned.
          *
-         * @param {object} options
-         * @param {string[]} options.types Required. Allowed file extensions, with no "." prefix.
+         * @param suggestedName Required. The file extension should match one of the options specified in the `types` option.
+         * @param {object} options additional options
          * @returns the selected file, or `null` if no file were selected.
          */
-        getFileForSaving(options?): Promise<File>;
+        getFileForSaving(suggestedName: string, options: {
+            /**
+             * Required. Allowed file extensions, with no "." prefix.
+             */
+            types: string[];
+        }): Promise<File>;
 
         /**
          * Gets a folder from the file system via a folder picker dialog. The files and folders within can be accessed via {@link Folder.getEntries}. Any files within are read-write.
@@ -250,12 +295,17 @@ declare module storage {
         /**
          * Creates a File Entry object within this folder and returns the appropriate instance. Note that this method just create a file entry object and not the actual file on the disk. The file actually gets created when you call for eg: write method on the file entry object.
          * @param {string} name the name of the file to create
-         * @param {object} options
-         * @param {boolean=false} options.overwrite If `true`, the create attempt can overwrite an existing file
+         * @param {object} options additional options
          *
          * @returns the created entry
          */
-        createFile(name: string, options?): Promise<File>;
+        createFile(name: string, options?: {
+            /**
+             * If `false`, the call will fail if the file already exists. If `true`, the call will succeed regardless of whether the file currently exists on disk.
+             * @default false
+             */
+            overwrite?: boolean;
+        }): Promise<File>;
 
         /**
          * Creates a Folder within this folder and returns the appropriate instance.
@@ -273,13 +323,18 @@ declare module storage {
         getEntry(filePath: string): Promise<File | Folder>;
 
         /**
-         * Renames an entry to a new name.
-         * @param {Entry} entry the entry to rename
+         * Renames an item on disk to a new name within the same folder. The Entry object passed to this function is automatically updated to reference the new name, however any other Entry objects referencing the original item will not be updated, and will thus no longer point to an item that exists on disk.
+         * @param {Entry} entry entry to rename (File or Folder). Must exist.
          * @param {string} newName the new name to assign
-         * @param {object} options
-         * @param {boolean=false} options.overwrite if `true`, renaming can overwrite an existing entry
+         * @param {object} options additional options
          */
-        renameEntry(entry: Entry, newName: string, options?): Promise<void>;
+        renameEntry(entry: Entry, newName: string, options?: {
+            /**
+             * if `true`, renaming can overwrite an existing entry
+             * @default false
+             */
+            overwrite?: boolean;
+        }): Promise<void>;
     }
 
      export const localFileSystem: LocalFileSystemProvider;
