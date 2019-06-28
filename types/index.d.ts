@@ -95,17 +95,5 @@ declare global {
          * The artboard the user is currently most focused on (via recent selection or edit operations). May be null, for example if no artboards exist or if the user just deleted an artboard.
          */
         focusedArtboard: Artboard | null | undefined;
-
-    }
-
-    /**
-     * To get an instance: `require("uxp").shell`
-     */
-    class Shell {
-        /**
-         * Opens the url in an the system browser.
-         * @param url The url which should be opened
-         */
-        openExternal(url: string);
     }
 }
