@@ -1,6 +1,6 @@
 {
   "name": "@adobexd/typings",
-  "version": "19.0.0",
+  "version": "20.1.0",
   "typings": "./types/index.d.ts",
   "description": "Typings for Adobe XD CC",
   "repository": {
@@ -26,6 +26,11 @@
       "name": "Pablo Klaschka",
       "email": "xdplugins@pabloklaschka.de",
       "url": "https://github.com/pklaschka"
+    },
+    {
+      "name": "Eric Robinson",
+      "email": "eric@sonicbloom.io",
+      "url": "https://github.com/ericdrobinson"
     },
     {
       "name": "Kerri Shotts",
