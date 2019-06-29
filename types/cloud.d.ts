@@ -6,7 +6,7 @@ declare namespace cloud {
         /**
          * Set to ArtifactType.PROTOTYPE
          */
-        type: ArtifactType.PROTOTYPE,
+        type: typeof ArtifactType.PROTOTYPE,
         /**
          * URL to view in browser
          */
@@ -49,7 +49,7 @@ declare namespace cloud {
      * Developer-oriented specs view generated via "Share for Development."
      */
     type SpecsArtifact = {
-        type: ArtifactType.SPECS,
+        type: typeof ArtifactType.SPECS,
         /**
          * URL to view in browser
          */
