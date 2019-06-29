@@ -9,13 +9,13 @@ const assets = require('assets');
  * @param {RootNode} documentRoot
  */
 async function test(selection, documentRoot) {
-    selection.items.forEach(node => {
+    selection.items.forEach(async node => {
         console.log("Hello world: ", node);
         if (node instanceof Text) {
             clipboard.copyText(node.text);
         } else if (node instanceof Ellipse) {
             node.fill = new Color("#ffaaee");
-            shell.openExternal('https://adobe-xd.gitbook.io/plugin-api-reference/uxp-api-reference/network-apis/shell');
+            await shell.openExternal('https://adobe-xd.gitbook.io/plugin-api-reference/uxp-api-reference/network-apis/shell');
         }
     });
     const tempFolder = await fs.getTemporaryFolder();
