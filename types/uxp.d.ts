@@ -1,10 +1,21 @@
-declare const shell: Shell;
+/**
+ * To get an instance: `require("uxp").shell`
+ */
+interface Shell {
+    /**
+     * Opens the url in an the system browser.
+     * @param url The url which should be opened
+     */
+    openExternal(url: string): Promise<void>;
+}
 
-declare module storage {
+export const shell: Shell;
+
+export module storage {
     /**
      * An Entry is the base class for `File` and `Folder`. You'll typically never instantiate an `Entry` directly, but it provides the common fields and methods that both `File` and `Folder` share.
      */
-     interface Entry {
+    interface Entry {
         /**
          * Indicates that this instance is an `Entry`. Useful for type-checking.
          */
@@ -42,24 +53,44 @@ declare module storage {
 
         /**
          * Copies this entry to the specified `folder`.
+         *
+         * The Entry object passed to this function will continue to reference the original item - it is not updated to reference the copy.
+         *
          * @param folder the folder to which to copy this entry
-         * @param {object} options additional options
-         * @param {boolean=false} options.overwrite if `true`, allows overwriting existing entries
+         * @param options additional options
          *
          * @throws errors.EntryExistsError if the attempt would overwrite an entry and `overwrite` is `false`
          * @throws errors.PermissionDeniedError if the underlying file system rejects the attempt
          * @throws errors.OutOfSpaceError if the file system is out of storage space
          */
-        copyTo(folder: Folder, options?): Promise<void>;
+        copyTo(folder: Folder, options?: {
+            /**
+             * if `true`, allows overwriting existing entries
+             * @default false
+             */
+            overwrite?: boolean;
+        }): Promise<void>;
 
         /**
          * Moves this entry to the target folder, optionally specifying a new name.
+         *
+         * The Entry object passed to this function is automatically updated to reference the new location, however any other Entry objects referencing the original item will not be updated, and will thus no longer point to an item that exists on disk.
+         *
          * @param folder the folder to which to move this entry
-         * @param {object} options
-         * @param {boolean=false} options.overwrite If true allows the move to overwrite existing files
-         * @param {string=} options.newName If specified, the entry is renamed to this name
+         * @param options additional options
          */
-        moveTo(folder: Folder, options?): Promise<void>;
+        moveTo(folder: Folder, options?: {
+            /**
+             * If true allows the move to overwrite existing files
+             * @default false
+             */
+            overwrite?: boolean;
+            /**
+             * If specified, the entry is renamed to this name
+             * @default undefined
+             */
+            newName?: string;
+        }): Promise<void>;
 
         /**
          * Removes this entry from the file system. If the entry is a folder, all the contents will also be removed.
@@ -88,7 +119,7 @@ declare module storage {
      * You'll not instantiate this directly; use  Entry#getMetadata to do so.
      * @see {@link Entry.getMetadata}
      */
-     interface EntryMetadata {
+    interface EntryMetadata {
         /**
          * The name of the entry.
          */
@@ -119,7 +150,7 @@ declare module storage {
      * Represents a file on a file system. Provides methods for reading from and writing to the file. You'll never instantiate a File directly; instead you'll get access via a FileSystemProvider.
      * @see {@link FileSystemProvider}
      */
-     interface File extends Entry {
+    interface File extends Entry {
         /**
          * Indicates if the entry is a file
          */
@@ -137,11 +168,15 @@ declare module storage {
 
         /**
          * Reads data from the file and returns it. The file format can be specified with the `format` option. If a format is not supplied, the file is assumed to be a text file using UTF8 encoding.
-         * @param {object=} options
-         * @param {Symbol=} options.format The format of the file; see utf8 and blob.
+         * @param options additional options
          * @see {@link formats}
          */
-        read(options?): Promise<string | ArrayBuffer>;
+        read(options?: {
+            /**
+             * Optional. Format to read: one of `storage.formats.utf8` or `storage.formats.binary`.
+             */
+            format?: typeof formats.utf8 | typeof formats.binary;
+        }): Promise<string | ArrayBuffer>;
 
         /**
          * Writes data to a file, appending if desired. The format of the file is controlled via the `format` option, and defaults to UTF8.
@@ -150,29 +185,45 @@ declare module storage {
          * @throws errors.OutOfSpaceError If writing to the file causes the file system to exceed the available space (or quota)
          *
          * @param data the data to write to the file
-         * @param {object=} options
-         * @param {Symbol=} options.format The format of the file; see utf8 and blob.
-         * @param {boolean=false} options.append if `true`, the data is written to the end of the file
+         * @param options additional options
          * @see {@link formats}
          */
-        write(data: string | ArrayBuffer, options?): Promise<void>;
+        write(data: string | ArrayBuffer, options?: {
+            /**
+             * Optional. Format to write: one of `storage.formats.utf8` or `storage.formats.binary`.
+             * @default formats.utf8
+             */
+            format?: typeof formats.utf8 | typeof formats.binary;
+        }): Promise<void>;
     }
 
     /**
      * Provides access to files and folders on a file system. You'll typically not instantiate this directly; instead you'll use an instance of one that has already been created for you. This class is abstract, meaning that you'll need to provide your own implementation in order to use it effectively.
      */
-     interface FileSystemProvider {
+    interface FileSystemProvider {
         /**
-         * Gets a file (or files) from the file system provider for the purpose of opening them. Files are read-only.
+         * Gets a file (or files) suitable for reading by displaying an "Open" file picker dialog to the user. File entries returned by this API are read-only - use getFileForSaving to get a File entry you can write to.
          *
-         * Multiple files can be returned if the `allowMultiple` option is `true`.
-         * @param {object} options
-         * @param {string[]} options.types the allowed file types
-         * @param {boolean} [options.allowMultiple=false] if `true`, multiple files can be returned (as an array)
+         * The user can select multiple files only if the `allowMultiple` option is `true`.
+         * @param options additional options
          *
          * @returns the selected files, or empty if no file were selected.
          */
-        getFileForOpening(options?): Promise<File[] | File>;
+        getFileForOpening(options?: {
+            /**
+             * Optional. Allowed file extensions, with no "." prefix; use `storage.fileTypes.all` to allow any file to be picked
+             * @default ['*']
+             */
+            types?: string[];
+            /**
+             * Optional. If `true`, multiple files can be selected and this API returns `Array<File>`.
+             *
+             * If `false`, only one file can be selected and this API returns a File directly.
+             *
+             * @default false
+             */
+            allowMultiple?: boolean;
+        }): Promise<File[] | File>;
 
         /**
          * Gets a file reference suitable for saving. The file is read-write. Any file picker displayed will be of the "save" variety.
@@ -181,11 +232,16 @@ declare module storage {
          *
          * If the act of writing to the file would overwrite it, the file picker should prompt the user if they are OK with that action. If not, the file should not be returned.
          *
-         * @param {object} options
-         * @param {string[]} options.types Required. Allowed file extensions, with no "." prefix.
+         * @param suggestedName Required. The file extension should match one of the options specified in the `types` option.
+         * @param options additional options
          * @returns the selected file, or `null` if no file were selected.
          */
-        getFileForSaving(options?): Promise<File>;
+        getFileForSaving(suggestedName: string, options: {
+            /**
+             * Required. Allowed file extensions, with no "." prefix.
+             */
+            types: string[];
+        }): Promise<File>;
 
         /**
          * Gets a folder from the file system via a folder picker dialog. The files and folders within can be accessed via {@link Folder.getEntries}. Any files within are read-write.
@@ -224,14 +280,14 @@ declare module storage {
         getNativePath(entry: Entry): string;
     }
 
-     static class LocalFileSystemProvider extends FileSystemProvider {
+    interface LocalFileSystemProvider extends FileSystemProvider {
         // TODO: Waiting for documentation on `LocalFileSystemProvider`
     }
 
     /**
      * Represents a folder on a file system. You'll never instantiate this directly, but will get it by calling {@link FileSystemProvider.getTemporaryFolder}, {@link FileSystemProvider.getFolder}, or via {@link Folder.getEntries}.
      */
-     static class Folder extends Entry {
+    interface Folder extends Entry {
         /**
          * Indicates if the entry is a file
          */
@@ -250,12 +306,17 @@ declare module storage {
         /**
          * Creates a File Entry object within this folder and returns the appropriate instance. Note that this method just create a file entry object and not the actual file on the disk. The file actually gets created when you call for eg: write method on the file entry object.
          * @param {string} name the name of the file to create
-         * @param {object} options
-         * @param {boolean=false} options.overwrite If `true`, the create attempt can overwrite an existing file
+         * @param options additional options
          *
          * @returns the created entry
          */
-        createFile(name: string, options?): Promise<File>;
+        createFile(name: string, options?: {
+            /**
+             * If `false`, the call will fail if the file already exists. If `true`, the call will succeed regardless of whether the file currently exists on disk.
+             * @default false
+             */
+            overwrite?: boolean;
+        }): Promise<File>;
 
         /**
          * Creates a Folder within this folder and returns the appropriate instance.
@@ -273,76 +334,81 @@ declare module storage {
         getEntry(filePath: string): Promise<File | Folder>;
 
         /**
-         * Renames an entry to a new name.
-         * @param {Entry} entry the entry to rename
+         * Renames an item on disk to a new name within the same folder. The Entry object passed to this function is automatically updated to reference the new name, however any other Entry objects referencing the original item will not be updated, and will thus no longer point to an item that exists on disk.
+         * @param {Entry} entry entry to rename (File or Folder). Must exist.
          * @param {string} newName the new name to assign
-         * @param {object} options
-         * @param {boolean=false} options.overwrite if `true`, renaming can overwrite an existing entry
+         * @param options additional options
          */
-        renameEntry(entry: Entry, newName: string, options?): Promise<void>;
+        renameEntry(entry: Entry, newName: string, options?: {
+            /**
+             * if `true`, renaming can overwrite an existing entry
+             * @default false
+             */
+            overwrite?: boolean;
+        }): Promise<void>;
     }
 
-     export const localFileSystem: LocalFileSystemProvider;
+    const localFileSystem: LocalFileSystemProvider;
 
     namespace errors {
         /**
          * Attempted to invoke an abstract method.
          */
-         class AbstractMethodInvocationError extends Error {
+        class AbstractMethodInvocationError extends Error {
         }
 
         /**
          * Attempted to execute a command that required the providers of all entries to match.
          */
-         class ProviderMismatchError extends Error {
+        class ProviderMismatchError extends Error {
         }
 
         /**
          * The object passed as an entry is not actually an {@link Entry}.
          */
-         class EntryIsNotAnEntryError extends Error {
+        class EntryIsNotAnEntryError extends Error {
         }
 
         /**
          * The entry is not a folder, but was expected to be a folder.
          */
-         class EntryIsNotAFolderError extends Error {
+        class EntryIsNotAFolderError extends Error {
         }
 
         /**
          * The entry is not a file, but was expected to be.
          */
-         class EntryIsNotAFileError extends Error {
+        class EntryIsNotAFileError extends Error {
         }
 
         /**
          * The instance was expected to be a file system, but wasn't.
          */
-         class NotAFileSystemError extends Error {
+        class NotAFileSystemError extends Error {
         }
 
         /**
          * The file system is out of space (or quota has been exceeded)
          */
-         class OutOfSpaceError extends Error {
+        class OutOfSpaceError extends Error {
         }
 
         /**
          * The file system revoked permission to complete the requested action.
          */
-         class PermissionDeniedError extends Error {
+        class PermissionDeniedError extends Error {
         }
 
         /**
          * An attempt was made to overwrite an entry without indicating that it was safe to do so via `overwrite: true`.
          */
-         class EntryExistsError extends Error {
+        class EntryExistsError extends Error {
         }
 
         /**
          * An attempt was made to write to a file that was opened as read-only.
          */
-         class FileIsReadOnlyError extends Error {
+        class FileIsReadOnlyError extends Error {
         }
 
         /**
@@ -365,16 +431,16 @@ declare module storage {
         /**
          * Text file extensions
          */
-         const text: string[];
+        const text: string[];
         /**
          * Image file extensions
          */
-         const images: string[];
+        const images: string[];
         /**
          *
          All file types
          */
-         const all: string[];
+        const all: string[];
     }
 
     /**
@@ -384,11 +450,11 @@ declare module storage {
         /**
          * UTF8 File encoding
          */
-         const utf8: unique symbol;
+        const utf8: unique symbol;
         /**
          * Binary file encoding
          */
-         const binary: unique symbol;
+        const binary: unique symbol;
     }
 
     /**
@@ -398,11 +464,11 @@ declare module storage {
         /**
          * The file is read-only; attempts to write will fail.
          */
-         const readOnly: unique symbol;
+        const readOnly: unique symbol;
         /**
          * The file is read-write.
          */
-         const readWrite: unique symbol;
+        const readWrite: unique symbol;
     }
 
     /**
@@ -412,12 +478,10 @@ declare module storage {
         /**
          * A file; used when creating an entity
          */
-         const file: unique symbol;
+        const file: unique symbol;
         /**
          * A folder; used when creating an entity
          */
-         const folder: unique symbol;
+        const folder: unique symbol;
     }
 }
-
-export = {shell, storage};
