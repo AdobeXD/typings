@@ -1,4 +1,4 @@
-import { Interaction } from 'interactions';
+import {Interaction} from 'interactions';
 
 declare interface Point {
     x: number;
@@ -45,7 +45,7 @@ declare interface SceneNodeList {
     at(index: number): SceneNode | null;
 }
 
-declare class Matrix {
+export class Matrix {
     /**
      * Creates a new transform matrix with the following structure:
      *
@@ -195,7 +195,7 @@ declare class Matrix {
     hasSkew(): boolean;
 }
 
-declare class Color {
+export class Color {
     /**
      * Integer 0-255. Get/set the alpha channel value.
      */
@@ -240,11 +240,11 @@ declare class Color {
     clone(): Color;
 }
 
-declare class LinearGradientFill {
+export class LinearGradientFill {
     /**
      * Array of objects representing each color and its position along the gradient line. The position (stop value) is a number 0.0 - 1.0.
      */
-    colorStops: {color:Color,stop:number}[];
+    colorStops: { color: Color, stop: number }[];
 
     /**
      * X position of the start of the gradient line, as a multiple of the object's bounding box: X=0 indicates the left edge of the bounding box and X=1 indicates the right edge. The gradient line may start or end outside the object's bounding box, so values may be < 0 or > 1.
@@ -294,11 +294,11 @@ declare class LinearGradientFill {
 /**
  * **The RadialGradientFill type is not documented and its API may change. Plugins currently cannot modify or otherwise work with radial gradients.**
  */
-declare class RadialGradientFill {
+export class RadialGradientFill {
     // TODO: Waiting for documentation to arrive
 }
 
-declare class ImageFill {
+export class ImageFill {
     /**
      * The image is stretched (distorting its aspect ratio) so its edges line up exactly with the edges of the shape. (Similar to `object-fit: fill` in CSS).
      */
@@ -352,7 +352,7 @@ declare class ImageFill {
 }
 
 
-declare class Shadow {
+export class Shadow {
     /**
      * X offset of the shadow relative to the shape it is attached to, in global coordinates (i.e. independent of the shape's rotation or any parent's rotation). May be negative.
      */
@@ -381,7 +381,7 @@ declare class Shadow {
     constructor(x: number, y: number, blur: number, color: Color, visible: boolean)
 }
 
-declare class Blur {
+export class Blur {
     /**
      * The amount of blur
      *
@@ -426,7 +426,7 @@ declare class Blur {
     constructor(blurAmount: number, brightnessAmount: number, fillOpacity: number, visible?: boolean, isBackgroundEffect?: boolean);
 }
 
-declare interface Bounds {
+export interface Bounds {
     x: number;
     y: number;
     width: number;
@@ -436,7 +436,7 @@ declare interface Bounds {
 /**
  * Base class of all scenegraph nodes. Nodes will always be an instance of some subclass of SceneNode.
  */
-declare abstract class SceneNode {
+export abstract class SceneNode {
     /**
      * Returns a unique identifier for this node that stays the same when the file is closed & reopened, or if the node is moved to a different part of the document. Cut-Paste will result in a new guid, however.
      */
@@ -561,8 +561,8 @@ declare abstract class SceneNode {
      * Currently, this API excludes any keyboard/gamepad interactions on this node.
      *
      * @example ```javascript
- // Print all the interactions triggered by a node
- node.triggeredInteractions.forEach(interaction => {
+     // Print all the interactions triggered by a node
+     node.triggeredInteractions.forEach(interaction => {
     console.log("Trigger: " + interaction.trigger.type + " -> Action: " + interaction.action.type);
 });
      * ```
@@ -629,7 +629,7 @@ declare abstract class SceneNode {
 /**
  * Base class for nodes that have a stroke and/or fill. This includes leaf nodes such as Rectangle, as well as BooleanGroup which is a container node. If you create a shape node, it will not be visible unless you explicitly give it either a stroke or a fill.
  */
-declare class GraphicNode extends SceneNode {
+export class GraphicNode extends SceneNode {
     /**
      * The fill applied to this shape, if any. If this property is null or fillEnabled is false, no fill is drawn. Freshly created nodes have no fill by default.
      *
@@ -732,7 +732,7 @@ declare class GraphicNode extends SceneNode {
  *
  * If a node is changed to overlap an Artboard, it will automatically become a child of the artboard when the operation finishes, and similar if a node is changed to no longer overlap an Artboard. It is not possible to have a node overlapping an Artboard that does not become a child of the artboard, or vice versa, a node that falls entirely outside an Artboard’s bounds but remains its child.
  */
-declare class Artboard extends GraphicNode {
+export class Artboard extends GraphicNode {
     /**
      * value must be >= 0
      */
@@ -764,7 +764,7 @@ declare class Artboard extends GraphicNode {
      * @see SceneNode.triggeredInteractions
      * @see interactions.allInteractions
      */
-    readonly incomingInteractions: Array<{triggerNode: SceneNode, interactions: Array<Interaction>}>;
+    readonly incomingInteractions: Array<{ triggerNode: SceneNode, interactions: Array<Interaction> }>;
 
     /**
      * **Since**: XD 19
@@ -805,7 +805,7 @@ declare class Artboard extends GraphicNode {
 /**
  * Rectangle leaf node shape, with or without rounded corners. Like all shape nodes, has no fill or stroke by default unless you set one.
  */
-declare class Rectangle extends GraphicNode {
+export class Rectangle extends GraphicNode {
     /**
      * value must be >= 0
      */
@@ -853,7 +853,7 @@ declare class Rectangle extends GraphicNode {
 /**
  * Ellipse leaf node shape.
  */
-declare class Ellipse extends GraphicNode {
+export class Ellipse extends GraphicNode {
     radiusX: number;
     radiusY: number;
     /**
@@ -865,7 +865,7 @@ declare class Ellipse extends GraphicNode {
 /**
  * Line leaf node shape.
  */
-declare class Line extends GraphicNode {
+export class Line extends GraphicNode {
     /**
      * Start point of the Line in local coordinate space.TEMP: To change the start point, use setStartEnd.
      */
@@ -895,7 +895,7 @@ declare class Line extends GraphicNode {
  *
  * The path may not start at (0,0) in local coordinates, for example if it starts with a move (“M”)
  */
-declare class Path extends GraphicNode {
+export class Path extends GraphicNode {
     /**
      * Representation of the path outline in SVG <path> syntax. Unlike other node types, pathData is writable here. Syntax is automatically normalized, so the getter may return a slightly different string than what you passed to the setter.
      */
@@ -921,7 +921,7 @@ declare class Path extends GraphicNode {
  selection.items = [polygon];
  * ```
  */
-declare class Polygon extends GraphicNode {
+export class Polygon extends GraphicNode {
     /**
      * > 0
      */
@@ -968,7 +968,7 @@ declare class Polygon extends GraphicNode {
  *
  * It is not currently possible for plugins to create a new BooleanGroup node, aside from using commands.duplicate to clone existing BooleanGroups.
  */
-declare class BooleanGroup extends GraphicNode {
+export class BooleanGroup extends GraphicNode {
     /**
      * Which boolean operation is used to generate the path: BooleanGroup.PATH_OP_ADD, PATH_OP_SUBTRACT, PATH_OP_INTERSECT, or PATH_OP_EXCLUDE_OVERLAP.
      */
@@ -1012,7 +1012,7 @@ declare class BooleanGroup extends GraphicNode {
  *
  * The bounds reported for a Text object leave enough space for descenders, uppercase letters, and accent marks, even if the current string does not contain any of those characters. This makes aligning text based on its bounds behave more consistently.
  */
-declare class Text extends GraphicNode {
+export class Text extends GraphicNode {
     /**
      * The plaintext content of the node, including any hard line breaks but excluding soft line wrap breaks.
      *
@@ -1170,7 +1170,7 @@ declare class Text extends GraphicNode {
  *
  * In a Mask Group, the mask shape is included in the group’s children list, at the top of the z order. It is not visible - only its path outline is used, for clipping the group.
  */
-declare class Group extends SceneNode {
+export class Group extends SceneNode {
     /**
      * The mask shape applied to this group, if any. This object is also present in the group’s children list. Though it has no direct visual appearance of its own, the mask affects the entire groups’s appearance by clipping all its other content.
      */
@@ -1214,7 +1214,7 @@ declare class Group extends SceneNode {
  *
  * It is not currently possible for plugins to *create* a new component definition or a new SymbolInstance node, aside from using {@link commands.duplicate} to clone existing SymbolInstances.
  */
-declare class SymbolInstance extends SceneNode {
+export class SymbolInstance extends SceneNode {
     /**
      * An identifier unique within this document that is shared by all instances of the same component.
      */
@@ -1258,7 +1258,7 @@ declare class SymbolInstance extends SceneNode {
  * Each grid cell is a Group that is an immediate child of the RepeatGrid. These groups are automatically created and destroyed as needed when the RepeatGrid is resized.
  * It is not currently possible for plugins to create a new RepeatGrid node, aside from using commands.duplicate to clone existing RepeatGrids.
  */
-declare class RepeatGrid extends SceneNode {
+export class RepeatGrid extends SceneNode {
     /**
      * Defines size of the RepeatGrid. Cells are created and destroyed as necessary to fill the current size. Cells that only partially fit will be clipped.
      */
@@ -1344,13 +1344,13 @@ declare class RepeatGrid extends SceneNode {
 /**
  * Container node whose content is linked to an external resource, such as Creative Cloud Libraries. It cannot be edited except by first ungrouping it, breaking this link.
  */
-declare class LinkedGraphic extends SceneNode {
+export class LinkedGraphic extends SceneNode {
 }
 
 /**
  * Class representing the root node of the document. All Artboards are children of this node, as well as any pasteboard content that does not lie within an Artboard. Artboards must be grouped contiguously at the bottom of this node’s z order. The root node has no visual appearance of its own.
  */
-declare class RootNode extends SceneNode {
+export class RootNode extends SceneNode {
     /**
      * Adds a child node to this container node. You can only add leaf nodes this way; to create structured subtrees of content, use commands.
      * @param {SceneNode} node Child to add
@@ -1382,37 +1382,10 @@ declare class RootNode extends SceneNode {
  * **Since:** XD 14
  * Object representing the current selection state and edit context. Also available as the first argument passed to your plugin command handler function.
  */
-declare const selection: SceneNodeList;
+export const selection: SceneNodeList;
 
 /**
  * **Since:** XD 14
  * Root node of the current document's scenegraph. Also available as the second argument passed to your plugin command handler function.
  */
-declare const root: RootNode;
-
-export {
-    RootNode,
-    SceneNode,
-    GraphicNode,
-    Artboard,
-    Rectangle,
-    Ellipse,
-    Line,
-    Path,
-    Polygon,
-    BooleanGroup,
-    Text,
-    Group,
-    SymbolInstance,
-    RepeatGrid,
-    LinkedGraphic,
-    Color,
-    ImageFill,
-    LinearGradientFill,
-    RadialGradientFill,
-    Matrix,
-    Shadow,
-    Blur,
-    selection,
-    root
-}
+export const root: RootNode;

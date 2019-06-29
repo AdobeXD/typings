@@ -9,9 +9,9 @@ declare class Shell {
     openExternal(url: string): Promise<void>;
 }
 
-declare const shell: Shell;
+export const shell: Shell;
 
-declare module storage {
+export module storage {
     /**
      * An Entry is the base class for `File` and `Folder`. You'll typically never instantiate an `Entry` directly, but it provides the common fields and methods that both `File` and `Folder` share.
      */
@@ -485,5 +485,3 @@ declare module storage {
         const folder: unique symbol;
     }
 }
-
-export {storage, shell};
