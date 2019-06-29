@@ -1,6 +1,4 @@
-import {Artboard, SceneNode} from "scenegraph";
-
-export {};
+import {Artboard, SceneNode} from "./scenegraph";
 
 declare global {
     /**
@@ -10,41 +8,6 @@ declare global {
     function require(module: string): void;
 
     let module: {exports:any};
-
-    /**
-     * Represents the children of a scenenode. Typically accessed via the SceneNode.children property.
-     */
-    class SceneNodeList {
-        public items: SceneNode[];
-        public readonly length: number;
-
-        public forEach(
-            callback: (sceneNode: SceneNode, index: number) => void,
-            thisArg?: object
-        ): void;
-
-        public forEachRight(
-            callback: (sceneNode: SceneNode, index: number) => void,
-            thisArg?: object
-        ): void;
-
-        public filter(
-            callback: (sceneNode: SceneNode, index: number) => boolean,
-            thisArg?: object
-        ): Array<SceneNode>;
-
-        public map(
-            callback: (sceneNode: SceneNode, index: number) => any,
-            thisArg?: object
-        ): Array<any>;
-
-        public some(
-            callback: (sceneNode: SceneNode, index: number) => boolean,
-            thisArg?: object
-        ): boolean;
-
-        public at(index: number): SceneNode | null;
-    }
 
     /**
      * The selection object represents the currently selected set of nodes in the UI. You can set the selection to use it as input for commands, or to determine what is left selected for the user when your plugin’s edit operation completes.
@@ -95,17 +58,5 @@ declare global {
          * The artboard the user is currently most focused on (via recent selection or edit operations). May be null, for example if no artboards exist or if the user just deleted an artboard.
          */
         focusedArtboard: Artboard | null | undefined;
-
-    }
-
-    /**
-     * To get an instance: `require("uxp").shell`
-     */
-    class Shell {
-        /**
-         * Opens the url in an the system browser.
-         * @param url The url which should be opened
-         */
-        public openExternal(url: string);
     }
 }

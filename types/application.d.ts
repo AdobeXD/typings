@@ -1,4 +1,4 @@
-import {Color, SceneNode} from "./scenegraph";
+import {Color, SceneNode} from "scenegraph";
 
 /**
  * All rendition settings fields are required (for a given rendition type) unless otherwise specified.
@@ -49,34 +49,26 @@ type RenditionResult = {
 }
 
 /**
- * The application module exposes useful information about XD's state, along with APIs for exporting content.
+ * Generate renditions of nodes in the document in a batch. Overwrites any existing files without warning.
+ *
+ * A single createRenditions() call can generate any number of renditions, including multiple renditions of the same node (with different output settings) or renditions of multiple different nodes. Only one createRenditions() call can be executing at any given time, so wait for the Promise it returns before calling it again.
+ *
+ * @param renditions List of renditions to generate
+ * @return Promise<Array<RenditionResult>, string> - Promise which is fulfilled with an array of RenditionResults (pointing to the same outputFiles that were originally passed in, or rejected with an error string if one or more renditions failed for any reason.
  */
-declare class application {
+export function createRenditions(renditions: RenditionSettings[]): Promise<RenditionResult[] | string>;
 
-    /**
-     * Generate renditions of nodes in the document in a batch. Overwrites any existing files without warning.
-     *
-     * A single createRenditions() call can generate any number of renditions, including multiple renditions of the same node (with different output settings) or renditions of multiple different nodes. Only one createRenditions() call can be executing at any given time, so wait for the Promise it returns before calling it again.
-     *
-     * @param renditions List of renditions to generate
-     * @return Promise<Array<RenditionResult>, string> - Promise which is fulfilled with an array of RenditionResults (pointing to the same outputFiles that were originally passed in, or rejected with an error string if one or more renditions failed for any reason.
-     */
-    public static createRenditions(renditions: RenditionSettings[]): Promise<RenditionResult[] | string>;
+/**
+ * Adobe XD version number in the form "major.minor.patch.build"
+ */
+export const version: string;
 
-    /**
-     * Adobe XD version number in the form "major.minor.patch.build"
-     */
-    public static readonly version: string;
+/**
+ * Current language the application UI is using. This may not equal the user's OS locale setting: it is the closest locale supported by XD - use this when you want your plugin's UI to be consistent with XD's UI. Specifies language only, with no region info (e.g. "fr", not "fr_FR").
+ */
+export const appLanguage: string;
 
-    /**
-     * Current language the application UI is using. This may not equal the user's OS locale setting: it is the closest locale supported by XD - use this when you want your plugin's UI to be consistent with XD's UI. Specifies language only, with no region info (e.g. "fr", not "fr_FR").
-     */
-    public static readonly appLanguage: string;
-
-    /**
-     * User's OS-wide locale setting. May not match the XD UI, since XD does not support all world languages. Includes both language and region (e.g. "fr_CA" or "en_US").
-     */
-    public static readonly systemLocale: string;
-}
-
-export = application;
+/**
+ * User's OS-wide locale setting. May not match the XD UI, since XD does not support all world languages. Includes both language and region (e.g. "fr_CA" or "en_US").
+ */
+export const systemLocale: string;
