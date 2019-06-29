@@ -188,7 +188,13 @@ declare module assets {
         delete(charStyleAssets: CharacterStyleAsset | Array<CharacterStyleAsset>): number;
     }
 
+    /**
+     * The collection of colors and gradients saved in this document's Asset library
+     */
     const colors: colors;
+    /**
+     * The collection of character styles saved in this document's Assets library.
+     */
     const characterStyles: characterStyles;
 }
 
