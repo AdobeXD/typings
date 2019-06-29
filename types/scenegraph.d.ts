@@ -70,7 +70,7 @@ declare class Matrix {
      * Copies another matrix's values into this matrix.
      * @param otherMatrix The matrix to copy values from.
      */
-    setFrom(otherMatrix: Matrix);
+    setFrom(otherMatrix: Matrix): void;
 
     /**
      * Returns a copy of the matrix
@@ -86,13 +86,13 @@ declare class Matrix {
      * @param e The e component of an affine transform.
      * @param f The f component of an affine transform.
      */
-    add(aOrOtherMatrix: number, b: number, c: number, d: number, e: number, f: number);
+    add(aOrOtherMatrix: number, b: number, c: number, d: number, e: number, f: number): void;
 
     /**
      * Multiplies a passed affine transform to the right: this * M. The result effectively applies the transform of the passed in matrix first, followed by the transform of this matrix second. Modifies this matrix object and also returns it so calls can be chained.
      * @param aOrOtherMatrix A Matrix or the a component of an affine transform.
      */
-    add(aOrOtherMatrix: Matrix);
+    add(aOrOtherMatrix: Matrix): void;
 
     /**
      * Multiplies a passed affine transform to the left: M * this. The result effectively applies the transform of this matrix first, followed by the transform of the passed in matrix second. Modifies this matrix object and also returns it so calls can be chained.
@@ -103,13 +103,13 @@ declare class Matrix {
      * @param e The e component of an affine transform.
      * @param f The f component of an affine transform.
      */
-    multLeft(aOrOtherMatrix: number, b: number, c: number, d: number, e: number, f: number);
+    multLeft(aOrOtherMatrix: number, b: number, c: number, d: number, e: number, f: number): void;
 
     /**
      * Multiplies a passed affine transform to the left: M * this. The result effectively applies the transform of this matrix first, followed by the transform of the passed in matrix second. Modifies this matrix object and also returns it so calls can be chained.
      * @param aOrOtherMatrix A Matrix or the a component of an affine transform.
      */
-    multLeft(aOrOtherMatrix: Matrix);
+    multLeft(aOrOtherMatrix: Matrix): void;
 
     /**
      * Returns an inverted version of the matrix. Returns a brand new matrix - does not modify this matrix object.
@@ -286,7 +286,7 @@ declare class LinearGradientFill {
      * @param endX
      * @param endY
      */
-    setEndPoints(startX: number, startY: number, endX: number, endY: number);
+    setEndPoints(startX: number, startY: number, endX: number, endY: number): void;
 }
 
 /**
@@ -942,7 +942,7 @@ declare class Polygon extends GraphicNode {
      *
      * To change corner count while guaranteeing the shape will not change size, save its original size first, set `cornerCount`, and      then set size back to the saved values.
      */
-    cornerCount: number = 3;
+    cornerCount: number;
 
     /**
      * True if any of the Polygon's corners is rounded (corner radius > 0).
@@ -1088,7 +1088,7 @@ declare class Text extends GraphicNode {
      *
      * Set strikethrough across all style ranges, or get the strikethrough of the last style range (strikethrough of all the text if one range covers all the text).
      */
-    strikethrough: boolean = false;
+    strikethrough: boolean;
 
     /**
      * @default "none"
@@ -1096,7 +1096,7 @@ declare class Text extends GraphicNode {
      *
      * Set textTransform ("none", "uppercase", "lowercase", or "titlecase") across all style ranges, or get the textTransform of the last style range.
      */
-    textTransform: 'none' | 'uppercase' | 'lowercase' | 'titlecase' = 'none';
+    textTransform: 'none' | 'uppercase' | 'lowercase' | 'titlecase';
 
     /**
      * @default "none"
@@ -1104,7 +1104,7 @@ declare class Text extends GraphicNode {
      *
      * Set textScript ("none" or "superscript" or "subscript") across all style ranges, or get the textScript of the last style range.
      */
-    textScript: 'none' | 'superscript' | 'subscript' = 'none';
+    textScript: 'none' | 'superscript' | 'subscript';
 
     static readonly ALIGN_LEFT: string;
     static readonly ALIGN_CENTER: string;
@@ -1157,23 +1157,6 @@ declare class Text extends GraphicNode {
      * Always false for point text. For area text, true if the text does not fit in the content box and its bottom is being clipped.
      */
     readonly clippedByArea: boolean;
-
-    /**
-     * **Since:** XD 19
-     *
-     * Set strikethrough across all style ranges, or get the strikethrough of the last style range (strikethrough of all the text if one range covers all the text).
-     * @default false
-     */
-    strikethrough: boolean;
-
-    /**
-     * **Since:** XD 19
-     *
-     * Set textTransform ("none" or "uppercase" or "lowercase" or "titlecase") across all style ranges, or get the textTransform of the last style range.
-     *
-     * @default 'none'
-     */
-    textTransform: 'none' | 'uppercase' | 'lowercase' | 'titlecase';
 }
 
 /**
@@ -1397,13 +1380,13 @@ declare class RootNode extends SceneNode {
  * **Since:** XD 14
  * Object representing the current selection state and edit context. Also available as the first argument passed to your plugin command handler function.
  */
-const selection: SceneNodeList;
+declare const selection: SceneNodeList;
 
 /**
  * **Since:** XD 14
  * Root node of the current document's scenegraph. Also available as the second argument passed to your plugin command handler function.
  */
-const root: RootNode;
+declare const root: RootNode;
 
 export {
     RootNode,
