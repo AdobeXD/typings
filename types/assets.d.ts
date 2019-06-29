@@ -116,7 +116,7 @@ declare module assets {
     /**
      * The collection of colors and gradients saved in this document's Asset library
      */
-    declare static class colors {
+    class colors {
         /**
          * Get a list of all color/gradient assets, in the order they appear in the Assets panel.
          *
@@ -152,7 +152,7 @@ declare module assets {
     /**
      * The collection of character styles saved in this document's Assets library.
      */
-    declare static class characterStyles {
+    class characterStyles {
         /**
          * Get a list of all character style assets, in the order they appear in the Assets panel.
          *
