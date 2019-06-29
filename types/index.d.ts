@@ -1,6 +1,4 @@
-import {Artboard, SceneNode} from "scenegraph";
-
-export {};
+import {Artboard, SceneNode} from "./scenegraph";
 
 declare global {
     /**
