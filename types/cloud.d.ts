@@ -1,71 +1,50 @@
 declare namespace cloud {
-    /**
-     * Interactive prototype view generated via "Share for Review."
-     */
-    type PrototypeArtifact = {
-        /**
-         * Set to ArtifactType.PROTOTYPE
-         */
-        type: typeof ArtifactType.PROTOTYPE,
+    interface BaseSharedArtifact {
+        type: ArtifactType;
         /**
          * URL to view in browser
          */
-        url: string,
+        url: string;
         /**
          * Name of shared artifact (often, but not always, matches the document name)
          */
-        name: string,
+        name: string;
         /**
          * Level of access protection
          */
-        accessLevel: AccessLevel,
+        accessLevel: AccessLevel;
         /**
          * True if stakeholders can post comments on this artifact
          */
-        allowComments: boolean,
+        allowComments: boolean;
+    }
+
+    interface PrototypeArtifact extends BaseSharedArtifact {
+        type: ArtifactType.PROTOTYPE;
         /**
          * URL for embedding a view of the prototype inside an iframe (compact view with minimal surrounding UI)
          */
-        embedURL: string,
+        embedURL: string;
         /**
          * iframe width needed to display embedURL. May include room for navigation UI in addition to the prototype's content itself.
          */
-        embedWidth: number,
+        embedWidth: number;
         /**
          * iframe height needed to display embedURL. May include room for navigation UI in addition to the prototype's content itself.
          */
-        embedHeight: number,
+        embedHeight: number;
         /**
          * True if prototype defaults to a view that fills the entire page, with no surrounding UI visible for navigation, commenting, etc.
          */
-        fullscreenInPage: boolean,
+        fullscreenInPage: boolean;
         /**
          * True if clicking in non-interactive parts of the prototype flashes visual hints indicating the interactive spots
          */
-        hotspotHints: boolean
+        hotspotHints: boolean;
     }
 
-    /**
-     * Developer-oriented specs view generated via "Share for Development."
-     */
-    type SpecsArtifact = {
-        type: typeof ArtifactType.SPECS,
-        /**
-         * URL to view in browser
-         */
-        url: string,
-        /**
-         * Name of shared artifact (often, but not always, matches the document name)
-         */
-        name: string,
-        /**
-         * Level of access protection
-         */
-        accessLevel: AccessLevel,
-        /**
-         * True if stakeholders can post comments on this artifact
-         */
-        allowComments: boolean,
+    interface SpecsArtifact extends BaseSharedArtifact {
+        type: ArtifactType.SPECS;
         /**
          * Target platform. Determines which information and measurement units are shown by default.
          */
@@ -76,22 +55,27 @@ declare namespace cloud {
      * Type of shared artifact: interactive prototype or developer-focused specs view
      */
     export enum ArtifactType {
-        PROTOTYPE,
-        SPECS
+        PROTOTYPE   = 'prototype',
+        SPECS       = 'specs'
     }
 
     /**
      * Target platform for published design specs
      */
     export enum TargetPlatform  {
-        WEB, IOS, ANDROID
+        WEB     = 'Web',
+        IOS     = 'iOS',
+        ANDROID = 'Android'
     }
+
 
     /**
      * Access level of the shared link: accessible to anyone with the link, anyone with the link + password, or only specific Creative Cloud user accounts
      */
     export enum AccessLevel {
-        LINKABLE, PASSWORD_PROTECTED, INVITE_ONLY
+        LINKABLE            = 'linkable',
+        PASSWORD_PROTECTED  = 'passwordProtected',
+        INVITE_ONLY         = 'inviteOnly'
     }
 
     /**
