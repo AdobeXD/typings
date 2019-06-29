@@ -2,7 +2,7 @@
  * The `viewport` module represents the current UI view of the XD document's content.
  * Since: XD 14
  */
-import {SceneNode} from "./scenegraph";
+import {SceneNode} from "scenegraph";
 
 declare class viewport {
     /**
