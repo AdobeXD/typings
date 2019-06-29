@@ -116,7 +116,7 @@ declare module assets {
     /**
      * The collection of colors and gradients saved in this document's Asset library
      */
-    class colors {
+    interface colors {
         /**
          * Get a list of all color/gradient assets, in the order they appear in the Assets panel.
          *
@@ -127,7 +127,7 @@ declare module assets {
          *  allColors = assets.colors.get();
          *
          */
-        static get(): Array<ColorAsset | GradientAsset>;
+        get(): Array<ColorAsset | GradientAsset>;
 
         /**
          * Add color/gradient assets to the collection.
@@ -136,7 +136,7 @@ declare module assets {
          * @param colorAssets The color assets
          * @returns {number} number of assets added (may be less than requested if duplicates already exist)
          */
-        static add(colorAssets: Color | ColorAsset | LinearGradientFill | RadialGradientFill | GradientAsset | Array<Color | ColorAsset | LinearGradientFill | RadialGradientFill | GradientAsset>): number;
+        add(colorAssets: Color | ColorAsset | LinearGradientFill | RadialGradientFill | GradientAsset | Array<Color | ColorAsset | LinearGradientFill | RadialGradientFill | GradientAsset>): number;
 
         /**
          * Delete color/gradient assets from the collection.
@@ -146,13 +146,13 @@ declare module assets {
          * @param colorAssets The color assets
          * @returns {number} number of assets deleted (may be less than requested if some didn't exist)
          */
-        static delete(colorAssets: Color | ColorAsset | LinearGradientFill | RadialGradientFill | GradientAsset | Array<Color | ColorAsset | LinearGradientFill | RadialGradientFill | GradientAsset>): number;
+        delete(colorAssets: Color | ColorAsset | LinearGradientFill | RadialGradientFill | GradientAsset | Array<Color | ColorAsset | LinearGradientFill | RadialGradientFill | GradientAsset>): number;
     }
 
     /**
      * The collection of character styles saved in this document's Assets library.
      */
-    class characterStyles {
+    interface characterStyles {
         /**
          * Get a list of all character style assets, in the order they appear in the Assets panel.
          *
@@ -163,7 +163,7 @@ declare module assets {
          *  allCharacterStyles = assets.characterStyles.get();
          *
          */
-        static get(): Array<CharacterStyleAsset>;
+        get(): Array<CharacterStyleAsset>;
 
         /**
          * Add one or more character style assets to the collection.
@@ -173,7 +173,7 @@ declare module assets {
          * @param charStyleAssets The character style assets
          * @returns {number} number of assets added (may be less than requested if duplicates already exist)
          */
-        static add(charStyleAssets: CharacterStyleAsset | Array<CharacterStyleAsset>): number;
+        add(charStyleAssets: CharacterStyleAsset | Array<CharacterStyleAsset>): number;
 
         /**
          * Delete one or more character style assets from the collection.
@@ -185,8 +185,11 @@ declare module assets {
          * @returns {number} number of assets deleted (may be less than requested if some didn't exist)
          * @param charStyleAssets The character styles
          */
-        static delete(charStyleAssets: CharacterStyleAsset | Array<CharacterStyleAsset>): number;
+        delete(charStyleAssets: CharacterStyleAsset | Array<CharacterStyleAsset>): number;
     }
+
+    const colors: colors;
+    const characterStyles: characterStyles;
 }
 
 export = assets;

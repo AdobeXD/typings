@@ -2,6 +2,7 @@ const {Text, Ellipse, Color, RootNode} = require("scenegraph");
 const clipboard = require("clipboard");
 const shell = require("uxp").shell;
 const fs = require("uxp").storage.localFileSystem;
+const assets = require('assets');
 
 /**
  * @param {Selection} selection
@@ -28,6 +29,9 @@ async function test(selection, documentRoot) {
     } else if (anotherFile.isFolder) {
         console.log("That's a folder. It shouldn't be a folder. What have you done?")
     }
+
+    const colors = assets.colors.get();
+    console.log(colors);
 }
 
 module.exports = {
