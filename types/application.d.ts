@@ -1,4 +1,4 @@
-import {Color, SceneNode} from "./scenegraph";
+import {Color, SceneNode} from "scenegraph";
 
 /**
  * All rendition settings fields are required (for a given rendition type) unless otherwise specified.
@@ -51,7 +51,7 @@ type RenditionResult = {
 /**
  * The application module exposes useful information about XD's state, along with APIs for exporting content.
  */
-declare class application {
+declare module application {
 
     /**
      * Generate renditions of nodes in the document in a batch. Overwrites any existing files without warning.
@@ -61,22 +61,22 @@ declare class application {
      * @param renditions List of renditions to generate
      * @return Promise<Array<RenditionResult>, string> - Promise which is fulfilled with an array of RenditionResults (pointing to the same outputFiles that were originally passed in, or rejected with an error string if one or more renditions failed for any reason.
      */
-    static createRenditions(renditions: RenditionSettings[]): Promise<RenditionResult[] | string>;
+    function createRenditions(renditions: RenditionSettings[]): Promise<RenditionResult[] | string>;
 
     /**
      * Adobe XD version number in the form "major.minor.patch.build"
      */
-    static readonly version: string;
+    const version: string;
 
     /**
      * Current language the application UI is using. This may not equal the user's OS locale setting: it is the closest locale supported by XD - use this when you want your plugin's UI to be consistent with XD's UI. Specifies language only, with no region info (e.g. "fr", not "fr_FR").
      */
-    static readonly appLanguage: string;
+    const appLanguage: string;
 
     /**
      * User's OS-wide locale setting. May not match the XD UI, since XD does not support all world languages. Includes both language and region (e.g. "fr_CA" or "en_US").
      */
-    static readonly systemLocale: string;
+    const systemLocale: string;
 }
 
 export = application;
