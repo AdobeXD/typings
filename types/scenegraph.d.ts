@@ -14,35 +14,35 @@ declare interface ScaleFactor {
  * Represents the children of a scenenode. Typically accessed via the SceneNode.children property.
  */
 declare interface SceneNodeList {
-    items: SceneNode[];
+    items: SceneNodeClass[];
     readonly length: number;
 
     forEach(
-        callback: (sceneNode: SceneNode, index: number) => void,
+        callback: (sceneNode: SceneNodeClass, index: number) => void,
         thisArg?: object
     ): void;
 
     forEachRight(
-        callback: (sceneNode: SceneNode, index: number) => void,
+        callback: (sceneNode: SceneNodeClass, index: number) => void,
         thisArg?: object
     ): void;
 
     filter(
-        callback: (sceneNode: SceneNode, index: number) => boolean,
+        callback: (sceneNode: SceneNodeClass, index: number) => boolean,
         thisArg?: object
-    ): Array<SceneNode>;
+    ): Array<SceneNodeClass>;
 
     map(
-        callback: (sceneNode: SceneNode, index: number) => any,
+        callback: (sceneNode: SceneNodeClass, index: number) => any,
         thisArg?: object
     ): Array<any>;
 
     some(
-        callback: (sceneNode: SceneNode, index: number) => boolean,
+        callback: (sceneNode: SceneNodeClass, index: number) => boolean,
         thisArg?: object
     ): boolean;
 
-    at(index: number): SceneNode | null;
+    at(index: number): SceneNodeClass | null;
 }
 
 export class Matrix {
@@ -433,10 +433,12 @@ export interface Bounds {
     height: number;
 }
 
+export interface SceneNode extends SceneNodeClass {}
+
 /**
  * Base class of all scenegraph nodes. Nodes will always be an instance of some subclass of SceneNode.
  */
-export abstract class SceneNode {
+declare abstract class SceneNodeClass {
     /**
      * Returns a unique identifier for this node that stays the same when the file is closed & reopened, or if the node is moved to a different part of the document. Cut-Paste will result in a new guid, however.
      */
@@ -444,7 +446,7 @@ export abstract class SceneNode {
     /**
      * Returns the parent node. Null if this is the root node, or a freshly constructed node which has not been added to a parent yet.
      */
-    readonly parent: SceneNode | null;
+    readonly parent: SceneNodeClass | null;
     /**
      * Returns a list of this node’s children. List is length 0 if the node has no children. The first child is lowest in the z order.
      * This list is not an Array, so you must use at(i) instead of [i] to access children by index. It has a number of Array-like methods such as forEach() for convenience, however.
@@ -629,7 +631,7 @@ export abstract class SceneNode {
 /**
  * Base class for nodes that have a stroke and/or fill. This includes leaf nodes such as Rectangle, as well as BooleanGroup which is a container node. If you create a shape node, it will not be visible unless you explicitly give it either a stroke or a fill.
  */
-export class GraphicNode extends SceneNode {
+export class GraphicNode extends SceneNodeClass {
     /**
      * The fill applied to this shape, if any. If this property is null or fillEnabled is false, no fill is drawn. Freshly created nodes have no fill by default.
      *
@@ -761,10 +763,10 @@ export class Artboard extends GraphicNode {
      * May include interactions that are impossible to trigger because the trigger node (or one of its ancestors) has `visible` = false.
      *
      * Note: currently, this API excludes any applicable keyboard/gamepad interactions.
-     * @see SceneNode.triggeredInteractions
+     * @see SceneNodeClass.triggeredInteractions
      * @see interactions.allInteractions
      */
-    readonly incomingInteractions: Array<{ triggerNode: SceneNode, interactions: Array<Interaction> }>;
+    readonly incomingInteractions: Array<{ triggerNode: SceneNodeClass, interactions: Array<Interaction> }>;
 
     /**
      * **Since**: XD 19
@@ -777,24 +779,24 @@ export class Artboard extends GraphicNode {
 
     /**
      * Adds a child node to this container node. You can only add leaf nodes this way; to create structured subtrees of content, use commands.
-     * @param {SceneNode} node Child to add
+     * @param {SceneNodeClass} node Child to add
      * @param {number} index Optional: index to insert child at. Child is appended to end of children list (top of z order) otherwise.
      */
-    addChild(node: SceneNode, index?: number): void;
+    addChild(node: SceneNodeClass, index?: number): void;
 
     /**
      * Inserts a child node after the given reference node.
-     * @param {SceneNode} node Child to add
-     * @param {SceneNode} relativeTo New child is added immediately after this existing child
+     * @param {SceneNodeClass} node Child to add
+     * @param {SceneNodeClass} relativeTo New child is added immediately after this existing child
      */
-    addChildAfter(node: SceneNode, relativeTo: SceneNode): void;
+    addChildAfter(node: SceneNodeClass, relativeTo: SceneNodeClass): void;
 
     /**
      * Inserts a child node before the given reference node.
-     * @param {SceneNode} node Child to add
-     * @param {SceneNode} relativeTo New child is added immediately before this existing child
+     * @param {SceneNodeClass} node Child to add
+     * @param {SceneNodeClass} relativeTo New child is added immediately before this existing child
      */
-    addChildBefore(node: SceneNode, relativeTo: SceneNode): void;
+    addChildBefore(node: SceneNodeClass, relativeTo: SceneNodeClass): void;
 
     /**
      * Removes all children from this node. Equivalent to calling removeFromParent() on each child in turn, but faster.
@@ -976,24 +978,24 @@ export class BooleanGroup extends GraphicNode {
 
     /**
      * Adds a child node to this container node. You can only add leaf nodes this way; to create structured subtrees of content, use commands.
-     * @param {SceneNode} node Child to add
+     * @param {SceneNodeClass} node Child to add
      * @param {number} index Optional: index to insert child at. Child is appended to end of children list (top of z order) otherwise.
      */
-    addChild(node: SceneNode, index?: number): void;
+    addChild(node: SceneNodeClass, index?: number): void;
 
     /**
      * Inserts a child node after the given reference node.
-     * @param {SceneNode} node Child to add
-     * @param {SceneNode} relativeTo New child is added immediately after this existing child
+     * @param {SceneNodeClass} node Child to add
+     * @param {SceneNodeClass} relativeTo New child is added immediately after this existing child
      */
-    addChildAfter(node: SceneNode, relativeTo: SceneNode): void;
+    addChildAfter(node: SceneNodeClass, relativeTo: SceneNodeClass): void;
 
     /**
      * Inserts a child node before the given reference node.
-     * @param {SceneNode} node Child to add
-     * @param {SceneNode} relativeTo New child is added immediately before this existing child
+     * @param {SceneNodeClass} node Child to add
+     * @param {SceneNodeClass} relativeTo New child is added immediately before this existing child
      */
-    addChildBefore(node: SceneNode, relativeTo: SceneNode): void;
+    addChildBefore(node: SceneNodeClass, relativeTo: SceneNodeClass): void;
 
     /**
      * Removes all children from this node. Equivalent to calling removeFromParent() on each child in turn, but faster.
@@ -1170,32 +1172,32 @@ export class Text extends GraphicNode {
  *
  * In a Mask Group, the mask shape is included in the group’s children list, at the top of the z order. It is not visible - only its path outline is used, for clipping the group.
  */
-export class Group extends SceneNode {
+export class Group extends SceneNodeClass {
     /**
      * The mask shape applied to this group, if any. This object is also present in the group’s children list. Though it has no direct visual appearance of its own, the mask affects the entire groups’s appearance by clipping all its other content.
      */
-    readonly mask: SceneNode | null;
+    readonly mask: SceneNodeClass | null;
 
     /**
      * Adds a child node to this container node. You can only add leaf nodes this way; to create structured subtrees of content, use commands.
-     * @param {SceneNode} node Child to add
+     * @param {SceneNodeClass} node Child to add
      * @param {number} index Optional: index to insert child at. Child is appended to end of children list (top of z order) otherwise.
      */
-    addChild(node: SceneNode, index?: number): void;
+    addChild(node: SceneNodeClass, index?: number): void;
 
     /**
      * Inserts a child node after the given reference node.
-     * @param {SceneNode} node Child to add
-     * @param {SceneNode} relativeTo New child is added immediately after this existing child
+     * @param {SceneNodeClass} node Child to add
+     * @param {SceneNodeClass} relativeTo New child is added immediately after this existing child
      */
-    addChildAfter(node: SceneNode, relativeTo: SceneNode): void;
+    addChildAfter(node: SceneNodeClass, relativeTo: SceneNodeClass): void;
 
     /**
      * Inserts a child node before the given reference node.
-     * @param {SceneNode} node Child to add
-     * @param {SceneNode} relativeTo New child is added immediately before this existing child
+     * @param {SceneNodeClass} node Child to add
+     * @param {SceneNodeClass} relativeTo New child is added immediately before this existing child
      */
-    addChildBefore(node: SceneNode, relativeTo: SceneNode): void;
+    addChildBefore(node: SceneNodeClass, relativeTo: SceneNodeClass): void;
 
     /**
      * Removes all children from this node. Equivalent to calling removeFromParent() on each child in turn, but faster.
@@ -1212,9 +1214,9 @@ export class Group extends SceneNode {
  *
  * Note that overrides vary somewhat in granularity. In some but not all cases, overriding one property may also prevent other properties on the same node from receiving future updates from the master instance.
  *
- * It is not currently possible for plugins to *create* a new component definition or a new SymbolInstance node, aside from using {@link commands.duplicate} to clone existing SymbolInstances.
+ * It is not currently possible for plugins to *create* a new component definition or a new SymbolInstance node, aside from using `require('commands').duplicate` to clone existing SymbolInstances.
  */
-export class SymbolInstance extends SceneNode {
+export class SymbolInstance extends SceneNodeClass {
     /**
      * An identifier unique within this document that is shared by all instances of the same component.
      */
@@ -1228,24 +1230,24 @@ export class SymbolInstance extends SceneNode {
 
     /**
      * Adds a child node to this container node. You can only add leaf nodes this way; to create structured subtrees of content, use commands.
-     * @param {SceneNode} node Child to add
+     * @param {SceneNodeClass} node Child to add
      * @param {number} index Optional: index to insert child at. Child is appended to end of children list (top of z order) otherwise.
      */
-    addChild(node: SceneNode, index?: number): void;
+    addChild(node: SceneNodeClass, index?: number): void;
 
     /**
      * Inserts a child node after the given reference node.
-     * @param {SceneNode} node Child to add
-     * @param {SceneNode} relativeTo New child is added immediately after this existing child
+     * @param {SceneNodeClass} node Child to add
+     * @param {SceneNodeClass} relativeTo New child is added immediately after this existing child
      */
-    addChildAfter(node: SceneNode, relativeTo: SceneNode): void;
+    addChildAfter(node: SceneNodeClass, relativeTo: SceneNodeClass): void;
 
     /**
      * Inserts a child node before the given reference node.
-     * @param {SceneNode} node Child to add
-     * @param {SceneNode} relativeTo New child is added immediately before this existing child
+     * @param {SceneNodeClass} node Child to add
+     * @param {SceneNodeClass} relativeTo New child is added immediately before this existing child
      */
-    addChildBefore(node: SceneNode, relativeTo: SceneNode): void;
+    addChildBefore(node: SceneNodeClass, relativeTo: SceneNodeClass): void;
 
     /**
      * Removes all children from this node. Equivalent to calling removeFromParent() on each child in turn, but faster.
@@ -1258,7 +1260,7 @@ export class SymbolInstance extends SceneNode {
  * Each grid cell is a Group that is an immediate child of the RepeatGrid. These groups are automatically created and destroyed as needed when the RepeatGrid is resized.
  * It is not currently possible for plugins to create a new RepeatGrid node, aside from using commands.duplicate to clone existing RepeatGrids.
  */
-export class RepeatGrid extends SceneNode {
+export class RepeatGrid extends SceneNodeClass {
     /**
      * Defines size of the RepeatGrid. Cells are created and destroyed as necessary to fill the current size. Cells that only partially fit will be clipped.
      */
@@ -1316,24 +1318,24 @@ export class RepeatGrid extends SceneNode {
 
     /**
      * Adds a child node to this container node. You can only add leaf nodes this way; to create structured subtrees of content, use commands.
-     * @param {SceneNode} node Child to add
+     * @param {SceneNodeClass} node Child to add
      * @param {number} index Optional: index to insert child at. Child is appended to end of children list (top of z order) otherwise.
      */
-    addChild(node: SceneNode, index?: number): void;
+    addChild(node: SceneNodeClass, index?: number): void;
 
     /**
      * Inserts a child node after the given reference node.
-     * @param {SceneNode} node Child to add
-     * @param {SceneNode} relativeTo New child is added immediately after this existing child
+     * @param {SceneNodeClass} node Child to add
+     * @param {SceneNodeClass} relativeTo New child is added immediately after this existing child
      */
-    addChildAfter(node: SceneNode, relativeTo: SceneNode): void;
+    addChildAfter(node: SceneNodeClass, relativeTo: SceneNodeClass): void;
 
     /**
      * Inserts a child node before the given reference node.
-     * @param {SceneNode} node Child to add
-     * @param {SceneNode} relativeTo New child is added immediately before this existing child
+     * @param {SceneNodeClass} node Child to add
+     * @param {SceneNodeClass} relativeTo New child is added immediately before this existing child
      */
-    addChildBefore(node: SceneNode, relativeTo: SceneNode): void;
+    addChildBefore(node: SceneNodeClass, relativeTo: SceneNodeClass): void;
 
     /**
      * Removes all children from this node. Equivalent to calling removeFromParent() on each child in turn, but faster.
@@ -1344,33 +1346,35 @@ export class RepeatGrid extends SceneNode {
 /**
  * Container node whose content is linked to an external resource, such as Creative Cloud Libraries. It cannot be edited except by first ungrouping it, breaking this link.
  */
-export class LinkedGraphic extends SceneNode {
+export class LinkedGraphic extends SceneNodeClass {
 }
+
+export interface RootNode extends RootNodeClass {}
 
 /**
  * Class representing the root node of the document. All Artboards are children of this node, as well as any pasteboard content that does not lie within an Artboard. Artboards must be grouped contiguously at the bottom of this node’s z order. The root node has no visual appearance of its own.
  */
-export class RootNode extends SceneNode {
+declare class RootNodeClass extends SceneNodeClass {
     /**
      * Adds a child node to this container node. You can only add leaf nodes this way; to create structured subtrees of content, use commands.
-     * @param {SceneNode} node Child to add
+     * @param {SceneNodeClass} node Child to add
      * @param {number} index Optional: index to insert child at. Child is appended to end of children list (top of z order) otherwise.
      */
-    addChild(node: SceneNode, index?: number): void;
+    addChild(node: SceneNodeClass, index?: number): void;
 
     /**
      * Inserts a child node after the given reference node.
-     * @param {SceneNode} node Child to add
-     * @param {SceneNode} relativeTo New child is added immediately after this existing child
+     * @param {SceneNodeClass} node Child to add
+     * @param {SceneNodeClass} relativeTo New child is added immediately after this existing child
      */
-    addChildAfter(node: SceneNode, relativeTo: SceneNode): void;
+    addChildAfter(node: SceneNodeClass, relativeTo: SceneNodeClass): void;
 
     /**
      * Inserts a child node before the given reference node.
-     * @param {SceneNode} node Child to add
-     * @param {SceneNode} relativeTo New child is added immediately before this existing child
+     * @param {SceneNodeClass} node Child to add
+     * @param {SceneNodeClass} relativeTo New child is added immediately before this existing child
      */
-    addChildBefore(node: SceneNode, relativeTo: SceneNode): void;
+    addChildBefore(node: SceneNodeClass, relativeTo: SceneNodeClass): void;
 
     /**
      * Removes all children from this node. Equivalent to calling removeFromParent() on each child in turn, but faster.
@@ -1388,4 +1392,6 @@ export const selection: SceneNodeList;
  * **Since:** XD 14
  * Root node of the current document's scenegraph. Also available as the second argument passed to your plugin command handler function.
  */
-export const root: RootNode;
+export const root: RootNodeClass;
+
+export {};
