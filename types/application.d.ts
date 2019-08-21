@@ -62,23 +62,23 @@ type RenditionSettings = {
     /**
      * (PNG & JPG renditions) DPI multipler in the range [0.1, 100], e.g. 2.0 for @2x DPI.
      */
-    scale: number;
+    scale?: number;
     /**
      * (JPG renditions) Compression quality in the range [1, 100].
      */
-    quality: number;
+    quality?: number;
     /**
      * (PNG & JPEG renditions) Alpha component ignored for JPG. Optional: defaults to transparent for PNG, solid white for JPG.
      */
-    background: Color;
+    background?: Color;
     /**
      * (SVG renditions) If true, SVG code is minified.
      */
-    minify: boolean;
+    minify?: boolean;
     /**
      * (SVG renditions) If true, bitmap images are stored as base64 data inside the SVG file. If false, bitmap images are saved as separate files linked from the SVG code.
      */
-    embedImages: boolean;
+    embedImages?: boolean;
 }
 
 /**
