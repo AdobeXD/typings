@@ -884,7 +884,7 @@ export class Line extends GraphicNode {
      * @param {number} endX
      * @param {number} endY
      */
-    setSTartEnd(
+    setStartEnd(
         startX: number,
         startY: number,
         endX: number,
