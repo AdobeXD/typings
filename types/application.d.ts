@@ -1,4 +1,5 @@
 import { Color, SceneNode, RootNode } from "scenegraph";
+import { storage } from "uxp";
 
 interface EditSettings {
     /**
@@ -53,7 +54,7 @@ type RenditionSettings = {
     /**
      * File to save the rendition to (overwritten without warning if it already exists)
      */
-    outputFile: File;
+    outputFile: storage.File;
     /**
      * File type: RenditionType.PNG, JPG, PDF, or SVG
      */
@@ -87,7 +88,7 @@ type RenditionResult = {
     /**
      * File the rendition was written to (equal to outputFile in RenditionSettings)
      */
-    outputFile: File;
+    outputFile: storage.File;
 }
 
 /**
