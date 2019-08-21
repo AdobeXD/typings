@@ -1,4 +1,46 @@
-import {Color, SceneNode} from "scenegraph";
+import { Color, SceneNode, RootNode } from "scenegraph";
+
+interface EditSettings {
+    /**
+     * Used as the Undo label in the **Edit** menu. If unspecified, XD uses the `uxp-edit-label` attribute on the DOM node which the user interacted with, and if that does not exist then the plugin's name will be used.
+     */
+    editLabel?: string;
+    /**
+     * If two consecutive edits to the same selection have the same `mergeId`, they are flattened together into one Undo step. If unspecified, for "high frequency" UI events (see above), XD treats the originating DOM node as a unique identifier for merging; for other UI events, merging is disabled.
+     */
+    mergeId?: string;
+}
+
+/**
+ * Call `editDocument()` from a plugin panel UI event listener to initiate an edit operation batch in order to modify the XD document. This API is irrelevant for plugin menu item commands, which are wrapped in an edit batch automatically.
+ *
+ * XD calls the `editFunction()` synchronously (before `editDocument()` returns). This function is treated the same as a menu command handler:
+ * 
+ * * It is passed two arguments, the selection and the root node of the scenegraph
+ * * It can return a Promise to extend the duration of the edit asynchronously
+ * 
+ * You can only call `editDocument()` in response to a user action, such as a button `"click"` event or a text input's `"input"` event. This generally means you must call it while a UI event handler is on the call stack.
+ * 
+ * For UI events that often occur in rapid-fire clusters, such as dragging a slider or pressing keys in a text field, XD tries to smartly merge consecutive edits into a single atomic Undo step. See the `mergeId` option below to customize this behavior.
+ * @param editFunction Function which will perform your plugin's edits to the scenegraph.
+ */
+export function editDocument(editFunction: (selection: Selection, root: RootNode) => Promise<any> | void): void;
+
+/**
+ * Call `editDocument()` from a plugin panel UI event listener to initiate an edit operation batch in order to modify the XD document. This API is irrelevant for plugin menu item commands, which are wrapped in an edit batch automatically.
+ *
+ * XD calls the `editFunction()` synchronously (before `editDocument()` returns). This function is treated the same as a menu command handler:
+ * 
+ * * It is passed two arguments, the selection and the root node of the scenegraph
+ * * It can return a Promise to extend the duration of the edit asynchronously
+ * 
+ * You can only call `editDocument()` in response to a user action, such as a button `"click"` event or a text input's `"input"` event. This generally means you must call it while a UI event handler is on the call stack.
+ * 
+ * For UI events that often occur in rapid-fire clusters, such as dragging a slider or pressing keys in a text field, XD tries to smartly merge consecutive edits into a single atomic Undo step. See the `mergeId` option below to customize this behavior.
+ * @param options Optional settings object (see below). This argument can be omitted.
+ * @param editFunction Function which will perform your plugin's edits to the scenegraph.
+ */
+export function editDocument(options: EditSettings, editFunction: (selection: Selection, root: RootNode) => Promise<any> | void): void;
 
 /**
  * All rendition settings fields are required (for a given rendition type) unless otherwise specified.
@@ -57,6 +99,13 @@ type RenditionResult = {
  * @return Promise<Array<RenditionResult>, string> - Promise which is fulfilled with an array of RenditionResults (pointing to the same outputFiles that were originally passed in, or rejected with an error string if one or more renditions failed for any reason.
  */
 export function createRenditions(renditions: RenditionSettings[]): Promise<RenditionResult[] | string>;
+
+export const RenditionType: {
+    readonly JPG: object,
+    readonly PNG: object,
+    readonly PDF: object,
+    readonly SVG: object,
+}
 
 /**
  * Adobe XD version number in the form "major.minor.patch.build"
