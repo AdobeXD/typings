@@ -101,11 +101,11 @@ type RenditionResult = {
  */
 export function createRenditions(renditions: RenditionSettings[]): Promise<RenditionResult[] | string>;
 
-export const RenditionType: {
-    readonly JPG: object,
-    readonly PNG: object,
-    readonly PDF: object,
-    readonly SVG: object,
+export enum RenditionType {
+    JPG = "jpg",
+    PNG = "png",
+    PDF = "pdf",
+    SVG = "svg",
 }
 
 /**
