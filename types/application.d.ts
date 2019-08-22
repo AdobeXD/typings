@@ -43,10 +43,7 @@ export function editDocument(editFunction: (selection: Selection, root: RootNode
  */
 export function editDocument(options: EditSettings, editFunction: (selection: Selection, root: RootNode) => Promise<any> | void): void;
 
-/**
- * All rendition settings fields are required (for a given rendition type) unless otherwise specified.
- */
-type RenditionSettings = {
+interface RenditionSettingsBase {
     /**
      * Root of scenegraph subtree to render. This may be any node in the scenegraph, regardless of the current edit context.
      */
@@ -55,31 +52,63 @@ type RenditionSettings = {
      * File to save the rendition to (overwritten without warning if it already exists)
      */
     outputFile: storage.File;
-    /**
-     * File type: RenditionType.PNG, JPG, PDF, or SVG
-     */
-    type: string;
+}
+
+interface RenditionSettingsPNGorJPG extends RenditionSettingsBase {
     /**
      * (PNG & JPG renditions) DPI multipler in the range [0.1, 100], e.g. 2.0 for @2x DPI.
      */
-    scale?: number;
-    /**
-     * (JPG renditions) Compression quality in the range [1, 100].
-     */
-    quality?: number;
+    scale: number;
     /**
      * (PNG & JPEG renditions) Alpha component ignored for JPG. Optional: defaults to transparent for PNG, solid white for JPG.
      */
     background?: Color;
+}
+
+export interface RenditionSettingsPNG extends RenditionSettingsPNGorJPG {
+    /**
+     * File type
+     */
+    type: RenditionType.PNG;
+}
+
+export interface RenditionSettingsJPG extends RenditionSettingsPNGorJPG {
+    /**
+     * File type.
+     */
+    type: RenditionType.JPG;
+    /**
+     * (JPG renditions) Compression quality in the range [1, 100].
+     */
+    quality: number;
+}
+
+export interface RenditionSettingsSVG extends RenditionSettingsBase {
+    /**
+     * File type.
+     */
+    type: RenditionType.SVG;
     /**
      * (SVG renditions) If true, SVG code is minified.
      */
-    minify?: boolean;
+    minify: boolean;
     /**
      * (SVG renditions) If true, bitmap images are stored as base64 data inside the SVG file. If false, bitmap images are saved as separate files linked from the SVG code.
      */
-    embedImages?: boolean;
+    embedImages: boolean;
 }
+
+export interface RenditionSettingsPDF extends RenditionSettingsBase {
+    /**
+     * File type
+     */
+    type: RenditionType.PDF;
+}
+
+/**
+ * All rendition settings fields are required (for a given rendition type) unless otherwise specified.
+ */
+export type RenditionSettings = RenditionSettingsPNG | RenditionSettingsJPG | RenditionSettingsSVG | RenditionSettingsPDF;
 
 /**
  * Type that gets returned by `application.createRenditions`
