@@ -1,4 +1,5 @@
-import {Interaction} from 'interactions';
+import { Interaction } from 'interactions';
+import { storage } from 'uxp';
 
 declare interface Point {
     x: number;
@@ -8,41 +9,6 @@ declare interface Point {
 declare interface ScaleFactor {
     scaleX: number;
     scaleY: number;
-}
-
-/**
- * Represents the children of a scenenode. Typically accessed via the SceneNode.children property.
- */
-declare interface SceneNodeList {
-    items: SceneNode[];
-    readonly length: number;
-
-    forEach(
-        callback: (sceneNode: SceneNode, index: number) => void,
-        thisArg?: object
-    ): void;
-
-    forEachRight(
-        callback: (sceneNode: SceneNode, index: number) => void,
-        thisArg?: object
-    ): void;
-
-    filter(
-        callback: (sceneNode: SceneNode, index: number) => boolean,
-        thisArg?: object
-    ): Array<SceneNode>;
-
-    map(
-        callback: (sceneNode: SceneNode, index: number) => any,
-        thisArg?: object
-    ): Array<any>;
-
-    some(
-        callback: (sceneNode: SceneNode, index: number) => boolean,
-        thisArg?: object
-    ): boolean;
-
-    at(index: number): SceneNode | null;
 }
 
 export class Matrix {
@@ -343,7 +309,7 @@ export class ImageFill {
      *
      * @param fileOrDataURI File object pointing to an image file; or a string containing a data: URI with a base-64 encoded image.
      */
-    constructor(fileOrDataURI: string | File);
+    constructor(fileOrDataURI: string | storage.File);
 
     /**
      * @returns a new copy of this ImageFill.
@@ -433,10 +399,12 @@ export interface Bounds {
     height: number;
 }
 
+export interface SceneNode extends SceneNodeClass { }
+
 /**
  * Base class of all scenegraph nodes. Nodes will always be an instance of some subclass of SceneNode.
  */
-export abstract class SceneNode {
+declare abstract class SceneNodeClass {
     /**
      * Returns a unique identifier for this node that stays the same when the file is closed & reopened, or if the node is moved to a different part of the document. Cut-Paste will result in a new guid, however.
      */
@@ -629,7 +597,7 @@ export abstract class SceneNode {
 /**
  * Base class for nodes that have a stroke and/or fill. This includes leaf nodes such as Rectangle, as well as BooleanGroup which is a container node. If you create a shape node, it will not be visible unless you explicitly give it either a stroke or a fill.
  */
-export class GraphicNode extends SceneNode {
+export class GraphicNode extends SceneNodeClass {
     /**
      * The fill applied to this shape, if any. If this property is null or fillEnabled is false, no fill is drawn. Freshly created nodes have no fill by default.
      *
@@ -882,7 +850,7 @@ export class Line extends GraphicNode {
      * @param {number} endX
      * @param {number} endY
      */
-    setSTartEnd(
+    setStartEnd(
         startX: number,
         startY: number,
         endX: number,
@@ -1170,7 +1138,7 @@ export class Text extends GraphicNode {
  *
  * In a Mask Group, the mask shape is included in the group’s children list, at the top of the z order. It is not visible - only its path outline is used, for clipping the group.
  */
-export class Group extends SceneNode {
+export class Group extends SceneNodeClass {
     /**
      * The mask shape applied to this group, if any. This object is also present in the group’s children list. Though it has no direct visual appearance of its own, the mask affects the entire groups’s appearance by clipping all its other content.
      */
@@ -1212,9 +1180,9 @@ export class Group extends SceneNode {
  *
  * Note that overrides vary somewhat in granularity. In some but not all cases, overriding one property may also prevent other properties on the same node from receiving future updates from the master instance.
  *
- * It is not currently possible for plugins to *create* a new component definition or a new SymbolInstance node, aside from using {@link commands.duplicate} to clone existing SymbolInstances.
+ * It is not currently possible for plugins to *create* a new component definition or a new SymbolInstance node, aside from using `require('commands').duplicate` to clone existing SymbolInstances.
  */
-export class SymbolInstance extends SceneNode {
+export class SymbolInstance extends SceneNodeClass {
     /**
      * An identifier unique within this document that is shared by all instances of the same component.
      */
@@ -1258,7 +1226,7 @@ export class SymbolInstance extends SceneNode {
  * Each grid cell is a Group that is an immediate child of the RepeatGrid. These groups are automatically created and destroyed as needed when the RepeatGrid is resized.
  * It is not currently possible for plugins to create a new RepeatGrid node, aside from using commands.duplicate to clone existing RepeatGrids.
  */
-export class RepeatGrid extends SceneNode {
+export class RepeatGrid extends SceneNodeClass {
     /**
      * Defines size of the RepeatGrid. Cells are created and destroyed as necessary to fill the current size. Cells that only partially fit will be clipped.
      */
@@ -1344,13 +1312,15 @@ export class RepeatGrid extends SceneNode {
 /**
  * Container node whose content is linked to an external resource, such as Creative Cloud Libraries. It cannot be edited except by first ungrouping it, breaking this link.
  */
-export class LinkedGraphic extends SceneNode {
+export class LinkedGraphic extends SceneNodeClass {
 }
+
+export interface RootNode extends RootNodeClass { }
 
 /**
  * Class representing the root node of the document. All Artboards are children of this node, as well as any pasteboard content that does not lie within an Artboard. Artboards must be grouped contiguously at the bottom of this node’s z order. The root node has no visual appearance of its own.
  */
-export class RootNode extends SceneNode {
+declare class RootNodeClass extends SceneNodeClass {
     /**
      * Adds a child node to this container node. You can only add leaf nodes this way; to create structured subtrees of content, use commands.
      * @param {SceneNode} node Child to add
@@ -1389,3 +1359,5 @@ export const selection: SceneNodeList;
  * Root node of the current document's scenegraph. Also available as the second argument passed to your plugin command handler function.
  */
 export const root: RootNode;
+
+export { };
