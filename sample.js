@@ -9,7 +9,7 @@ const assets = require('assets');
  * @param {RootNode} documentRoot
  */
 async function test(selection, documentRoot) {
-    selection.items.forEach(async node => {
+    for (const node of selection.items) {
         console.log("Hello world: ", node);
         if (node instanceof Text) {
             clipboard.copyText(node.text);
@@ -17,7 +17,7 @@ async function test(selection, documentRoot) {
             node.fill = new Color("#ffaaee");
             await shell.openExternal('https://adobe-xd.gitbook.io/plugin-api-reference/uxp-api-reference/network-apis/shell');
         }
-    });
+    }
     const tempFolder = await fs.getTemporaryFolder();
     const newFile = await tempFolder.createFile("tempfile.txt", {overwrite: true});
     await newFile.write("Hello, world!");
