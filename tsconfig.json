@@ -7,10 +7,9 @@
       "es2015",
       "dom"
     ],
-    "paths": {
-      "*": [
-        "types/*"
-      ]
-    }
+    "typeRoots": [
+      "./types/index.d.ts"
+    ],
+    "types": ["./types"]
   }
 }
