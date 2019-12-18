@@ -1,7 +1,6 @@
 declare module 'scenegraph' {
     import {Interaction} from 'interactions';
     import {storage} from 'uxp';
-    import {SceneNodeList} from "index";
 
     interface Point {
         x: number;
@@ -1364,5 +1363,5 @@ declare module 'scenegraph' {
      */
     export const root: RootNode;
 
-    export {};
+    export {}; // Avoid exporting SceneNodeClass and RootNodeClass
 }
