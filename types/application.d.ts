@@ -156,4 +156,24 @@ declare module 'application' {
      * User's OS-wide locale setting. May not match the XD UI, since XD does not support all world languages. Includes both language and region (e.g. "fr_CA" or "en_US").
      */
     export const systemLocale: string;
+
+    /**
+     *
+     */
+    type DocumentInfo = {
+        /**
+         * Document name as displayed in the document window.
+         */
+        name: string;
+        /**
+         * Unique document identifier that does not change.
+         */
+        guid: string;
+    }
+
+    /**
+     * Represents the active document. Provides the document guid and current saved name.
+     *
+     */
+    export const activeDocument: DocumentInfo;
 }
