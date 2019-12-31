@@ -1,12 +1,13 @@
-const {Text, Ellipse, Color, RootNode} = require("scenegraph");
+const {Text, Ellipse, Color} = require("scenegraph");
 const clipboard = require("clipboard");
 const shell = require("uxp").shell;
 const fs = require("uxp").storage.localFileSystem;
 const assets = require('assets');
+const uxp = require('uxp');
 
 /**
- * @param {Selection} selection
- * @param {RootNode} documentRoot
+ * @param {XDSelection} selection
+ * @param {import('scenegraph').RootNode} documentRoot
  */
 async function test(selection, documentRoot) {
     for (const node of selection.items) {

@@ -1,13 +1,16 @@
-import { Artboard, SceneNode } from "./scenegraph";
+import './application';
+import './assets';
+import './clipboard';
+import './cloud';
+import './commands';
+import './interactions';
+import './scenegraph';
+import './uxp';
+import './viewport';
+import {SceneNode, Artboard} from 'scenegraph';
 
 declare global {
-    /**
-     * Imports classes from a module (e.g. ```const { Text } = require('scenegraph'); ```)
-     * @param module The module name
-     */
-    function require(module: string): void;
-
-    let module: { exports: any };
+    function require(path:string): any;
 
     /**
      * Represents the children of a scenenode. Typically accessed via the SceneNode.children property.
@@ -58,7 +61,7 @@ declare global {
      *
      * Items that are locked cannot be in the selection. If the user or your plugin attempts to select any locked items, they are automatically filtered into a separate list (itemsIncludingLocked) which is generally only used by the Unlock command.
      */
-    interface Selection {
+    interface XDSelection {
         /**
          * Array representing the current selection. Empty array if nothing is selected (never null). Never includes locked nodes.
          *

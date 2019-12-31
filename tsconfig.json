@@ -3,14 +3,16 @@
     "strict": true,
     "target": "es2015",
     "baseUrl": "./",
+    "allowJs": true,
+    "checkJs": true,
     "lib": [
       "es2015",
       "dom"
     ],
-    "paths": {
-      "*": [
-        "types/*"
-      ]
-    }
+    "typeRoots": [
+      "./types/index.d.ts",
+      "node_modules/@types"
+    ],
+    "types": ["./types", "node_modules/types"]
   }
 }
