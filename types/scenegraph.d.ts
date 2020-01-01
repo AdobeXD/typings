@@ -207,7 +207,7 @@ declare module 'scenegraph' {
         clone(): Color;
     }
 
-    export class LinearGradientFill {
+    export class LinearGradient {
         /**
          * Array of objects representing each color and its position along the gradient line. The position (stop value) is a number 0.0 - 1.0.
          */
@@ -234,14 +234,14 @@ declare module 'scenegraph' {
         endY: number;
 
         /**
-         * Create a new LinearGradientFill instance.
+         * Create a new LinearGradient instance.
          */
         constructor();
 
         /**
          * Returns a copy of this instance.
          */
-        clone(): LinearGradientFill;
+        clone(): LinearGradient;
 
         /**
          * Returns an array of [startX, startY, endX, endY].
@@ -259,9 +259,9 @@ declare module 'scenegraph' {
     }
 
     /**
-     * **The RadialGradientFill type is not documented and its API may change. Plugins currently cannot modify or otherwise work with radial gradients.**
+     * **The RadialGradient type is not documented and its API may change. Plugins currently cannot modify or otherwise work with radial gradients.**
      */
-    export class RadialGradientFill {
+    export class RadialGradient {
         // TODO: Waiting for documentation to arrive
     }
 
@@ -612,8 +612,8 @@ declare module 'scenegraph' {
         fill:
             | null
             | Color
-            | LinearGradientFill
-            | RadialGradientFill
+            | LinearGradient
+            | RadialGradient
             | ImageFill;
 
         /**
@@ -1355,7 +1355,7 @@ declare module 'scenegraph' {
      * **Since:** XD 14
      * Object representing the current selection state and edit context. Also available as the first argument passed to your plugin command handler function.
      */
-    export const selection: SceneNodeList;
+    export const selection: XDSelection;
 
     /**
      * **Since:** XD 14

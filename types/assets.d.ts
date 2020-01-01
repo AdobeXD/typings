@@ -1,5 +1,5 @@
 declare module 'assets' {
-    import {Color, LinearGradientFill, RadialGradientFill} from "scenegraph";
+    import {Color, LinearGradient, RadialGradient} from "scenegraph";
 
     /**
      * Type of gradient color element: linear gradient or radial gradient
@@ -37,7 +37,7 @@ declare module 'assets' {
          */
         gradientType: GradientType;
         /**
-         * Array of color stops used in the gradient, where stop >= 0 and <= 1, and the values are strictly increasing. Same format as the colorStops property of a LinearGradientFill object.
+         * Array of color stops used in the gradient, where stop >= 0 and <= 1, and the values are strictly increasing. Same format as the colorStops property of a LinearGradient object.
          */
         colorStops: Array<{ stop: number, color: Color }>
     }
@@ -132,7 +132,7 @@ declare module 'assets' {
          * @param colorAssets The color assets
          * @returns {number} number of assets added (may be less than requested if duplicates already exist)
          */
-        add(colorAssets: Color | ColorAsset | LinearGradientFill | RadialGradientFill | GradientAsset | Array<Color | ColorAsset | LinearGradientFill | RadialGradientFill | GradientAsset>): number;
+        add(colorAssets: Color | ColorAsset | LinearGradient | RadialGradient | GradientAsset | Array<Color | ColorAsset | LinearGradient | RadialGradient | GradientAsset>): number;
 
         /**
          * Delete color/gradient assets from the collection.
@@ -142,7 +142,7 @@ declare module 'assets' {
          * @param colorAssets The color assets
          * @returns {number} number of assets deleted (may be less than requested if some didn't exist)
          */
-        delete(colorAssets: Color | ColorAsset | LinearGradientFill | RadialGradientFill | GradientAsset | Array<Color | ColorAsset | LinearGradientFill | RadialGradientFill | GradientAsset>): number;
+        delete(colorAssets: Color | ColorAsset | LinearGradient | RadialGradient | GradientAsset | Array<Color | ColorAsset | LinearGradient | RadialGradient | GradientAsset>): number;
     }
 
     /**

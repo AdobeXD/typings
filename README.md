@@ -30,3 +30,8 @@ You may also take a look at the `tsconfig.json` file contained in this repositor
 
 ## One last thing
 These type declarations track the contents of the official documentation. If an issue with the type declarations stems from an issue with the official documentation, then the type declaration files will be fixed once the issue is addressed in the documentation. This is intentional so as to keep the type declarations both maintainable and in sync with the documentation.
+
+A few notable exceptions include:
+- `scenegraph.SceneNode` and `scenegraph.RootNode`, are documented as classes, but implemented as interfaces (in the TypeScript-sense, i.e., without a constructor), which is how they get declared in the typings
+- To avoid ambiguity with the *DOM* `Selection` type, the interface [`Selection`](https://adobexdplatform.com/plugin-docs/reference/selection.html) is implemented under the name `XDSelection` (in the global namespace), here.
+- The `LinearGradient` type is incorrectly documented as [`LinearGradientFill`](https://adobexdplatform.com/plugin-docs/reference/LinearGradientFill.html). This is implemented "the right way" in the typings.
