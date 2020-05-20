@@ -1,16 +1,12 @@
 {
   "compilerOptions": {
     "target": "es2015",
+    "module": "commonjs",
     "baseUrl": "./",
     "checkJs": true,
     "lib": [
       "es2015",
       "dom"
-    ],
-    "paths": {
-      "*": [
-        "types/*"
-      ]
-    }
-  }
+    ]
+  },
 }

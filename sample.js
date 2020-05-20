@@ -1,16 +1,16 @@
-const {Text, Ellipse, Color, RootNode, SceneNode} = require("scenegraph");
+const {Text, Ellipse, Color, SceneNode} = require("scenegraph");
 const clipboard = require("clipboard");
 const shell = require("uxp").shell;
 const fs = require("uxp").storage.localFileSystem;
 const assets = require('assets');
+const uxp = require('uxp');
 
 /**
- * @param {Selection} selection
- * @param {RootNode} documentRoot
+ * @param {XDSelection} selection
+ * @param {import('scenegraph').RootNode} documentRoot
  */
 async function test(selection, documentRoot) {
-
-    selection.items.forEach(async node => {
+    for (const node of selection.items) {
         console.log("Hello world: ", node);
         if (node instanceof Text) {
             clipboard.copyText(node.text);
@@ -18,7 +18,7 @@ async function test(selection, documentRoot) {
             node.fill = new Color("#ffaaee");
             await shell.openExternal('https://adobe-xd.gitbook.io/plugin-api-reference/uxp-api-reference/network-apis/shell');
         }
-    });
+    }
     const tempFolder = await fs.getTemporaryFolder();
     const newFile = await tempFolder.createFile("tempfile.txt", {overwrite: true});
     await newFile.write("Hello, world!");
