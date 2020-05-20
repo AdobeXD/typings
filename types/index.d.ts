@@ -1,4 +1,4 @@
-import {Artboard, SceneNode} from "./scenegraph";
+import {Artboard, SceneNode} from "scenegraph";
 
 declare global {
     /**
@@ -7,7 +7,7 @@ declare global {
      */
     function require(module: string): void;
 
-    let module: {exports:any};
+    let module: { exports: any };
 
     /**
      * The selection object represents the currently selected set of nodes in the UI. You can set the selection to use it as input for commands, or to determine what is left selected for the user when your plugin’s edit operation completes.
@@ -37,26 +37,37 @@ declare global {
         /**
          * Array representing the current selection plus any locked items that the user has attempted to select.
          */
-        itemsIncludingLocked: Array<SceneNode>;
+        readonly itemsIncludingLocked: Array<SceneNode>;
         /**
          * True if the selection isn’t empty and consists of one or more non-Artboards. Never true at the same time as hasArtboards.
          */
-        hasArtwork: boolean;
+        readonly hasArtwork: boolean;
         /**
          * True if the selection isn’t empty and consists of one or more Artboards. Never true at the same time as hasArtwork.
          */
-        hasArtboards: boolean;
+        readonly hasArtboards: boolean;
         /**
          * The context in which selection and edit operations must occur. If the user hasn’t drilled into any container node, this value is the document root, and its scope includes all immediate children of the pasteboard (including Artboards), and all immediate children of all those Artboards.
          */
-        editContext: SceneNode;
+        readonly editContext: SceneNode;
         /**
-         * The preferred parent to insert newly added content into. Takes into account the current edit context as well as the “focused artboard” if in the root context.
+         * The preferred parent to insert newly added content into. Takes into account the current edit context as well as the "focused artboard" if in the root context.
+         Typically this is the same parent where, for example, XD's shape drawing tools would add items.
+         *
+         * _Selected items are not necessarily all immediate children of the `insertionParent`._ They can be anywhere within the [edit context's](/reference/core/edit-context.md) scope.
          */
-        insertionParent: SceneNode;
+        readonly insertionParent: SceneNode;
         /**
          * The artboard the user is currently most focused on (via recent selection or edit operations). May be null, for example if no artboards exist or if the user just deleted an artboard.
          */
-        focusedArtboard: Artboard | null | undefined;
+        readonly focusedArtboard: Artboard | null | undefined;
+
+        /**
+         * Returns true if the node is accessible for editing in the scope of the current edit context.
+         * If false, the node cannot be edited given the user's current selection.
+         * Nodes that are currently selected are always in the current edit context.
+         * @param node
+         */
+        isInEditContext(node: SceneNode): boolean;
     }
 }
