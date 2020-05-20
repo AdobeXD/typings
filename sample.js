@@ -1,4 +1,4 @@
-const {Text, Ellipse, Color, RootNode} = require("scenegraph");
+const {Text, Ellipse, Color, RootNode, SceneNode} = require("scenegraph");
 const clipboard = require("clipboard");
 const shell = require("uxp").shell;
 const fs = require("uxp").storage.localFileSystem;
@@ -9,6 +9,7 @@ const assets = require('assets');
  * @param {RootNode} documentRoot
  */
 async function test(selection, documentRoot) {
+
     selection.items.forEach(async node => {
         console.log("Hello world: ", node);
         if (node instanceof Text) {

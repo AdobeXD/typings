@@ -40,7 +40,7 @@ declare interface PerPluginStorage {
     /**
      * Returns a map where key is plugin ID and value is a nested map containing all the shared metadata for that plugin ID (i.e. the result of calling `getForPluginId()` with that ID).
      */
-    getAll(): { [key: string]: {[key:string]: string} };
+    getAll(): { [key: string]: { [key: string]: string } };
 
     /**
      * Returns a map of key-value string pairs containing all shared metadata stored on this node by the given plugin. May be an empty object (zero keys), but is never null.
@@ -50,15 +50,15 @@ declare interface PerPluginStorage {
      *
      * @example
      *const MY_PLUGIN_ID = "<your manifest's plugin ID here>";
-let mySharedMetadata = node.sharedPluginData.getForPluginId(MY_PLUGIN_ID);
-console.log("My shared 'foo' & 'bar' values:",
-    mySharedMetadata.foo, mySharedMetadata.bar);
+     let mySharedMetadata = node.sharedPluginData.getForPluginId(MY_PLUGIN_ID);
+     console.log("My shared 'foo' & 'bar' values:",
+     mySharedMetadata.foo, mySharedMetadata.bar);
 
 
-console.log("Plugin B's shared 'foo' value:",
-    node.sharedPluginData.getForPluginId("B").foo);
+     console.log("Plugin B's shared 'foo' value:",
+     node.sharedPluginData.getForPluginId("B").foo);
      */
-    getForPluginId(pluginId: string): {[key:string]: string};
+    getForPluginId(pluginId: string): { [key: string]: string };
 
     /**
      * Returns a list of all keys stored on this node by the given plugin. May be empty (length zero), but is never null.
@@ -79,8 +79,8 @@ console.log("Plugin B's shared 'foo' value:",
      *
      * @example
      * // These are two different values, stored independently per plugin
- console.log("Plugin A's 'foo' value:", node.sharedPluginData.getItem("A", "foo"));
- console.log("Plugin B's 'foo' value:", node.sharedPluginData.getItem("B", "foo"));
+     console.log("Plugin A's 'foo' value:", node.sharedPluginData.getItem("A", "foo"));
+     console.log("Plugin B's 'foo' value:", node.sharedPluginData.getItem("B", "foo"));
      */
     getItem(pluginId: string, key: string): string | undefined;
 
@@ -91,13 +91,13 @@ console.log("Plugin B's shared 'foo' value:",
      * @param value If undefined, behaves as if you'd called `removeItem()` instead.
      *
      * @example
-const MY_PLUGIN_ID = "<your manifest's plugin ID here>";
-node.sharedPluginData.setItem(MY_PLUGIN_ID, "foo", "42");
+     const MY_PLUGIN_ID = "<your manifest's plugin ID here>";
+     node.sharedPluginData.setItem(MY_PLUGIN_ID, "foo", "42");
 
-node.sharedPluginData.setItem("other_plugin_id", "foo", "42");
-// ^ ERROR: other plugin's metadata is read-only
+     node.sharedPluginData.setItem("other_plugin_id", "foo", "42");
+     // ^ ERROR: other plugin's metadata is read-only
 
-console.log(node.sharedPluginData.getItem(MY_PLUGIN_ID, "foo"));  // "42"
+     console.log(node.sharedPluginData.getItem(MY_PLUGIN_ID, "foo"));  // "42"
      */
     setItem(pluginId: string, key: string, value: string | undefined): void;
 
@@ -106,14 +106,14 @@ console.log(node.sharedPluginData.getItem(MY_PLUGIN_ID, "foo"));  // "42"
      * @param pluginId *Must* be equal to your plugin's ID.
      * @param key
      * @example
-const MY_PLUGIN_ID = "<your manifest's plugin ID here>";
-node.sharedPluginData.setItem(MY_PLUGIN_ID, "foo", "42");
-console.log(node.sharedPluginData.getItem(MY_PLUGIN_ID, "foo"));  // "42"
+     const MY_PLUGIN_ID = "<your manifest's plugin ID here>";
+     node.sharedPluginData.setItem(MY_PLUGIN_ID, "foo", "42");
+     console.log(node.sharedPluginData.getItem(MY_PLUGIN_ID, "foo"));  // "42"
 
-node.sharedPluginData.removeItem(MY_PLUGIN_ID, "foo");
-console.log(node.sharedPluginData.getItem(MY_PLUGIN_ID, "foo"));  // undefined
+     node.sharedPluginData.removeItem(MY_PLUGIN_ID, "foo");
+     console.log(node.sharedPluginData.getItem(MY_PLUGIN_ID, "foo"));  // undefined
      */
-    removeItem(pluginId: string, key:string): void;
+    removeItem(pluginId: string, key: string): void;
 
     /**
      * Provided for convenience: you can `console.log(node.sharedPluginData)` to see the value of `getAll()`.
@@ -130,35 +130,35 @@ console.log(node.sharedPluginData.getItem(MY_PLUGIN_ID, "foo"));  // undefined
  * Represents the children of a scenenode. Typically accessed via the SceneNode.children property.
  */
 declare interface SceneNodeList {
-    items: SceneNodeClass[];
+    items: SceneNode[];
     readonly length: number;
 
     forEach(
-        callback: (sceneNode: SceneNodeClass, index: number) => void,
+        callback: (sceneNode: SceneNode, index: number) => void,
         thisArg?: object
     ): void;
 
     forEachRight(
-        callback: (sceneNode: SceneNodeClass, index: number) => void,
+        callback: (sceneNode: SceneNode, index: number) => void,
         thisArg?: object
     ): void;
 
     filter(
-        callback: (sceneNode: SceneNodeClass, index: number) => boolean,
+        callback: (sceneNode: SceneNode, index: number) => boolean,
         thisArg?: object
-    ): Array<SceneNodeClass>;
+    ): Array<SceneNode>;
 
     map(
-        callback: (sceneNode: SceneNodeClass, index: number) => any,
+        callback: (sceneNode: SceneNode, index: number) => any,
         thisArg?: object
     ): Array<any>;
 
     some(
-        callback: (sceneNode: SceneNodeClass, index: number) => boolean,
+        callback: (sceneNode: SceneNode, index: number) => boolean,
         thisArg?: object
     ): boolean;
 
-    at(index: number): SceneNodeClass | null;
+    at(index: number): SceneNode | null;
 }
 
 export class Matrix {
@@ -558,20 +558,22 @@ export interface Bounds {
     height: number;
 }
 
-export interface SceneNode extends SceneNodeClass {}
-
 /**
  * Base class of all scenegraph nodes. Nodes will always be an instance of some subclass of SceneNode.
  */
-declare abstract class SceneNodeClass {
+export abstract class SceneNode {
     /**
      * Returns a unique identifier for this node that stays the same when the file is closed & reopened, or if the node is moved to a different part of the document. Cut-Paste will result in a new guid, however.
+     *
+     * The GUID is guaranteed unique _within_ the current document, but _other_ documents may contain the same GUID value. For example, if the user makes a copy of an XD file, both files will use the same GUIDs.
+     *
+     * The GUID of the root node changes if the document is duplicated via Save As. See `application.activeDocument.guid` for details.
      */
     readonly guid: string;
     /**
      * Returns the parent node. Null if this is the root node, or a freshly constructed node which has not been added to a parent yet.
      */
-    readonly parent: SceneNodeClass | null;
+    readonly parent: SceneNode | null;
     /**
      * Returns a list of this node’s children. List is length 0 if the node has no children. The first child is lowest in the z order.
      * This list is not an Array, so you must use at(i) instead of [i] to access children by index. It has a number of Array-like methods such as forEach() for convenience, however.
@@ -653,6 +655,8 @@ declare abstract class SceneNodeClass {
 
     /**
      * Node name as seen in the Layers panel. Also used as filename during export.
+     *
+     * Setting this property will cause `hasDefaultName` to become false.
      */
     name: string;
 
@@ -685,7 +689,7 @@ declare abstract class SceneNodeClass {
      *
      * Note: If this node (or one of its ancestors) has `visible` = false, tap and drag interactions on it will not be triggered.
      *
-     * Currently, this API excludes any keyboard/gamepad interactions on this node.
+     * Currently, this API excludes some types of interactions: keypress/gamepad, scrolling, hover, component state transitions, or non-speech audio playback.
      *
      * @example ```javascript
      // Print all the interactions triggered by a node
@@ -705,14 +709,154 @@ declare abstract class SceneNodeClass {
 
     /**
      * **Since:** XD 14
-     * Metadata specific to your plugin. Must be a value which can be converted to a JSON string, or undefined to clear the stored metadata on this node.
+     * Metadata specific to your plugin. Must be a value which can be converted to a JSON string, or undefined to clear the
+     stored metadata on this node.    stored metadata on this node.
      *
-     * Metadata is persisted with the document when it is saved. Duplicating a node (including across documents, via copy-paste) will duplicate the metadata with it. If the node lies within a Component or Repeat Grid, all instances of the node will have identical metadata (changes in one copy will automatically be synced to the other copy). Metadata stored by this plugin cannot be accessed by other plugins - each plugin has its own isolated metadata storage.
-
+     * Metadata is persisted with the document when it is saved. Duplicating a node (including across documents, via copy-paste)
+     * will duplicate the metadata with it. If the node lies within a Component or Repeat Grid, all instances of the node will have
+     * identical metadata (changes in one copy will automatically be synced to the other copy).
      *
-     * To store general metadata for the document overall, set pluginData on the root node of the scenegraph. Metadata on the root node can be changed from any edit context.
+     * To store general metadata for the document overall, set pluginData on the [root](#module_scenegraph-root) node of the scenegraph. Metadata on
+     * the root node can be changed from _any_ edit context.
+     *
+     * Metadata stored in pluginData cannot be accessed by other plugins -- each plugin has its own isolated storage. To share metadata
+     * with other plugins, use `sharedPluginData`.
      */
     pluginData: any;
+
+    /**
+     * (**Since**: XD 29)
+     *
+     * Metadata storage accessible by other plugins, separated into silos by plugin ID. Your plugin can read & write the storage for its own plugin ID,
+     * but storage for other plugin IDs is *read-only*. This property returns a PerPluginStorage API object.
+     *
+     * *Each* scenenode has its own metadata storage. To store general metadata that is not specific to one scenenode, use `sharedPluginData` on the
+     * [document's scenegraph root](scenegraph.md#module_scenegraph-root).
+     *
+     * Metadata is persisted with the document when it is saved. See `pluginData` for info on how metadata is duplicated when nodes are
+     * copied or synced.
+     *
+     */
+    sharedPluginData: PerPluginStorage;
+
+
+    public static readonly BLEND_MODE_PASSTHROUGH: string;
+    public static readonly BLEND_MODE_NORMAL: string;
+    public static readonly BLEND_MODE_MULTIPLY: string;
+    public static readonly BLEND_MODE_DARKEN: string;
+    public static readonly BLEND_MODE_COLOR_BURN: string;
+    public static readonly BLEND_MODE_LIGHTEN: string;
+    public static readonly BLEND_MODE_SCREEN: string;
+    public static readonly BLEND_MODE_COLOR_DODGE: string;
+    public static readonly BLEND_MODE_OVERLAY: string;
+    public static readonly BLEND_MODE_SOFT_LIGHT: string;
+    public static readonly BLEND_MODE_HARD_LIGHT: string;
+    public static readonly BLEND_MODE_DIFFERENCE: string;
+    public static readonly BLEND_MODE_EXCLUSION: string;
+    public static readonly BLEND_MODE_HUE: string;
+    public static readonly BLEND_MODE_SATURATION: string;
+    public static readonly BLEND_MODE_COLOR: string;
+    public static readonly BLEND_MODE_LUMINOSITY: string;
+
+    /**
+     * (**Since**: XD 27)
+     *
+     * Blend mode determines how a node is composited onto the content below it.
+     *
+     * One of: `SceneNode.BLEND_MODE_PASSTHROUGH`, `BLEND_MODE_NORMAL`, `BLEND_MODE_MULTIPLY`, `BLEND_MODE_DARKEN`, `BLEND_MODE_COLOR_BURN`, `BLEND_MODE_LIGHTEN`, `BLEND_MODE_SCREEN`, `BLEND_MODE_COLOR_DODGE`, `BLEND_MODE_OVERLAY`, `BLEND_MODE_SOFT_LIGHT`,
+     `BLEND_MODE_HARD_LIGHT`, `BLEND_MODE_DIFFERENCE`, `BLEND_MODE_EXCLUSION`, `BLEND_MODE_HUE`, `BLEND_MODE_SATURATION`, `BLEND_MODE_COLOR`, `BLEND_MODE_LUMINOSITY`.
+     *
+     *  _Note:_ for leaf nodes (GraphicNode), the XD UI may show leaf nodes as blend mode "Normal" even when the underlying value is `BLEND_MODE_PASSTHROUGH`. This is because "Pass Through" and "Normal" are essentially equivalent for leaf nodes -- they only differ
+     *  in appearance when a node has children.
+     *
+     *  @example ```js
+     *node.blendMode = scenegraph.SceneNode.BLEND_MODE_LUMINOSITY;
+     *```
+     */
+    blendMode: string; // TODO: Implement the actual constant value possibilities
+
+    public static readonly FIXED_LEFT: string;
+    public static readonly FIXED_RIGHT: string;
+    public static readonly FIXED_TOP: string;
+    public static readonly FIXED_BOTTOM: string;
+    public static readonly FIXED_BOTH: string;
+    public static readonly POSITION_PROPORTIONAL: string;
+    public static readonly SIZE_FIXED: string;
+    public static readonly SIZE_RESIZES: string;
+
+    /**
+     * (**Since**: XD 29)
+     *
+     * Horizontal dynamic-layout settings used with the Responsive Resize feature. Setting this only determines how the node is updated when its parent is resized -- it does not change the node's current size or position.
+     *
+     * Both fields *must* be provided together when setting this property.
+     *
+     * Returns undefined if node's parent is a container where Responsive Resize is unavailable:
+     * * Certain containers such as RepeatGrid and the pasteboard (scenegraph root) do not support Responsive Resize.
+     * * Container may have Responsive Resize layout explicitly turned off (see `dynamicLayout` flag).
+     *
+     * Attempting to set this property when Responsive Resize is unavailable results in an error.
+     *
+     * Setting this property will cause `hasCustomConstraints` to become true.
+     * @example ```js
+     *let node = selection.items[0];
+     *node.horizontalConstraints = { position: scenegraph.SceneNode.FIXED_LEFT, size: scenegraph.SceneNode.SIZE_FIXED };
+     *```
+     */
+    horizontalConstraints: undefined | {
+        /**
+         * Horizontal position anchoring, one of `SceneNode.FIXED_LEFT`, `FIXED_RIGHT`, `FIXED_BOTH` or `POSITION_PROPORTIONAL`.<br><br>`FIXED_BOTH` sets fixed left & right offsets, so it always implies `size: SIZE_RESIZES` (similar to setting both `left` & `right` in CSS).<br><br>`POSITION_PROPORTIONAL` holds node position at a fixed percentage of the parent's width -- the same positioning behavior you'd get if Responsive Resize is turned off entirely.
+         */
+        postition: string,
+        /**
+         * Horizontal sizing behavior, either `SceneNode.SIZE_FIXED` or `SceneNode.SIZE_RESIZES`.<br><br>`SIZE_FIXED` cannot be used with `position: FIXED_BOTH`, since it is impossible to fix both left & right edges without resizing when the parent resizes.<br><br>`SIZE_RESIZES` can be used with any `position` setting. With `position: FIXED_BOTH`, the node's size always equals the parent's size minus the fixed left & right offsets. With other position settings, the node's size maintains a fixed percentage of the parent's size.
+         */
+        size: string
+    };
+
+    /**
+     * (**Since**: XD 29)
+     *
+     * Vertical dynamic-layout settings used with the Responsive Resize feature. Setting this only determines how the node is updated when its parent is resized -- it does not change the node's current size or position.
+     *
+     * Both fields *must* be provided together when setting this property.
+     *
+     * See `horizontalConstraints` for other important notes.
+     *
+     * @example ```js
+     *let node = selection.items[0];
+     *node.verticalConstraints = { position: scenegraph.SceneNode.FIXED_TOP, size: scenegraph.SceneNode.SIZE_RESIZES };
+     */
+    verticalConstraints: undefined | {
+        /**
+         * Vertical position anchoring, one of `SceneNode.FIXED_TOP`, `FIXED_BOTTOM`, `FIXED_BOTH` or `POSITION_PROPORTIONAL`.<br><br>For details, see `horizontalConstraints` above.
+         */
+        postition: string,
+        /**
+         * Vertical sizing behavior, either `SceneNode.SIZE_FIXED` or `SceneNode.SIZE_RESIZES`.<br><br>For details, see `horizontalConstraints` above.
+         */
+        size: string
+    };
+
+    /**
+     * (**Since**: XD 29)
+     *
+     * True if this node's Responsive Resize layout settings, which are normally automatically inferred by XD, have been overridden with specific desired values. Constraints on a node are either all overridden, or all automatic -- never mixed.
+     *
+     * If false, each time the parent resizes XD will automatically guess the best layout settings to used based on the current size & position of this node within its parent. You can use the `horizontalConstraints` and `verticalConstraints` getters to check what computed settings XD would use based on the node's current size & position.
+     *
+     * Automatically becomes true any time you set `horizontalConstraints` or `verticalConstraints`. To reset to false, call `resetToAutoConstraints()`.
+     */
+    readonly hasCustomConstraints: boolean;
+
+    /**
+     * (**Since**: XD 29)
+     *
+     * Erase any overridden Responsive Resize layout settings, restoring the default behavior where XD will automatically guess the best layout settings for this node the next time its parent is resized. This function does not change the node's *current* size & position, however.
+     *
+     * Calling this will cause `hasCustomConstraints` to become false.
+     */
+    resetToAutoConstraints(): void;
 
     /**
      * Remove this node from its parent, effectively deleting it from the document.
@@ -756,7 +900,7 @@ declare abstract class SceneNodeClass {
 /**
  * Base class for nodes that have a stroke and/or fill. This includes leaf nodes such as Rectangle, as well as BooleanGroup which is a container node. If you create a shape node, it will not be visible unless you explicitly give it either a stroke or a fill.
  */
-export class GraphicNode extends SceneNodeClass {
+export class GraphicNode extends SceneNode {
     /**
      * The fill applied to this shape, if any. If this property is null or fillEnabled is false, no fill is drawn. Freshly created nodes have no fill by default.
      *
@@ -888,10 +1032,10 @@ export class Artboard extends GraphicNode {
      * May include interactions that are impossible to trigger because the trigger node (or one of its ancestors) has `visible` = false.
      *
      * Note: currently, this API excludes any applicable keyboard/gamepad interactions.
-     * @see SceneNodeClass.triggeredInteractions
+     * @see SceneNode.triggeredInteractions
      * @see interactions.allInteractions
      */
-    readonly incomingInteractions: Array<{ triggerNode: SceneNodeClass, interactions: Array<Interaction> }>;
+    readonly incomingInteractions: Array<{ triggerNode: SceneNode, interactions: Array<Interaction> }>;
 
     /**
      * **Since**: XD 19
@@ -904,24 +1048,24 @@ export class Artboard extends GraphicNode {
 
     /**
      * Adds a child node to this container node. You can only add leaf nodes this way; to create structured subtrees of content, use commands.
-     * @param {SceneNodeClass} node Child to add
+     * @param {SceneNode} node Child to add
      * @param {number} index Optional: index to insert child at. Child is appended to end of children list (top of z order) otherwise.
      */
-    addChild(node: SceneNodeClass, index?: number): void;
+    addChild(node: SceneNode, index?: number): void;
 
     /**
      * Inserts a child node after the given reference node.
-     * @param {SceneNodeClass} node Child to add
-     * @param {SceneNodeClass} relativeTo New child is added immediately after this existing child
+     * @param {SceneNode} node Child to add
+     * @param {SceneNode} relativeTo New child is added immediately after this existing child
      */
-    addChildAfter(node: SceneNodeClass, relativeTo: SceneNodeClass): void;
+    addChildAfter(node: SceneNode, relativeTo: SceneNode): void;
 
     /**
      * Inserts a child node before the given reference node.
-     * @param {SceneNodeClass} node Child to add
-     * @param {SceneNodeClass} relativeTo New child is added immediately before this existing child
+     * @param {SceneNode} node Child to add
+     * @param {SceneNode} relativeTo New child is added immediately before this existing child
      */
-    addChildBefore(node: SceneNodeClass, relativeTo: SceneNodeClass): void;
+    addChildBefore(node: SceneNode, relativeTo: SceneNode): void;
 
     /**
      * Removes all children from this node. Equivalent to calling removeFromParent() on each child in turn, but faster.
@@ -1031,14 +1175,14 @@ export class Path extends GraphicNode {
 
 /**
  * **Since**: XD 19
- * Leaf node shape that is a polygon with 3 or more sides. May also have rounded corners. The sides are not necessarily all equal in length: this is true only when the Polygon's width and height matches the aspect ratio of a regular (equilateral) polygon with the given number of sides.
+ * Leaf node shape that is either a convex polygon _or_ a star shape. May have rounded corners. The sides are not necessarily all equal in length:
  *
- * When unrotated, the Polygon always has its bottommost side as a perfectly horizontal line - with the exception of the 4-sided Polygon, which is a diamond shape instead.
+ * When unrotated, a non-star Polygon always has its bottommost side as a perfectly horizontal line - with the exception of the 4-sided Polygon, which
  *
  * Like all shape nodes, has no size, fill, or stroke by default unless you set one.
  *
  * @example ```javascript
- // Add a red triangle to the document and select it
+ // Add a red triangle to the document
  var polygon = new Polygon();
  polygon.cornerCount = 3;
  polygon.width = 50;
@@ -1046,6 +1190,16 @@ export class Path extends GraphicNode {
  polygon.fill = new Color("red");
  selection.insertionParent.addChild(polygon);
  selection.items = [polygon];
+
+ // Add a blue 5-pointed star with rounded corners
+ var polygon = new Polygon();
+ polygon.cornerCount = 5;
+ polygon.starRatio = 55;
+ polygon.setAllCornerRadii(4);
+ polygon.width = 100;
+ polygon.height = 95;
+ polygon.fill = new Color("blue");
+ selection.insertionParent.addChild(polygon);
  * ```
  */
 export class Polygon extends GraphicNode {
@@ -1061,11 +1215,14 @@ export class Polygon extends GraphicNode {
 
     /**
      * @default 3
-     * Number of corners (vertices), and also therefore number of sides.
+     * For a non-star shape, defines the number of corners (vertices), and also therefore number of sides. For a star shape, defines the
+     number of star points -- there will be twice as many corners in total (the tips of the points _plus_ all the inside corners
+     between the points).
      *
-     * Setting cornerCount on an existing Polygon behaves in one of two different ways:
-     * * If the shape's aspect ratio gives it equilateral sides, the sides remain equilateral while the size and aspect ratio of the shape is changed to accomodate.
-     * * Otherwise, the size and aspect ratio of the shape remains unchanged.
+     * Setting `cornerCount` on an existing Polygon behaves in one of two different ways:
+     * * If the shape's aspect ratio gives it equilateral sides, the sides remain equilateral while the size and aspect ratio of the
+     *   shape are automatically changed as needed.
+     * * Otherwise, the size and aspect ratio of the shape remain unchanged.
      *
      * This matches how changing the corner count in XD's UI behaves.
      *
@@ -1082,6 +1239,17 @@ export class Polygon extends GraphicNode {
      * List of corner radius for each corner of the polygon. To set corner radius, use [<code>setAllCornerRadii()</code>](#Polygon-setAllCornerRadii).
      */
     cornerRadii: number[];
+
+    /**
+     * @default 100
+     * (**Since**: XD 26)
+     *
+     * Determines how prominent the shape's star points are. The default value of 100 is a normal convex polygon (not a star at all).
+     * For a star shape, consider that the outer vertices at the tips of the points all lie on a circle and the inner vertices
+     * between the points all lie on a second, smaller circle. The `starRatio` is the ratio of the smaller circle's diameter to the
+     * outer circle's diameter, expressed as a percentage.
+     */
+    starRatio: number;
 
     /**
      * Set the corner radius of all corners of the Polygon to the same value.
@@ -1103,24 +1271,24 @@ export class BooleanGroup extends GraphicNode {
 
     /**
      * Adds a child node to this container node. You can only add leaf nodes this way; to create structured subtrees of content, use commands.
-     * @param {SceneNodeClass} node Child to add
+     * @param {SceneNode} node Child to add
      * @param {number} index Optional: index to insert child at. Child is appended to end of children list (top of z order) otherwise.
      */
-    addChild(node: SceneNodeClass, index?: number): void;
+    addChild(node: SceneNode, index?: number): void;
 
     /**
      * Inserts a child node after the given reference node.
-     * @param {SceneNodeClass} node Child to add
-     * @param {SceneNodeClass} relativeTo New child is added immediately after this existing child
+     * @param {SceneNode} node Child to add
+     * @param {SceneNode} relativeTo New child is added immediately after this existing child
      */
-    addChildAfter(node: SceneNodeClass, relativeTo: SceneNodeClass): void;
+    addChildAfter(node: SceneNode, relativeTo: SceneNode): void;
 
     /**
      * Inserts a child node before the given reference node.
-     * @param {SceneNodeClass} node Child to add
-     * @param {SceneNodeClass} relativeTo New child is added immediately before this existing child
+     * @param {SceneNode} node Child to add
+     * @param {SceneNode} relativeTo New child is added immediately before this existing child
      */
-    addChildBefore(node: SceneNodeClass, relativeTo: SceneNodeClass): void;
+    addChildBefore(node: SceneNode, relativeTo: SceneNode): void;
 
     /**
      * Removes all children from this node. Equivalent to calling removeFromParent() on each child in turn, but faster.
@@ -1297,32 +1465,45 @@ export class Text extends GraphicNode {
  *
  * In a Mask Group, the mask shape is included in the group’s children list, at the top of the z order. It is not visible - only its path outline is used, for clipping the group.
  */
-export class Group extends SceneNodeClass {
+export class Group extends SceneNode {
     /**
      * The mask shape applied to this group, if any. This object is also present in the group’s children list. Though it has no direct visual appearance of its own, the mask affects the entire groups’s appearance by clipping all its other content.
      */
-    readonly mask: SceneNodeClass | null;
+    readonly mask: SceneNode | null;
+
+    /**
+     * (**Since:** XD 29)
+     *
+     * If true, Responsive Resize is enabled, and this node's children will use an intelligent layout algorithm whenever this node is resized.
+     *
+     * Returns undefined on node types that do not support Responsive Resize (such as RepeatGrid; see `horizontalConstraints` docs for a
+     * complete list). Attempting to set this property on such node types results in an error.
+     *
+     * @see SceneNode.horizontalConstraints
+     * @see SceneNode.verticalConstraints
+     */
+    dynamicLayout: undefined | boolean;
 
     /**
      * Adds a child node to this container node. You can only add leaf nodes this way; to create structured subtrees of content, use commands.
-     * @param {SceneNodeClass} node Child to add
+     * @param {SceneNode} node Child to add
      * @param {number} index Optional: index to insert child at. Child is appended to end of children list (top of z order) otherwise.
      */
-    addChild(node: SceneNodeClass, index?: number): void;
+    addChild(node: SceneNode, index?: number): void;
 
     /**
      * Inserts a child node after the given reference node.
-     * @param {SceneNodeClass} node Child to add
-     * @param {SceneNodeClass} relativeTo New child is added immediately after this existing child
+     * @param {SceneNode} node Child to add
+     * @param {SceneNode} relativeTo New child is added immediately after this existing child
      */
-    addChildAfter(node: SceneNodeClass, relativeTo: SceneNodeClass): void;
+    addChildAfter(node: SceneNode, relativeTo: SceneNode): void;
 
     /**
      * Inserts a child node before the given reference node.
-     * @param {SceneNodeClass} node Child to add
-     * @param {SceneNodeClass} relativeTo New child is added immediately before this existing child
+     * @param {SceneNode} node Child to add
+     * @param {SceneNode} relativeTo New child is added immediately before this existing child
      */
-    addChildBefore(node: SceneNodeClass, relativeTo: SceneNodeClass): void;
+    addChildBefore(node: SceneNode, relativeTo: SceneNode): void;
 
     /**
      * Removes all children from this node. Equivalent to calling removeFromParent() on each child in turn, but faster.
@@ -1341,7 +1522,7 @@ export class Group extends SceneNodeClass {
  *
  * It is not currently possible for plugins to *create* a new component definition or a new SymbolInstance node, aside from using `require('commands').duplicate` to clone existing SymbolInstances.
  */
-export class SymbolInstance extends SceneNodeClass {
+export class SymbolInstance extends SceneNode {
     /**
      * An identifier unique within this document that is shared by all instances of the same component.
      */
@@ -1355,24 +1536,24 @@ export class SymbolInstance extends SceneNodeClass {
 
     /**
      * Adds a child node to this container node. You can only add leaf nodes this way; to create structured subtrees of content, use commands.
-     * @param {SceneNodeClass} node Child to add
+     * @param {SceneNode} node Child to add
      * @param {number} index Optional: index to insert child at. Child is appended to end of children list (top of z order) otherwise.
      */
-    addChild(node: SceneNodeClass, index?: number): void;
+    addChild(node: SceneNode, index?: number): void;
 
     /**
      * Inserts a child node after the given reference node.
-     * @param {SceneNodeClass} node Child to add
-     * @param {SceneNodeClass} relativeTo New child is added immediately after this existing child
+     * @param {SceneNode} node Child to add
+     * @param {SceneNode} relativeTo New child is added immediately after this existing child
      */
-    addChildAfter(node: SceneNodeClass, relativeTo: SceneNodeClass): void;
+    addChildAfter(node: SceneNode, relativeTo: SceneNode): void;
 
     /**
      * Inserts a child node before the given reference node.
-     * @param {SceneNodeClass} node Child to add
-     * @param {SceneNodeClass} relativeTo New child is added immediately before this existing child
+     * @param {SceneNode} node Child to add
+     * @param {SceneNode} relativeTo New child is added immediately before this existing child
      */
-    addChildBefore(node: SceneNodeClass, relativeTo: SceneNodeClass): void;
+    addChildBefore(node: SceneNode, relativeTo: SceneNode): void;
 
     /**
      * Removes all children from this node. Equivalent to calling removeFromParent() on each child in turn, but faster.
@@ -1385,7 +1566,7 @@ export class SymbolInstance extends SceneNodeClass {
  * Each grid cell is a Group that is an immediate child of the RepeatGrid. These groups are automatically created and destroyed as needed when the RepeatGrid is resized.
  * It is not currently possible for plugins to create a new RepeatGrid node, aside from using commands.duplicate to clone existing RepeatGrids.
  */
-export class RepeatGrid extends SceneNodeClass {
+export class RepeatGrid extends SceneNode {
     /**
      * Defines size of the RepeatGrid. Cells are created and destroyed as necessary to fill the current size. Cells that only partially fit will be clipped.
      */
@@ -1443,24 +1624,24 @@ export class RepeatGrid extends SceneNodeClass {
 
     /**
      * Adds a child node to this container node. You can only add leaf nodes this way; to create structured subtrees of content, use commands.
-     * @param {SceneNodeClass} node Child to add
+     * @param {SceneNode} node Child to add
      * @param {number} index Optional: index to insert child at. Child is appended to end of children list (top of z order) otherwise.
      */
-    addChild(node: SceneNodeClass, index?: number): void;
+    addChild(node: SceneNode, index?: number): void;
 
     /**
      * Inserts a child node after the given reference node.
-     * @param {SceneNodeClass} node Child to add
-     * @param {SceneNodeClass} relativeTo New child is added immediately after this existing child
+     * @param {SceneNode} node Child to add
+     * @param {SceneNode} relativeTo New child is added immediately after this existing child
      */
-    addChildAfter(node: SceneNodeClass, relativeTo: SceneNodeClass): void;
+    addChildAfter(node: SceneNode, relativeTo: SceneNode): void;
 
     /**
      * Inserts a child node before the given reference node.
-     * @param {SceneNodeClass} node Child to add
-     * @param {SceneNodeClass} relativeTo New child is added immediately before this existing child
+     * @param {SceneNode} node Child to add
+     * @param {SceneNode} relativeTo New child is added immediately before this existing child
      */
-    addChildBefore(node: SceneNodeClass, relativeTo: SceneNodeClass): void;
+    addChildBefore(node: SceneNode, relativeTo: SceneNode): void;
 
     /**
      * Removes all children from this node. Equivalent to calling removeFromParent() on each child in turn, but faster.
@@ -1471,35 +1652,36 @@ export class RepeatGrid extends SceneNodeClass {
 /**
  * Container node whose content is linked to an external resource, such as Creative Cloud Libraries. It cannot be edited except by first ungrouping it, breaking this link.
  */
-export class LinkedGraphic extends SceneNodeClass {
+export class LinkedGraphic extends SceneNode {
 }
 
-export interface RootNode extends RootNodeClass {}
+export interface RootNode extends RootNodeClass {
+}
 
 /**
  * Class representing the root node of the document. All Artboards are children of this node, as well as any pasteboard content that does not lie within an Artboard. Artboards must be grouped contiguously at the bottom of this node’s z order. The root node has no visual appearance of its own.
  */
-declare class RootNodeClass extends SceneNodeClass {
+declare class RootNodeClass extends SceneNode {
     /**
      * Adds a child node to this container node. You can only add leaf nodes this way; to create structured subtrees of content, use commands.
-     * @param {SceneNodeClass} node Child to add
+     * @param {SceneNode} node Child to add
      * @param {number} index Optional: index to insert child at. Child is appended to end of children list (top of z order) otherwise.
      */
-    addChild(node: SceneNodeClass, index?: number): void;
+    addChild(node: SceneNode, index?: number): void;
 
     /**
      * Inserts a child node after the given reference node.
-     * @param {SceneNodeClass} node Child to add
-     * @param {SceneNodeClass} relativeTo New child is added immediately after this existing child
+     * @param {SceneNode} node Child to add
+     * @param {SceneNode} relativeTo New child is added immediately after this existing child
      */
-    addChildAfter(node: SceneNodeClass, relativeTo: SceneNodeClass): void;
+    addChildAfter(node: SceneNode, relativeTo: SceneNode): void;
 
     /**
      * Inserts a child node before the given reference node.
-     * @param {SceneNodeClass} node Child to add
-     * @param {SceneNodeClass} relativeTo New child is added immediately before this existing child
+     * @param {SceneNode} node Child to add
+     * @param {SceneNode} relativeTo New child is added immediately before this existing child
      */
-    addChildBefore(node: SceneNodeClass, relativeTo: SceneNodeClass): void;
+    addChildBefore(node: SceneNode, relativeTo: SceneNode): void;
 
     /**
      * Removes all children from this node. Equivalent to calling removeFromParent() on each child in turn, but faster.
@@ -1518,5 +1700,27 @@ export const selection: SceneNodeList;
  * Root node of the current document's scenegraph. Also available as the second argument passed to your plugin command handler function.
  */
 export const root: RootNodeClass;
+
+/**
+ * (**Since**: XD 28)
+ *
+ * Returns the scenenode in this document that has the given node GUID. Returns undefined if no such node exists connected
+ * to the scenegraph tree (detached/orphan nodes will not be found). This provides a fast way of persistently remembering a node across plugin
+ * operations and even across document open/closes.
+ * @param guid SceneNode GUID -- must be all lowercase, as returned by the [`guid` getter](#SceneNode-guid).
+ *
+ * @example ```js
+ let node = scenegraph.selection.items[0];
+ let guid = node.guid;
+ // ...later on:
+ let sameNode = scenegraph.getNodeByGUID(guid);
+ if (sameNode) {
+   // ^ Always check if node still exists - user may have deleted it
+   console.log("Found node again!", sameNode);
+}
+ ```
+ */
+export function getNodeByGUID(guid: string): SceneNode | undefined;
+
 
 export {};
