@@ -11,6 +11,122 @@ declare interface ScaleFactor {
 }
 
 /**
+ * (**Since:** XD 29)
+ *
+ * Stores metadata accessible to multiple plugins, separated into silos by plugin ID. Your plugin can read & write the storage for its own plugin ID, but storage for other plugin IDs is *read-only*.
+ *
+ * Each per-plugin storage silo is a collection of key-value pairs. Keys and values must both be strings.
+ *
+ * *Each* scenenode has its own metadata storage, accessed via `SceneNode.sharedPluginData`. To store general metadata that is not specific to one scenenode, use `sharedPluginData` on the document's scenegraph root.
+ * @example ```js
+ * // This example shows how to save & retrieve rich JSON data in shared metadata storage.
+ // See below for simpler examples of using individual APIs.
+ const PLUGIN_ID = "<your manifest's plugin ID here>";
+ let richObject = {
+    list: [2, 4, 6],
+    name: "Hello world"
+ };
+ node.sharedPluginData.setItem(PLUGIN_ID, "richData", JSON.stringify(richObject));
+
+ // Later on...
+ // (This could be in a different plugin, if it passes the original plugin's ID here)
+ let jsonString = node.sharedPluginData.getItem(PLUGIN_ID, "richData");
+ if (jsonString) {  // may be undefined
+    let richObjectCopy = JSON.parse(jsonString);
+    console.log(richObjectCopy.list.length);  // 3
+ }
+ */
+declare interface PerPluginStorage {
+    /**
+     * Returns a map where key is plugin ID and value is a nested map containing all the shared metadata for that plugin ID (i.e. the result of calling `getForPluginId()` with that ID).
+     */
+    getAll(): { [key: string]: {[key:string]: string} };
+
+    /**
+     * Returns a map of key-value string pairs containing all shared metadata stored on this node by the given plugin. May be an empty object (zero keys), but is never null.
+     *
+     * This map is a clone of the stored metadata, so modifying it has no effect.
+     * @param pluginId
+     *
+     * @example
+     *const MY_PLUGIN_ID = "<your manifest's plugin ID here>";
+let mySharedMetadata = node.sharedPluginData.getForPluginId(MY_PLUGIN_ID);
+console.log("My shared 'foo' & 'bar' values:",
+    mySharedMetadata.foo, mySharedMetadata.bar);
+
+
+console.log("Plugin B's shared 'foo' value:",
+    node.sharedPluginData.getForPluginId("B").foo);
+     */
+    getForPluginId(pluginId: string): {[key:string]: string};
+
+    /**
+     * Returns a list of all keys stored on this node by the given plugin. May be empty (length zero), but is never null.
+     * @param pluginId
+     *
+     * @example
+     * console.log("All properties stored by plugin A on this node:",
+     node.sharedPluginData.keys("A"));
+     */
+    keys(pluginId: string): string[];
+
+    /**
+     * Returns the value stored under the given key on this node by the given plugin, or `undefined` if the plugin hasn't stored anything under the given key.
+     *
+     * Because metadata is stored separately per plugin, two plugins can store two different values under the same key.
+     * @param pluginId
+     * @param key
+     *
+     * @example
+     * // These are two different values, stored independently per plugin
+ console.log("Plugin A's 'foo' value:", node.sharedPluginData.getItem("A", "foo"));
+ console.log("Plugin B's 'foo' value:", node.sharedPluginData.getItem("B", "foo"));
+     */
+    getItem(pluginId: string, key: string): string | undefined;
+
+    /**
+     * Set a metadata key which can be read by any other plugin.
+     * @param pluginId *Must* be equal to your plugin's ID.
+     * @param key
+     * @param value If undefined, behaves as if you'd called `removeItem()` instead.
+     *
+     * @example
+const MY_PLUGIN_ID = "<your manifest's plugin ID here>";
+node.sharedPluginData.setItem(MY_PLUGIN_ID, "foo", "42");
+
+node.sharedPluginData.setItem("other_plugin_id", "foo", "42");
+// ^ ERROR: other plugin's metadata is read-only
+
+console.log(node.sharedPluginData.getItem(MY_PLUGIN_ID, "foo"));  // "42"
+     */
+    setItem(pluginId: string, key: string, value: string | undefined): void;
+
+    /**
+     * Clears a shared metadata key stored by your plugin.
+     * @param pluginId *Must* be equal to your plugin's ID.
+     * @param key
+     * @example
+const MY_PLUGIN_ID = "<your manifest's plugin ID here>";
+node.sharedPluginData.setItem(MY_PLUGIN_ID, "foo", "42");
+console.log(node.sharedPluginData.getItem(MY_PLUGIN_ID, "foo"));  // "42"
+
+node.sharedPluginData.removeItem(MY_PLUGIN_ID, "foo");
+console.log(node.sharedPluginData.getItem(MY_PLUGIN_ID, "foo"));  // undefined
+     */
+    removeItem(pluginId: string, key:string): void;
+
+    /**
+     * Provided for convenience: you can `console.log(node.sharedPluginData)` to see the value of `getAll()`.
+     */
+    toString(): string;
+
+    /**
+     * Provided for convenience: you can include a `PerPluginStorage` object inside data you are going to convert to JSON, even though it is not a plain JavaScript object. Returns the same value as `getAll()`.
+     */
+    toJSON(): object;
+}
+
+/**
  * Represents the children of a scenenode. Typically accessed via the SceneNode.children property.
  */
 declare interface SceneNodeList {
@@ -318,6 +434,15 @@ export class ImageFill {
      * To change this property, use cloneWithOverrides.
      */
     scaleBehaviour: string;
+
+    // TODO: assetId: string (readonly?)
+    /**
+     * (**Since**: XD 29)
+     *
+     * A unique identifier for the image asset used by this ImageFill. May be shared by other ImageFills, including those with different cropping, size,
+     rotation, or mirroring. If identical images are imported into XD from separate sources, they may have different `assetId`s however.
+     */
+    assetId: string;
 
     /**
      * Format the image data was originally encoded in, such as `image/gif` or `image/jpeg`.
