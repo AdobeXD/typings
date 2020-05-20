@@ -75,7 +75,7 @@ declare global {
         /**
          * Array representing the current selection plus any locked items that the user has attempted to select.
          */
-        readonly itemsIncludingLocked: Array<SceneNode>;
+        readonly itemsIncludingLocked: ReadonlyArray<SceneNode>;
         /**
          * True if the selection isn’t empty and consists of one or more non-Artboards. Never true at the same time as hasArtboards.
          */
