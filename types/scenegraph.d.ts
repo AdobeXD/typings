@@ -131,7 +131,7 @@ declare module 'scenegraph' {
     /**
      * Represents the children of a scenenode. Typically accessed via the SceneNode.children property.
      */
-    declare interface SceneNodeList {
+    interface SceneNodeList {
         items: SceneNode[];
         readonly length: number;
 
@@ -442,7 +442,7 @@ declare module 'scenegraph' {
          * (**Since**: XD 29)
          *
          * A unique identifier for the image asset used by this ImageFill. May be shared by other ImageFills, including those with different cropping, size,
-         rotation, or mirroring. If identical images are imported into XD from separate sources, they may have different `assetId`s however.
+         * rotation, or mirroring. If identical images are imported into XD from separate sources, they may have different `assetId`s however.
          */
         assetId: string;
         /**
@@ -1662,7 +1662,7 @@ declare module 'scenegraph' {
     /**
      * Class representing the root node of the document. All Artboards are children of this node, as well as any pasteboard content that does not lie within an Artboard. Artboards must be grouped contiguously at the bottom of this node’s z order. The root node has no visual appearance of its own.
      */
-    declare class RootNodeClass extends SceneNode {
+    class RootNodeClass extends SceneNode {
         /**
          * Adds a child node to this container node. You can only add leaf nodes this way; to create structured subtrees of content, use commands.
          * @param {SceneNode} node Child to add
