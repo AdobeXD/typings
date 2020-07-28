@@ -75,7 +75,7 @@ declare global {
         /**
          * Array representing the current selection plus any locked items that the user has attempted to select.
          */
-        readonly itemsIncludingLocked: Array<SceneNode>;
+        readonly itemsIncludingLocked: ReadonlyArray<SceneNode>;
         /**
          * True if the selection isn’t empty and consists of one or more non-Artboards. Never true at the same time as hasArtboards.
          */
@@ -92,7 +92,7 @@ declare global {
          * The preferred parent to insert newly added content into. Takes into account the current edit context as well as the "focused artboard" if in the root context.
          Typically this is the same parent where, for example, XD's shape drawing tools would add items.
          *
-         * _Selected items are not necessarily all immediate children of the `insertionParent`._ They can be anywhere within the [edit context's](/reference/core/edit-context.md) scope.
+         * _Selected items are not necessarily all immediate children of the `insertionParent`._ They can be anywhere within the edit context's scope.
          */
         readonly insertionParent: SceneNode;
         /**
