@@ -119,9 +119,8 @@ declare module 'assets' {
          * The list may contain a mix of solid Color assets and/or gradient assets. If there are no color/gradient assets, an empty array is returned.
          *
          * @example
-         *  var assets = require("assets"),
-         *  allColors = assets.colors.get();
-         *
+         * var assets = require("assets"),
+         * allColors = assets.colors.get();
          */
         get(): Array<ColorAsset | GradientAsset>;
 
@@ -155,9 +154,8 @@ declare module 'assets' {
          * If there are no character style assets, an empty array is returned.
          *
          * @example
-         *  var assets = require("assets"),
-         *  allCharacterStyles = assets.characterStyles.get();
-         *
+         * var assets = require("assets"),
+         * allCharacterStyles = assets.characterStyles.get();
          */
         get(): Array<CharacterStyleAsset>;
 

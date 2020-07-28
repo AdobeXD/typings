@@ -12,30 +12,33 @@ declare module 'interactions' {
      *
      * May include interactions that are impossible to trigger because the trigger node (or one of its ancestors) has `visible` = false.
      *
-     * Note: currently, this API excludes all of the document's keyboard/gamepad interactions.
+     * > **Tip**
+     * >
+     * > Currently, this API excludes some types of interactions: keypress/gamepad, scrolling, hover, component state transitions, or non-speech audio playback.
      */
     export const allInteractions: Array<{ triggerNode: SceneNode, interactions: Array<Interaction> }>;
 
     /**
      * An interaction consists of a Trigger + Action pair and is attached to a single, specific scenenode.
      *
-     * @example ```javascript
-     {
-    trigger: {
-        type: "tap"
-    },
-    action: {
-        type: "goToArtboard",
-        destination: Artboard node,
-        preserveScrollPosition: false,
-        transition: {
-            type: "dissolve",
-            duration: 0.4,
-            easing: "ease-out"
-        }
-    }
-}```
      * Note: Interaction objects are not plain JSON -- they may reference scenenodes (as seen above) and other strongly-typed objects.
+     *
+     * @example
+     * {
+     *   trigger: {
+     *     type: "tap"
+     *   },
+     *   action: {
+     *     type: "goToArtboard",
+     *     destination: Artboard node,
+     *     preserveScrollPosition: false,
+     *     transition: {
+     *       type: "dissolve",
+     *       duration: 0.4,
+     *       easing: "ease-out"
+     *     }
+     *   }
+     * }
      */
     type Interaction = {
         /**

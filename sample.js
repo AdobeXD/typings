@@ -1,4 +1,4 @@
-const {Text, Ellipse, Color} = require("scenegraph");
+const {Text, Ellipse, Color, SceneNode} = require("scenegraph");
 const clipboard = require("clipboard");
 const shell = require("uxp").shell;
 const fs = require("uxp").storage.localFileSystem;

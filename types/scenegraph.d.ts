@@ -12,6 +12,169 @@ declare module 'scenegraph' {
         scaleY: number;
     }
 
+    /**
+     * (**Since:** XD 29)
+     *
+     * Stores metadata accessible to multiple plugins, separated into silos by plugin ID. Your plugin can read & write the storage for its own plugin ID, but storage for other plugin IDs is *read-only*.
+     *
+     * Each per-plugin storage silo is a collection of key-value pairs. Keys and values must both be strings.
+     *
+     * *Each* scenenode has its own metadata storage, accessed via `SceneNode.sharedPluginData`. To store general metadata that is not specific to one scenenode, use `sharedPluginData` on the document's scenegraph root.
+     * @example
+     * // This example shows how to save & retrieve rich JSON data in shared metadata storage.
+     * // See below for simpler examples of using individual APIs.
+     * const PLUGIN_ID = "<your manifest's plugin ID here>";
+     * let richObject = {
+     *   list: [2, 4, 6],
+     *   name: "Hello world"
+     * };
+     * node.sharedPluginData.setItem(PLUGIN_ID, "richData", JSON.stringify(richObject));
+     *
+     * // Later on...
+     * // (This could be in a different plugin, if it passes the original plugin's ID here)
+     * let jsonString = node.sharedPluginData.getItem(PLUGIN_ID, "richData");
+     * if (jsonString) {  // may be undefined
+     *   let richObjectCopy = JSON.parse(jsonString);
+     *   console.log(richObjectCopy.list.length);  // 3
+     * }
+     */
+    interface PerPluginStorage {
+        /**
+         * Returns a map where key is plugin ID and value is a nested map containing all the shared metadata for that plugin ID (i.e. the result of calling `getForPluginId()` with that ID).
+         *
+         * This map is a clone of the stored metadata, so modifying it has no effect.
+         *
+         * @example
+         * let allSharedMetadata = node.sharedPluginData.getAll();
+         * console.log("Plugin A's 'foo' value:",
+         *             allSharedMetadata["A"] && allSharedMetadata["A"].foo);
+         * console.log("All of plugin B's shared metadata on this node:",
+         *             allSharedMetadata["B"]);
+         * console.log("List of plugins storing shared metadata on this node:",
+         *             Object.keys(allSharedMetadata));
+         */
+        getAll(): { [key: string]: { [key: string]: string } };
+
+        /**
+         * Returns a map of key-value string pairs containing all shared metadata stored on this node by the given plugin. May be an empty object (zero keys), but is never null.
+         *
+         * This map is a clone of the stored metadata, so modifying it has no effect.
+         * @param pluginId
+         *
+         * @example
+         * const MY_PLUGIN_ID = "<your manifest's plugin ID here>";
+         * let mySharedMetadata = node.sharedPluginData.getForPluginId(MY_PLUGIN_ID);
+         * console.log("My shared 'foo' & 'bar' values:",
+         * mySharedMetadata.foo, mySharedMetadata.bar);
+         *
+         *
+         * console.log("Plugin B's shared 'foo' value:",
+         *   node.sharedPluginData.getForPluginId("B").foo);
+         */
+        getForPluginId(pluginId: string): { [key: string]: string };
+
+        /**
+         * Returns a list of all keys stored on this node by the given plugin. May be empty (length zero), but is never null.
+         * @param pluginId
+         *
+         * @example
+         * console.log("All properties stored by plugin A on this node:",
+         * node.sharedPluginData.keys("A"));
+         */
+        keys(pluginId: string): string[];
+
+        /**
+         * Returns the value stored under the given key on this node by the given plugin, or `undefined` if the plugin hasn't stored anything under the given key.
+         *
+         * Because metadata is stored separately per plugin, two plugins can store two different values under the same key.
+         * @param pluginId
+         * @param key
+         *
+         * @example
+         * // These are two different values, stored independently per plugin
+         * console.log("Plugin A's 'foo' value:", node.sharedPluginData.getItem("A", "foo"));
+         * console.log("Plugin B's 'foo' value:", node.sharedPluginData.getItem("B", "foo"));
+         */
+        getItem(pluginId: string, key: string): string | undefined;
+
+        /**
+         * Set a metadata key which can be read by any other plugin.
+         * @param pluginId *Must* be equal to your plugin's ID.
+         * @param key
+         * @param value If undefined, behaves as if you'd called `removeItem()` instead.
+         *
+         * @example
+         * const MY_PLUGIN_ID = "<your manifest's plugin ID here>";
+         * node.sharedPluginData.setItem(MY_PLUGIN_ID, "foo", "42");
+         *
+         * node.sharedPluginData.setItem("other_plugin_id", "foo", "42");
+         * // ^ ERROR: other plugin's metadata is read-only
+         *
+         * console.log(node.sharedPluginData.getItem(MY_PLUGIN_ID, "foo"));  // "42"
+         */
+        setItem(pluginId: string, key: string, value: string | undefined): void;
+
+        /**
+         * Clears a shared metadata key stored by your plugin.
+         * @param pluginId *Must* be equal to your plugin's ID.
+         * @param key
+         *
+         * @example
+         * const MY_PLUGIN_ID = "<your manifest's plugin ID here>";
+         * node.sharedPluginData.setItem(MY_PLUGIN_ID, "foo", "42");
+         * console.log(node.sharedPluginData.getItem(MY_PLUGIN_ID, "foo"));  // "42"
+         *
+         * node.sharedPluginData.removeItem(MY_PLUGIN_ID, "foo");
+         * console.log(node.sharedPluginData.getItem(MY_PLUGIN_ID, "foo"));  // undefined
+         */
+        removeItem(pluginId: string, key: string): void;
+
+        /**
+         * Provided for convenience: you can `console.log(node.sharedPluginData)` to see the value of `getAll()`.
+         */
+        toString(): string;
+
+        /**
+         * Provided for convenience: you can include a `PerPluginStorage` object inside data you are going to convert to JSON, even though it is not a plain JavaScript object. Returns the same value as `getAll()`.
+         */
+        toJSON(): object;
+    }
+
+    /**
+     * Represents the children of a scenenode. Typically accessed via the SceneNode.children property.
+     */
+    interface SceneNodeList {
+        items: SceneNode[];
+        readonly length: number;
+
+        forEach(
+            callback: (sceneNode: SceneNode, index: number) => void,
+            thisArg?: object
+        ): void;
+
+        forEachRight(
+            callback: (sceneNode: SceneNode, index: number) => void,
+            thisArg?: object
+        ): void;
+
+        filter(
+            callback: (sceneNode: SceneNode, index: number) => boolean,
+            thisArg?: object
+        ): Array<SceneNode>;
+
+        map(
+            callback: (sceneNode: SceneNode, index: number) => any,
+            thisArg?: object
+        ): Array<any>;
+
+        some(
+            callback: (sceneNode: SceneNode, index: number) => boolean,
+            thisArg?: object
+        ): boolean;
+
+        at(index: number): SceneNode | null;
+    }
+
     export class Matrix {
         /**
          * Creates a new transform matrix with the following structure:
@@ -286,6 +449,14 @@ declare module 'scenegraph' {
          */
         scaleBehaviour: string;
 
+        // TODO: assetId: string (readonly?)
+        /**
+         * (**Since**: XD 29)
+         *
+         * A unique identifier for the image asset used by this ImageFill. May be shared by other ImageFills, including those with different cropping, size,
+         * rotation, or mirroring. If identical images are imported into XD from separate sources, they may have different `assetId`s however.
+         */
+        assetId: string;
         /**
          * Format the image data was originally encoded in, such as `image/gif` or `image/jpeg`.
          */
@@ -317,7 +488,6 @@ declare module 'scenegraph' {
          */
         clone(): ImageFill;
     }
-
 
     export class Shadow {
         /**
@@ -400,15 +570,16 @@ declare module 'scenegraph' {
         height: number;
     }
 
-    export interface SceneNode extends SceneNodeClass {
-    }
-
     /**
      * Base class of all scenegraph nodes. Nodes will always be an instance of some subclass of SceneNode.
      */
     abstract class SceneNodeClass {
         /**
          * Returns a unique identifier for this node that stays the same when the file is closed & reopened, or if the node is moved to a different part of the document. Cut-Paste will result in a new guid, however.
+         *
+         * The GUID is guaranteed unique _within_ the current document, but _other_ documents may contain the same GUID value. For example, if the user makes a copy of an XD file, both files will use the same GUIDs.
+         *
+         * The GUID of the root node changes if the document is duplicated via Save As. See `application.activeDocument.guid` for details.
          */
         readonly guid: string;
         /**
@@ -496,6 +667,8 @@ declare module 'scenegraph' {
 
         /**
          * Node name as seen in the Layers panel. Also used as filename during export.
+         *
+         * Setting this property will cause `hasDefaultName` to become false.
          */
         name: string;
 
@@ -528,14 +701,13 @@ declare module 'scenegraph' {
          *
          * Note: If this node (or one of its ancestors) has `visible` = false, tap and drag interactions on it will not be triggered.
          *
-         * Currently, this API excludes any keyboard/gamepad interactions on this node.
+         * Currently, this API excludes some types of interactions: keypress/gamepad, scrolling, hover, component state transitions, or non-speech audio playback.
          *
-         * @example ```javascript
-         // Print all the interactions triggered by a node
-         node.triggeredInteractions.forEach(interaction => {
-    console.log("Trigger: " + interaction.trigger.type + " -> Action: " + interaction.action.type);
-});
-         * ```
+         * @example
+         * // Print all the interactions triggered by a node
+         * node.triggeredInteractions.forEach(interaction => {
+         *    console.log("Trigger: " + interaction.trigger.type + " -> Action: " + interaction.action.type);
+         * });
          *
          * @see interactions.allInteractions
          */
@@ -548,14 +720,126 @@ declare module 'scenegraph' {
 
         /**
          * **Since:** XD 14
-         * Metadata specific to your plugin. Must be a value which can be converted to a JSON string, or undefined to clear the stored metadata on this node.
+         * Metadata specific to your plugin. Must be a value which can be converted to a JSON string, or undefined to clear the
+         stored metadata on this node.    stored metadata on this node.
          *
-         * Metadata is persisted with the document when it is saved. Duplicating a node (including across documents, via copy-paste) will duplicate the metadata with it. If the node lies within a Component or Repeat Grid, all instances of the node will have identical metadata (changes in one copy will automatically be synced to the other copy). Metadata stored by this plugin cannot be accessed by other plugins - each plugin has its own isolated metadata storage.
-
+         * Metadata is persisted with the document when it is saved. Duplicating a node (including across documents, via copy-paste)
+         * will duplicate the metadata with it. If the node lies within a Component or Repeat Grid, all instances of the node will have
+         * identical metadata (changes in one copy will automatically be synced to the other copy).
          *
-         * To store general metadata for the document overall, set pluginData on the root node of the scenegraph. Metadata on the root node can be changed from any edit context.
+         * To store general metadata for the document overall, set pluginData on the [root](#module_scenegraph-root) node of the scenegraph. Metadata on
+         * the root node can be changed from _any_ edit context.
+         *
+         * Metadata stored in pluginData cannot be accessed by other plugins -- each plugin has its own isolated storage. To share metadata
+         * with other plugins, use `sharedPluginData`.
          */
         pluginData: any;
+
+        /**
+         * (**Since**: XD 29)
+         *
+         * Metadata storage accessible by other plugins, separated into silos by plugin ID. Your plugin can read & write the storage for its own plugin ID,
+         * but storage for other plugin IDs is *read-only*. This property returns a PerPluginStorage API object.
+         *
+         * *Each* scenenode has its own metadata storage. To store general metadata that is not specific to one scenenode, use `sharedPluginData` on the
+         * [document's scenegraph root](scenegraph.md#module_scenegraph-root).
+         *
+         * Metadata is persisted with the document when it is saved. See `pluginData` for info on how metadata is duplicated when nodes are
+         * copied or synced.
+         *
+         */
+        sharedPluginData: PerPluginStorage;
+
+
+
+        /**
+         * (**Since**: XD 27)
+         *
+         * Blend mode determines how a node is composited onto the content below it.
+         *
+         * One of: `SceneNode.BLEND_MODE_PASSTHROUGH`, `BLEND_MODE_NORMAL`, `BLEND_MODE_MULTIPLY`, `BLEND_MODE_DARKEN`, `BLEND_MODE_COLOR_BURN`, `BLEND_MODE_LIGHTEN`, `BLEND_MODE_SCREEN`, `BLEND_MODE_COLOR_DODGE`, `BLEND_MODE_OVERLAY`, `BLEND_MODE_SOFT_LIGHT`,
+         * `BLEND_MODE_HARD_LIGHT`, `BLEND_MODE_DIFFERENCE`, `BLEND_MODE_EXCLUSION`, `BLEND_MODE_HUE`, `BLEND_MODE_SATURATION`, `BLEND_MODE_COLOR`, `BLEND_MODE_LUMINOSITY`.
+         *
+         *  _Note:_ for leaf nodes (GraphicNode), the XD UI may show leaf nodes as blend mode "Normal" even when the underlying value is `BLEND_MODE_PASSTHROUGH`. This is because "Pass Through" and "Normal" are essentially equivalent for leaf nodes -- they only differ
+         *  in appearance when a node has children.
+         *
+         * @example
+         * node.blendMode = scenegraph.SceneNode.BLEND_MODE_LUMINOSITY;
+         */
+        blendMode: string; // TODO: Implement the actual constant value possibilities
+
+        /**
+         * (**Since**: XD 29)
+         *
+         * Horizontal dynamic-layout settings used with the Responsive Resize feature. Setting this only determines how the node is updated when its parent is resized -- it does not change the node's current size or position.
+         *
+         * Both fields *must* be provided together when setting this property.
+         *
+         * Returns undefined if node's parent is a container where Responsive Resize is unavailable:
+         * * Certain containers such as RepeatGrid and the pasteboard (scenegraph root) do not support Responsive Resize.
+         * * Container may have Responsive Resize layout explicitly turned off (see `dynamicLayout` flag).
+         *
+         * Attempting to set this property when Responsive Resize is unavailable results in an error.
+         *
+         * Setting this property will cause `hasCustomConstraints` to become true.
+         * @example
+         * let node = selection.items[0];
+         * node.horizontalConstraints = { position: scenegraph.SceneNode.FIXED_LEFT, size: scenegraph.SceneNode.SIZE_FIXED };
+         */
+        horizontalConstraints: undefined | {
+            /**
+             * Horizontal position anchoring, one of `SceneNode.FIXED_LEFT`, `FIXED_RIGHT`, `FIXED_BOTH` or `POSITION_PROPORTIONAL`.<br><br>`FIXED_BOTH` sets fixed left & right offsets, so it always implies `size: SIZE_RESIZES` (similar to setting both `left` & `right` in CSS).<br><br>`POSITION_PROPORTIONAL` holds node position at a fixed percentage of the parent's width -- the same positioning behavior you'd get if Responsive Resize is turned off entirely.
+             */
+            position: string,
+            /**
+             * Horizontal sizing behavior, either `SceneNode.SIZE_FIXED` or `SceneNode.SIZE_RESIZES`.<br><br>`SIZE_FIXED` cannot be used with `position: FIXED_BOTH`, since it is impossible to fix both left & right edges without resizing when the parent resizes.<br><br>`SIZE_RESIZES` can be used with any `position` setting. With `position: FIXED_BOTH`, the node's size always equals the parent's size minus the fixed left & right offsets. With other position settings, the node's size maintains a fixed percentage of the parent's size.
+             */
+            size: string
+        };
+
+        /**
+         * (**Since**: XD 29)
+         *
+         * Vertical dynamic-layout settings used with the Responsive Resize feature. Setting this only determines how the node is updated when its parent is resized -- it does not change the node's current size or position.
+         *
+         * Both fields *must* be provided together when setting this property.
+         *
+         * See `horizontalConstraints` for other important notes.
+         *
+         * @example
+         * let node = selection.items[0];
+         * node.verticalConstraints = { position: scenegraph.SceneNode.FIXED_TOP, size: scenegraph.SceneNode.SIZE_RESIZES };
+         */
+        verticalConstraints: undefined | {
+            /**
+             * Vertical position anchoring, one of `SceneNode.FIXED_TOP`, `FIXED_BOTTOM`, `FIXED_BOTH` or `POSITION_PROPORTIONAL`.<br><br>For details, see `horizontalConstraints` above.
+             */
+            position: string,
+            /**
+             * Vertical sizing behavior, either `SceneNode.SIZE_FIXED` or `SceneNode.SIZE_RESIZES`.<br><br>For details, see `horizontalConstraints` above.
+             */
+            size: string
+        };
+
+        /**
+         * (**Since**: XD 29)
+         *
+         * True if this node's Responsive Resize layout settings, which are normally automatically inferred by XD, have been overridden with specific desired values. Constraints on a node are either all overridden, or all automatic -- never mixed.
+         *
+         * If false, each time the parent resizes XD will automatically guess the best layout settings to used based on the current size & position of this node within its parent. You can use the `horizontalConstraints` and `verticalConstraints` getters to check what computed settings XD would use based on the node's current size & position.
+         *
+         * Automatically becomes true any time you set `horizontalConstraints` or `verticalConstraints`. To reset to false, call `resetToAutoConstraints()`.
+         */
+        readonly hasCustomConstraints: boolean;
+
+        /**
+         * (**Since**: XD 29)
+         *
+         * Erase any overridden Responsive Resize layout settings, restoring the default behavior where XD will automatically guess the best layout settings for this node the next time its parent is resized. This function does not change the node's *current* size & position, however.
+         *
+         * Calling this will cause `hasCustomConstraints` to become false.
+         */
+        resetToAutoConstraints(): void;
 
         /**
          * Remove this node from its parent, effectively deleting it from the document.
@@ -594,6 +878,50 @@ declare module 'scenegraph' {
          * @param {number} height
          */
         resize(width: number, height: number): void;
+    }
+
+    /*
+     Export the "name" of SceneNode. This provides access to the "restricted" static
+     properties.
+     You could get the "type" of this by using `typeof SceneNode` (especially in type
+     declarations).
+     */
+    export const SceneNode: SceneNodeStatic;
+
+    export interface SceneNode extends SceneNodeClass {
+    }
+
+    /*
+     Define the shape of the SceneNode "restricted" static properties.
+     NOTE: These properties do not show up on sub-classes so they cannot
+     be a part of the class-inheritance tree.
+     */
+    interface SceneNodeStatic {
+        readonly BLEND_MODE_PASSTHROUGH: string;
+        readonly BLEND_MODE_NORMAL: string;
+        readonly BLEND_MODE_MULTIPLY: string;
+        readonly BLEND_MODE_DARKEN: string;
+        readonly BLEND_MODE_COLOR_BURN: string;
+        readonly BLEND_MODE_LIGHTEN: string;
+        readonly BLEND_MODE_SCREEN: string;
+        readonly BLEND_MODE_COLOR_DODGE: string;
+        readonly BLEND_MODE_OVERLAY: string;
+        readonly BLEND_MODE_SOFT_LIGHT: string;
+        readonly BLEND_MODE_HARD_LIGHT: string;
+        readonly BLEND_MODE_DIFFERENCE: string;
+        readonly BLEND_MODE_EXCLUSION: string;
+        readonly BLEND_MODE_HUE: string;
+        readonly BLEND_MODE_SATURATION: string;
+        readonly BLEND_MODE_COLOR: string;
+        readonly BLEND_MODE_LUMINOSITY: string;
+        readonly FIXED_LEFT: string;
+        readonly FIXED_RIGHT: string;
+        readonly FIXED_TOP: string;
+        readonly FIXED_BOTTOM: string;
+        readonly FIXED_BOTH: string;
+        readonly POSITION_PROPORTIONAL: string;
+        readonly SIZE_FIXED: string;
+        readonly SIZE_RESIZES: string;
     }
 
     /**
@@ -874,41 +1202,53 @@ declare module 'scenegraph' {
 
     /**
      * **Since**: XD 19
-     * Leaf node shape that is a polygon with 3 or more sides. May also have rounded corners. The sides are not necessarily all equal in length: this is true only when the Polygon's width and height matches the aspect ratio of a regular (equilateral) polygon with the given number of sides.
+     * Leaf node shape that is either a convex polygon _or_ a star shape. May have rounded corners. The sides are not necessarily all equal in length:
      *
-     * When unrotated, the Polygon always has its bottommost side as a perfectly horizontal line - with the exception of the 4-sided Polygon, which is a diamond shape instead.
+     * When unrotated, a non-star Polygon always has its bottommost side as a perfectly horizontal line - with the exception of the 4-sided Polygon, which
      *
      * Like all shape nodes, has no size, fill, or stroke by default unless you set one.
      *
-     * @example ```javascript
-     // Add a red triangle to the document and select it
-     var polygon = new Polygon();
-     polygon.cornerCount = 3;
-     polygon.width = 50;
-     polygon.height = 100;
-     polygon.fill = new Color("red");
-     selection.insertionParent.addChild(polygon);
-     selection.items = [polygon];
-     * ```
+     * @example
+     * // Add a red triangle to the document
+     * var polygon = new Polygon();
+     * polygon.cornerCount = 3;
+     * polygon.width = 50;
+     * polygon.height = 100;
+     * polygon.fill = new Color("red");
+     * selection.insertionParent.addChild(polygon);
+     * selection.items = [polygon];
+     *
+     * // Add a blue 5-pointed star with rounded corners
+     * var polygon = new Polygon();
+     * polygon.cornerCount = 5;
+     * polygon.starRatio = 55;
+     * polygon.setAllCornerRadii(4);
+     * polygon.width = 100;
+     * polygon.height = 95;
+     * polygon.fill = new Color("blue");
+     * selection.insertionParent.addChild(polygon);
      */
     export class Polygon extends GraphicNode {
         /**
-         * > 0
+         * must be > 0
          */
         width: number;
 
         /**
-         * > 0
+         * must be > 0
          */
         height: number;
 
         /**
          * @default 3
-         * Number of corners (vertices), and also therefore number of sides.
+         * For a non-star shape, defines the number of corners (vertices), and also therefore number of sides. For a star shape, defines the
+         number of star points -- there will be twice as many corners in total (the tips of the points _plus_ all the inside corners
+         between the points).
          *
-         * Setting cornerCount on an existing Polygon behaves in one of two different ways:
-         * * If the shape's aspect ratio gives it equilateral sides, the sides remain equilateral while the size and aspect ratio of the shape is changed to accomodate.
-         * * Otherwise, the size and aspect ratio of the shape remains unchanged.
+         * Setting `cornerCount` on an existing Polygon behaves in one of two different ways:
+         * * If the shape's aspect ratio gives it equilateral sides, the sides remain equilateral while the size and aspect ratio of the
+         *   shape are automatically changed as needed.
+         * * Otherwise, the size and aspect ratio of the shape remain unchanged.
          *
          * This matches how changing the corner count in XD's UI behaves.
          *
@@ -922,9 +1262,20 @@ declare module 'scenegraph' {
         readonly hasRoundedCorners: boolean;
 
         /**
-         * List of corner radius for each corner of the polygon. To set corner radius, use [<code>setAllCornerRadii()</code>](#Polygon-setAllCornerRadii).
+         * List of corner radius for each corner of the polygon. To set corner radius, use `setAllCornerRadii()`.
          */
         cornerRadii: number[];
+
+        /**
+         * @default 100
+         * (**Since**: XD 26)
+         *
+         * Determines how prominent the shape's star points are. The default value of 100 is a normal convex polygon (not a star at all).
+         * For a star shape, consider that the outer vertices at the tips of the points all lie on a circle and the inner vertices
+         * between the points all lie on a second, smaller circle. The `starRatio` is the ratio of the smaller circle's diameter to the
+         * outer circle's diameter, expressed as a percentage.
+         */
+        starRatio: number;
 
         /**
          * Set the corner radius of all corners of the Polygon to the same value.
@@ -1086,7 +1437,7 @@ declare module 'scenegraph' {
          * Horizontal alignment: Text.ALIGN_LEFT, ALIGN_CENTER, or ALIGN_RIGHT. This setting affects the layout of multiline text, and for point text it also affects how the text is positioned relative to its anchor point (x=0 in local coordinates) and what direction the text grows when edited by the user.
          *
          * Changing textAlign on existing point text will cause it to shift horizontally. To change textAlign while keeping the text in a fixed position, shift the text horizontally (moving its anchor point) to compensate:
-         * @example ```javascript
+         * @example
          * let originalBounds = textNode.localBounds;
          * textNode.textAlign = newAlignValue;
          * let newBounds = textNode.localBounds;
@@ -1145,6 +1496,19 @@ declare module 'scenegraph' {
          * The mask shape applied to this group, if any. This object is also present in the group’s children list. Though it has no direct visual appearance of its own, the mask affects the entire groups’s appearance by clipping all its other content.
          */
         readonly mask: SceneNode | null;
+
+        /**
+         * (**Since:** XD 29)
+         *
+         * If true, Responsive Resize is enabled, and this node's children will use an intelligent layout algorithm whenever this node is resized.
+         *
+         * Returns undefined on node types that do not support Responsive Resize (such as RepeatGrid; see `horizontalConstraints` docs for a
+         * complete list). Attempting to set this property on such node types results in an error.
+         *
+         * @see SceneNode.horizontalConstraints
+         * @see SceneNode.verticalConstraints
+         */
+        dynamicLayout: undefined | boolean;
 
         /**
          * Adds a child node to this container node. You can only add leaf nodes this way; to create structured subtrees of content, use commands.
@@ -1362,6 +1726,27 @@ declare module 'scenegraph' {
      * Root node of the current document's scenegraph. Also available as the second argument passed to your plugin command handler function.
      */
     export const root: RootNode;
+
+    /**
+     * (**Since**: XD 28)
+     *
+     * Returns the scenenode in this document that has the given node GUID. Returns undefined if no such node exists connected
+     * to the scenegraph tree (detached/orphan nodes will not be found). This provides a fast way of persistently remembering a node across plugin
+     * operations and even across document open/closes.
+     * @param guid SceneNode GUID -- must be all lowercase, as returned by the [`guid` getter](#SceneNode-guid).
+     *
+     * @example
+     * let node = scenegraph.selection.items[0];
+     * let guid = node.guid;
+     * // ...later on:
+     * let sameNode = scenegraph.getNodeByGUID(guid);
+     * if (sameNode) {
+     *   // ^ Always check if node still exists - user may have deleted it
+     *   console.log("Found node again!", sameNode);
+     * }
+     */
+    export function getNodeByGUID(guid: string): SceneNode | undefined;
+
 
     export {}; // Avoid exporting SceneNodeClass and RootNodeClass
 }

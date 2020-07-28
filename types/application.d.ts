@@ -24,21 +24,6 @@ declare module 'application' {
      * You can only call `editDocument()` in response to a user action, such as a button `"click"` event or a text input's `"input"` event. This generally means you must call it while a UI event handler is on the call stack.
      *
      * For UI events that often occur in rapid-fire clusters, such as dragging a slider or pressing keys in a text field, XD tries to smartly merge consecutive edits into a single atomic Undo step. See the `mergeId` option below to customize this behavior.
-     * @param editFunction Function which will perform your plugin's edits to the scenegraph.
-     */
-    export function editDocument(editFunction: (selection: Selection, root: RootNode) => Promise<any> | void): void;
-
-    /**
-     * Call `editDocument()` from a plugin panel UI event listener to initiate an edit operation batch in order to modify the XD document. This API is irrelevant for plugin menu item commands, which are wrapped in an edit batch automatically.
-     *
-     * XD calls the `editFunction()` synchronously (before `editDocument()` returns). This function is treated the same as a menu command handler:
-     *
-     * * It is passed two arguments, the selection and the root node of the scenegraph
-     * * It can return a Promise to extend the duration of the edit asynchronously
-     *
-     * You can only call `editDocument()` in response to a user action, such as a button `"click"` event or a text input's `"input"` event. This generally means you must call it while a UI event handler is on the call stack.
-     *
-     * For UI events that often occur in rapid-fire clusters, such as dragging a slider or pressing keys in a text field, XD tries to smartly merge consecutive edits into a single atomic Undo step. See the `mergeId` option below to customize this behavior.
      * @param options Optional settings object (see below). This argument can be omitted.
      * @param editFunction Function which will perform your plugin's edits to the scenegraph.
      */
@@ -125,6 +110,19 @@ declare module 'application' {
         outputFile: storage.File;
     }
 
+    type DocumentInfo = {
+        /**
+         * Document name as displayed in the titlebar. For untitled documents, this will be a localized string such as "Untitled-1."
+         */
+        name: string,
+        /**
+         * *Semi*-unique document identifier. Duplicating an .xd file on disk will result in two files with the same GUID. Duplicating a document via "Save As" will change its GUID; thus two *cloud* documents will never have the same GUID. The GUID of an Untitled document doesn't change when it is saved for the first time.
+         *
+         * This returns the same value as `scenegraph.root.guid`.
+         */
+        guid: string
+    };
+
     /**
      * Generate renditions of nodes in the document in a batch. Overwrites any existing files without warning.
      *
@@ -158,22 +156,21 @@ declare module 'application' {
     export const systemLocale: string;
 
     /**
+     * Information about the document which this instance of the plugin is attached to.
      *
-     */
-    type DocumentInfo = {
-        /**
-         * Document name as displayed in the document window.
-         */
-        name: string;
-        /**
-         * Unique document identifier that does not change.
-         */
-        guid: string;
-    }
-
-    /**
-     * Represents the active document. Provides the document guid and current saved name.
+     * > **Tip**
+     * >
+     * > _This does **not** indicate the frontmost "active" document window in the XD application._
+     * > In XD, each document window loads a separate copy of your plugin. When a given instance of your plugin calls this API, you will always receive information about the document that this instance of the plugin is attached to, even if it's not the active window.
      *
+     * @example
+     * let application = require("application");
+     * let documentInfo = application.activeDocument;
+     * console.log("Document title: " + documentInfo.name);
+     * console.log("Document ID: " + documentInfo.guid);
      */
     export const activeDocument: DocumentInfo;
+
 }
+
+
