@@ -809,10 +809,9 @@ declare module 'scenegraph' {
          * Attempting to set this property when Responsive Resize is unavailable results in an error.
          *
          * Setting this property will cause `hasCustomConstraints` to become true.
-         * @example ```js
-         *let node = selection.items[0];
-         *node.horizontalConstraints = { position: scenegraph.SceneNode.FIXED_LEFT, size: scenegraph.SceneNode.SIZE_FIXED };
-         *```
+         * @example
+         * let node = selection.items[0];
+         * node.horizontalConstraints = { position: scenegraph.SceneNode.FIXED_LEFT, size: scenegraph.SceneNode.SIZE_FIXED };
          */
         horizontalConstraints: undefined | {
             /**
@@ -834,9 +833,9 @@ declare module 'scenegraph' {
          *
          * See `horizontalConstraints` for other important notes.
          *
-         * @example ```js
-         *let node = selection.items[0];
-         *node.verticalConstraints = { position: scenegraph.SceneNode.FIXED_TOP, size: scenegraph.SceneNode.SIZE_RESIZES };
+         * @example
+         * let node = selection.items[0];
+         * node.verticalConstraints = { position: scenegraph.SceneNode.FIXED_TOP, size: scenegraph.SceneNode.SIZE_RESIZES };
          */
         verticalConstraints: undefined | {
             /**
@@ -1192,35 +1191,34 @@ declare module 'scenegraph' {
      *
      * Like all shape nodes, has no size, fill, or stroke by default unless you set one.
      *
-     * @example ```javascript
-     // Add a red triangle to the document
-     var polygon = new Polygon();
-     polygon.cornerCount = 3;
-     polygon.width = 50;
-     polygon.height = 100;
-     polygon.fill = new Color("red");
-     selection.insertionParent.addChild(polygon);
-     selection.items = [polygon];
-
-     // Add a blue 5-pointed star with rounded corners
-     var polygon = new Polygon();
-     polygon.cornerCount = 5;
-     polygon.starRatio = 55;
-     polygon.setAllCornerRadii(4);
-     polygon.width = 100;
-     polygon.height = 95;
-     polygon.fill = new Color("blue");
-     selection.insertionParent.addChild(polygon);
-     * ```
+     * @example
+     * // Add a red triangle to the document
+     * var polygon = new Polygon();
+     * polygon.cornerCount = 3;
+     * polygon.width = 50;
+     * polygon.height = 100;
+     * polygon.fill = new Color("red");
+     * selection.insertionParent.addChild(polygon);
+     * selection.items = [polygon];
+     *
+     * // Add a blue 5-pointed star with rounded corners
+     * var polygon = new Polygon();
+     * polygon.cornerCount = 5;
+     * polygon.starRatio = 55;
+     * polygon.setAllCornerRadii(4);
+     * polygon.width = 100;
+     * polygon.height = 95;
+     * polygon.fill = new Color("blue");
+     * selection.insertionParent.addChild(polygon);
      */
     export class Polygon extends GraphicNode {
         /**
-         * > 0
+         * must be > 0
          */
         width: number;
 
         /**
-         * > 0
+         * must be > 0
          */
         height: number;
 
@@ -1247,7 +1245,7 @@ declare module 'scenegraph' {
         readonly hasRoundedCorners: boolean;
 
         /**
-         * List of corner radius for each corner of the polygon. To set corner radius, use [<code>setAllCornerRadii()</code>](#Polygon-setAllCornerRadii).
+         * List of corner radius for each corner of the polygon. To set corner radius, use `setAllCornerRadii()`.
          */
         cornerRadii: number[];
 
@@ -1422,7 +1420,7 @@ declare module 'scenegraph' {
          * Horizontal alignment: Text.ALIGN_LEFT, ALIGN_CENTER, or ALIGN_RIGHT. This setting affects the layout of multiline text, and for point text it also affects how the text is positioned relative to its anchor point (x=0 in local coordinates) and what direction the text grows when edited by the user.
          *
          * Changing textAlign on existing point text will cause it to shift horizontally. To change textAlign while keeping the text in a fixed position, shift the text horizontally (moving its anchor point) to compensate:
-         * @example ```javascript
+         * @example
          * let originalBounds = textNode.localBounds;
          * textNode.textAlign = newAlignValue;
          * let newBounds = textNode.localBounds;
@@ -1720,16 +1718,15 @@ declare module 'scenegraph' {
      * operations and even across document open/closes.
      * @param guid SceneNode GUID -- must be all lowercase, as returned by the [`guid` getter](#SceneNode-guid).
      *
-     * @example ```js
-     let node = scenegraph.selection.items[0];
-     let guid = node.guid;
-     // ...later on:
-     let sameNode = scenegraph.getNodeByGUID(guid);
-     if (sameNode) {
-   // ^ Always check if node still exists - user may have deleted it
-   console.log("Found node again!", sameNode);
-}
-     ```
+     * @example
+     * let node = scenegraph.selection.items[0];
+     * let guid = node.guid;
+     * // ...later on:
+     * let sameNode = scenegraph.getNodeByGUID(guid);
+     * if (sameNode) {
+     *   // ^ Always check if node still exists - user may have deleted it
+     *   console.log("Found node again!", sameNode);
+     * }
      */
     export function getNodeByGUID(guid: string): SceneNode | undefined;
 
