@@ -489,7 +489,6 @@ declare module 'scenegraph' {
         clone(): ImageFill;
     }
 
-
     export class Shadow {
         /**
          * X offset of the shadow relative to the shape it is attached to, in global coordinates (i.e. independent of the shape's rotation or any parent's rotation). May be negative.
@@ -574,7 +573,7 @@ declare module 'scenegraph' {
     /**
      * Base class of all scenegraph nodes. Nodes will always be an instance of some subclass of SceneNode.
      */
-    export abstract class SceneNode {
+    abstract class SceneNodeClass {
         /**
          * Returns a unique identifier for this node that stays the same when the file is closed & reopened, or if the node is moved to a different part of the document. Cut-Paste will result in a new guid, however.
          *
@@ -752,23 +751,6 @@ declare module 'scenegraph' {
         sharedPluginData: PerPluginStorage;
 
 
-        public static readonly BLEND_MODE_PASSTHROUGH: string;
-        public static readonly BLEND_MODE_NORMAL: string;
-        public static readonly BLEND_MODE_MULTIPLY: string;
-        public static readonly BLEND_MODE_DARKEN: string;
-        public static readonly BLEND_MODE_COLOR_BURN: string;
-        public static readonly BLEND_MODE_LIGHTEN: string;
-        public static readonly BLEND_MODE_SCREEN: string;
-        public static readonly BLEND_MODE_COLOR_DODGE: string;
-        public static readonly BLEND_MODE_OVERLAY: string;
-        public static readonly BLEND_MODE_SOFT_LIGHT: string;
-        public static readonly BLEND_MODE_HARD_LIGHT: string;
-        public static readonly BLEND_MODE_DIFFERENCE: string;
-        public static readonly BLEND_MODE_EXCLUSION: string;
-        public static readonly BLEND_MODE_HUE: string;
-        public static readonly BLEND_MODE_SATURATION: string;
-        public static readonly BLEND_MODE_COLOR: string;
-        public static readonly BLEND_MODE_LUMINOSITY: string;
 
         /**
          * (**Since**: XD 27)
@@ -785,15 +767,6 @@ declare module 'scenegraph' {
          * node.blendMode = scenegraph.SceneNode.BLEND_MODE_LUMINOSITY;
          */
         blendMode: string; // TODO: Implement the actual constant value possibilities
-
-        public static readonly FIXED_LEFT: string;
-        public static readonly FIXED_RIGHT: string;
-        public static readonly FIXED_TOP: string;
-        public static readonly FIXED_BOTTOM: string;
-        public static readonly FIXED_BOTH: string;
-        public static readonly POSITION_PROPORTIONAL: string;
-        public static readonly SIZE_FIXED: string;
-        public static readonly SIZE_RESIZES: string;
 
         /**
          * (**Since**: XD 29)
@@ -907,10 +880,54 @@ declare module 'scenegraph' {
         resize(width: number, height: number): void;
     }
 
+    /*
+     Export the "name" of SceneNode. This provides access to the "restricted" static
+     properties.
+     You could get the "type" of this by using `typeof SceneNode` (especially in type
+     declarations).
+     */
+    export const SceneNode: SceneNodeStatic;
+
+    export interface SceneNode extends SceneNodeClass {
+    }
+
+    /*
+     Define the shape of the SceneNode "restricted" static properties.
+     NOTE: These properties do not show up on sub-classes so they cannot
+     be a part of the class-inheritance tree.
+     */
+    interface SceneNodeStatic {
+        readonly BLEND_MODE_PASSTHROUGH: string;
+        readonly BLEND_MODE_NORMAL: string;
+        readonly BLEND_MODE_MULTIPLY: string;
+        readonly BLEND_MODE_DARKEN: string;
+        readonly BLEND_MODE_COLOR_BURN: string;
+        readonly BLEND_MODE_LIGHTEN: string;
+        readonly BLEND_MODE_SCREEN: string;
+        readonly BLEND_MODE_COLOR_DODGE: string;
+        readonly BLEND_MODE_OVERLAY: string;
+        readonly BLEND_MODE_SOFT_LIGHT: string;
+        readonly BLEND_MODE_HARD_LIGHT: string;
+        readonly BLEND_MODE_DIFFERENCE: string;
+        readonly BLEND_MODE_EXCLUSION: string;
+        readonly BLEND_MODE_HUE: string;
+        readonly BLEND_MODE_SATURATION: string;
+        readonly BLEND_MODE_COLOR: string;
+        readonly BLEND_MODE_LUMINOSITY: string;
+        readonly FIXED_LEFT: string;
+        readonly FIXED_RIGHT: string;
+        readonly FIXED_TOP: string;
+        readonly FIXED_BOTTOM: string;
+        readonly FIXED_BOTH: string;
+        readonly POSITION_PROPORTIONAL: string;
+        readonly SIZE_FIXED: string;
+        readonly SIZE_RESIZES: string;
+    }
+
     /**
      * Base class for nodes that have a stroke and/or fill. This includes leaf nodes such as Rectangle, as well as BooleanGroup which is a container node. If you create a shape node, it will not be visible unless you explicitly give it either a stroke or a fill.
      */
-    export class GraphicNode extends SceneNode {
+    export class GraphicNode extends SceneNodeClass {
         /**
          * The fill applied to this shape, if any. If this property is null or fillEnabled is false, no fill is drawn. Freshly created nodes have no fill by default.
          *
@@ -1474,7 +1491,7 @@ declare module 'scenegraph' {
      *
      * In a Mask Group, the mask shape is included in the group’s children list, at the top of the z order. It is not visible - only its path outline is used, for clipping the group.
      */
-    export class Group extends SceneNode {
+    export class Group extends SceneNodeClass {
         /**
          * The mask shape applied to this group, if any. This object is also present in the group’s children list. Though it has no direct visual appearance of its own, the mask affects the entire groups’s appearance by clipping all its other content.
          */
@@ -1531,7 +1548,7 @@ declare module 'scenegraph' {
      *
      * It is not currently possible for plugins to *create* a new component definition or a new SymbolInstance node, aside from using `require('commands').duplicate` to clone existing SymbolInstances.
      */
-    export class SymbolInstance extends SceneNode {
+    export class SymbolInstance extends SceneNodeClass {
         /**
          * An identifier unique within this document that is shared by all instances of the same component.
          */
@@ -1575,7 +1592,7 @@ declare module 'scenegraph' {
      * Each grid cell is a Group that is an immediate child of the RepeatGrid. These groups are automatically created and destroyed as needed when the RepeatGrid is resized.
      * It is not currently possible for plugins to create a new RepeatGrid node, aside from using commands.duplicate to clone existing RepeatGrids.
      */
-    export class RepeatGrid extends SceneNode {
+    export class RepeatGrid extends SceneNodeClass {
         /**
          * Defines size of the RepeatGrid. Cells are created and destroyed as necessary to fill the current size. Cells that only partially fit will be clipped.
          */
@@ -1661,7 +1678,7 @@ declare module 'scenegraph' {
     /**
      * Container node whose content is linked to an external resource, such as Creative Cloud Libraries. It cannot be edited except by first ungrouping it, breaking this link.
      */
-    export class LinkedGraphic extends SceneNode {
+    export class LinkedGraphic extends SceneNodeClass {
     }
 
     export interface RootNode extends RootNodeClass {
@@ -1670,7 +1687,7 @@ declare module 'scenegraph' {
     /**
      * Class representing the root node of the document. All Artboards are children of this node, as well as any pasteboard content that does not lie within an Artboard. Artboards must be grouped contiguously at the bottom of this node’s z order. The root node has no visual appearance of its own.
      */
-    class RootNodeClass extends SceneNode {
+    class RootNodeClass extends SceneNodeClass {
         /**
          * Adds a child node to this container node. You can only add leaf nodes this way; to create structured subtrees of content, use commands.
          * @param {SceneNode} node Child to add
