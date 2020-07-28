@@ -20,27 +20,38 @@ declare module 'scenegraph' {
      * Each per-plugin storage silo is a collection of key-value pairs. Keys and values must both be strings.
      *
      * *Each* scenenode has its own metadata storage, accessed via `SceneNode.sharedPluginData`. To store general metadata that is not specific to one scenenode, use `sharedPluginData` on the document's scenegraph root.
-     * @example ```js
+     * @example
      * // This example shows how to save & retrieve rich JSON data in shared metadata storage.
-     // See below for simpler examples of using individual APIs.
-     const PLUGIN_ID = "<your manifest's plugin ID here>";
-     let richObject = {
-    list: [2, 4, 6],
-    name: "Hello world"
- };
-     node.sharedPluginData.setItem(PLUGIN_ID, "richData", JSON.stringify(richObject));
-
-     // Later on...
-     // (This could be in a different plugin, if it passes the original plugin's ID here)
-     let jsonString = node.sharedPluginData.getItem(PLUGIN_ID, "richData");
-     if (jsonString) {  // may be undefined
-    let richObjectCopy = JSON.parse(jsonString);
-    console.log(richObjectCopy.list.length);  // 3
- }
+     * // See below for simpler examples of using individual APIs.
+     * const PLUGIN_ID = "<your manifest's plugin ID here>";
+     * let richObject = {
+     *   list: [2, 4, 6],
+     *   name: "Hello world"
+     * };
+     * node.sharedPluginData.setItem(PLUGIN_ID, "richData", JSON.stringify(richObject));
+     *
+     * // Later on...
+     * // (This could be in a different plugin, if it passes the original plugin's ID here)
+     * let jsonString = node.sharedPluginData.getItem(PLUGIN_ID, "richData");
+     * if (jsonString) {  // may be undefined
+     *   let richObjectCopy = JSON.parse(jsonString);
+     *   console.log(richObjectCopy.list.length);  // 3
+     * }
      */
     interface PerPluginStorage {
         /**
          * Returns a map where key is plugin ID and value is a nested map containing all the shared metadata for that plugin ID (i.e. the result of calling `getForPluginId()` with that ID).
+         *
+         * This map is a clone of the stored metadata, so modifying it has no effect.
+         *
+         * @example
+         * let allSharedMetadata = node.sharedPluginData.getAll();
+         * console.log("Plugin A's 'foo' value:",
+         *             allSharedMetadata["A"] && allSharedMetadata["A"].foo);
+         * console.log("All of plugin B's shared metadata on this node:",
+         *             allSharedMetadata["B"]);
+         * console.log("List of plugins storing shared metadata on this node:",
+         *             Object.keys(allSharedMetadata));
          */
         getAll(): { [key: string]: { [key: string]: string } };
 
@@ -51,14 +62,14 @@ declare module 'scenegraph' {
          * @param pluginId
          *
          * @example
-         *const MY_PLUGIN_ID = "<your manifest's plugin ID here>";
-         let mySharedMetadata = node.sharedPluginData.getForPluginId(MY_PLUGIN_ID);
-         console.log("My shared 'foo' & 'bar' values:",
-         mySharedMetadata.foo, mySharedMetadata.bar);
-
-
-         console.log("Plugin B's shared 'foo' value:",
-         node.sharedPluginData.getForPluginId("B").foo);
+         * const MY_PLUGIN_ID = "<your manifest's plugin ID here>";
+         * let mySharedMetadata = node.sharedPluginData.getForPluginId(MY_PLUGIN_ID);
+         * console.log("My shared 'foo' & 'bar' values:",
+         * mySharedMetadata.foo, mySharedMetadata.bar);
+         *
+         *
+         * console.log("Plugin B's shared 'foo' value:",
+         *   node.sharedPluginData.getForPluginId("B").foo);
          */
         getForPluginId(pluginId: string): { [key: string]: string };
 
@@ -68,7 +79,7 @@ declare module 'scenegraph' {
          *
          * @example
          * console.log("All properties stored by plugin A on this node:",
-         node.sharedPluginData.keys("A"));
+         * node.sharedPluginData.keys("A"));
          */
         keys(pluginId: string): string[];
 
@@ -81,8 +92,8 @@ declare module 'scenegraph' {
          *
          * @example
          * // These are two different values, stored independently per plugin
-         console.log("Plugin A's 'foo' value:", node.sharedPluginData.getItem("A", "foo"));
-         console.log("Plugin B's 'foo' value:", node.sharedPluginData.getItem("B", "foo"));
+         * console.log("Plugin A's 'foo' value:", node.sharedPluginData.getItem("A", "foo"));
+         * console.log("Plugin B's 'foo' value:", node.sharedPluginData.getItem("B", "foo"));
          */
         getItem(pluginId: string, key: string): string | undefined;
 
@@ -93,13 +104,13 @@ declare module 'scenegraph' {
          * @param value If undefined, behaves as if you'd called `removeItem()` instead.
          *
          * @example
-         const MY_PLUGIN_ID = "<your manifest's plugin ID here>";
-         node.sharedPluginData.setItem(MY_PLUGIN_ID, "foo", "42");
-
-         node.sharedPluginData.setItem("other_plugin_id", "foo", "42");
-         // ^ ERROR: other plugin's metadata is read-only
-
-         console.log(node.sharedPluginData.getItem(MY_PLUGIN_ID, "foo"));  // "42"
+         * const MY_PLUGIN_ID = "<your manifest's plugin ID here>";
+         * node.sharedPluginData.setItem(MY_PLUGIN_ID, "foo", "42");
+         *
+         * node.sharedPluginData.setItem("other_plugin_id", "foo", "42");
+         * // ^ ERROR: other plugin's metadata is read-only
+         *
+         * console.log(node.sharedPluginData.getItem(MY_PLUGIN_ID, "foo"));  // "42"
          */
         setItem(pluginId: string, key: string, value: string | undefined): void;
 
@@ -107,13 +118,14 @@ declare module 'scenegraph' {
          * Clears a shared metadata key stored by your plugin.
          * @param pluginId *Must* be equal to your plugin's ID.
          * @param key
+         *
          * @example
-         const MY_PLUGIN_ID = "<your manifest's plugin ID here>";
-         node.sharedPluginData.setItem(MY_PLUGIN_ID, "foo", "42");
-         console.log(node.sharedPluginData.getItem(MY_PLUGIN_ID, "foo"));  // "42"
-
-         node.sharedPluginData.removeItem(MY_PLUGIN_ID, "foo");
-         console.log(node.sharedPluginData.getItem(MY_PLUGIN_ID, "foo"));  // undefined
+         * const MY_PLUGIN_ID = "<your manifest's plugin ID here>";
+         * node.sharedPluginData.setItem(MY_PLUGIN_ID, "foo", "42");
+         * console.log(node.sharedPluginData.getItem(MY_PLUGIN_ID, "foo"));  // "42"
+         *
+         * node.sharedPluginData.removeItem(MY_PLUGIN_ID, "foo");
+         * console.log(node.sharedPluginData.getItem(MY_PLUGIN_ID, "foo"));  // undefined
          */
         removeItem(pluginId: string, key: string): void;
 
@@ -692,12 +704,11 @@ declare module 'scenegraph' {
          *
          * Currently, this API excludes some types of interactions: keypress/gamepad, scrolling, hover, component state transitions, or non-speech audio playback.
          *
-         * @example ```javascript
+         * @example
          * // Print all the interactions triggered by a node
-         *node.triggeredInteractions.forEach(interaction => {
+         * node.triggeredInteractions.forEach(interaction => {
          *    console.log("Trigger: " + interaction.trigger.type + " -> Action: " + interaction.action.type);
-         *});
-         * ```
+         * });
          *
          * @see interactions.allInteractions
          */
@@ -765,14 +776,13 @@ declare module 'scenegraph' {
          * Blend mode determines how a node is composited onto the content below it.
          *
          * One of: `SceneNode.BLEND_MODE_PASSTHROUGH`, `BLEND_MODE_NORMAL`, `BLEND_MODE_MULTIPLY`, `BLEND_MODE_DARKEN`, `BLEND_MODE_COLOR_BURN`, `BLEND_MODE_LIGHTEN`, `BLEND_MODE_SCREEN`, `BLEND_MODE_COLOR_DODGE`, `BLEND_MODE_OVERLAY`, `BLEND_MODE_SOFT_LIGHT`,
-         `BLEND_MODE_HARD_LIGHT`, `BLEND_MODE_DIFFERENCE`, `BLEND_MODE_EXCLUSION`, `BLEND_MODE_HUE`, `BLEND_MODE_SATURATION`, `BLEND_MODE_COLOR`, `BLEND_MODE_LUMINOSITY`.
+         * `BLEND_MODE_HARD_LIGHT`, `BLEND_MODE_DIFFERENCE`, `BLEND_MODE_EXCLUSION`, `BLEND_MODE_HUE`, `BLEND_MODE_SATURATION`, `BLEND_MODE_COLOR`, `BLEND_MODE_LUMINOSITY`.
          *
          *  _Note:_ for leaf nodes (GraphicNode), the XD UI may show leaf nodes as blend mode "Normal" even when the underlying value is `BLEND_MODE_PASSTHROUGH`. This is because "Pass Through" and "Normal" are essentially equivalent for leaf nodes -- they only differ
          *  in appearance when a node has children.
          *
-         *  @example ```js
-         *node.blendMode = scenegraph.SceneNode.BLEND_MODE_LUMINOSITY;
-         *```
+         * @example
+         * node.blendMode = scenegraph.SceneNode.BLEND_MODE_LUMINOSITY;
          */
         blendMode: string; // TODO: Implement the actual constant value possibilities
 

@@ -7,37 +7,38 @@ declare module 'interactions' {
      */
     export const homeArtboard: Artboard | null;
 
-/**
- * Returns a collection of *all* interactions across the entire document, grouped by triggering scenenode. Each entry in this array specifies a `triggerNode` and the result of getting [`triggerNode.triggeredInteractions`](./scenegraph.md#SceneNode-triggeredInteractions).
- *
- * May include interactions that are impossible to trigger because the trigger node (or one of its ancestors) has `visible` = false.
- *
- * > **Tip**
- * >
- * > Currently, this API excludes some types of interactions: keypress/gamepad, scrolling, hover, component state transitions, or non-speech audio playback.
- */
-export const allInteractions: Array<{ triggerNode: SceneNode, interactions: Array<Interaction> }>;
+    /**
+     * Returns a collection of *all* interactions across the entire document, grouped by triggering scenenode. Each entry in this array specifies a `triggerNode` and the result of getting [`triggerNode.triggeredInteractions`](./scenegraph.md#SceneNode-triggeredInteractions).
+     *
+     * May include interactions that are impossible to trigger because the trigger node (or one of its ancestors) has `visible` = false.
+     *
+     * > **Tip**
+     * >
+     * > Currently, this API excludes some types of interactions: keypress/gamepad, scrolling, hover, component state transitions, or non-speech audio playback.
+     */
+    export const allInteractions: Array<{ triggerNode: SceneNode, interactions: Array<Interaction> }>;
 
     /**
      * An interaction consists of a Trigger + Action pair and is attached to a single, specific scenenode.
      *
-     * @example ```javascript
-     {
-    trigger: {
-        type: "tap"
-    },
-    action: {
-        type: "goToArtboard",
-        destination: Artboard node,
-        preserveScrollPosition: false,
-        transition: {
-            type: "dissolve",
-            duration: 0.4,
-            easing: "ease-out"
-        }
-    }
-}```
      * Note: Interaction objects are not plain JSON -- they may reference scenenodes (as seen above) and other strongly-typed objects.
+     *
+     * @example
+     * {
+     *   trigger: {
+     *     type: "tap"
+     *   },
+     *   action: {
+     *     type: "goToArtboard",
+     *     destination: Artboard node,
+     *     preserveScrollPosition: false,
+     *     transition: {
+     *       type: "dissolve",
+     *       duration: 0.4,
+     *       easing: "ease-out"
+     *     }
+     *   }
+     * }
      */
     type Interaction = {
         /**

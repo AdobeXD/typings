@@ -163,12 +163,11 @@ declare module 'application' {
      * > _This does **not** indicate the frontmost "active" document window in the XD application._
      * > In XD, each document window loads a separate copy of your plugin. When a given instance of your plugin calls this API, you will always receive information about the document that this instance of the plugin is attached to, even if it's not the active window.
      *
-     * @example ```js
-     let application = require("application");
-     let documentInfo = application.activeDocument;
-     console.log("Document title: " + documentInfo.name);
-     console.log("Document ID: " + documentInfo.guid);
-     ```
+     * @example
+     * let application = require("application");
+     * let documentInfo = application.activeDocument;
+     * console.log("Document title: " + documentInfo.name);
+     * console.log("Document ID: " + documentInfo.guid);
      */
     export const activeDocument: DocumentInfo;
 

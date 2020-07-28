@@ -101,6 +101,8 @@ declare global {
         readonly focusedArtboard: Artboard | null | undefined;
 
         /**
+         * **Since:** XD 28
+         *
          * Returns true if the node is accessible for editing in the scope of the current edit context.
          * If false, the node cannot be edited given the user's current selection.
          * Nodes that are currently selected are always in the current edit context.
