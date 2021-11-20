@@ -35,3 +35,8 @@ A few notable exceptions include:
 - `scenegraph.SceneNode` and `scenegraph.RootNode`, are documented as classes, but implemented as interfaces (in the TypeScript-sense, i.e., without a constructor), which is how they get declared in the typings
 - To avoid ambiguity with the *DOM* `Selection` type, the interface [`Selection`](https://adobexdplatform.com/plugin-docs/reference/selection.html) is implemented under the name `XDSelection` (in the global namespace), here.
 - The `LinearGradient` type is incorrectly documented as [`LinearGradientFill`](https://adobexdplatform.com/plugin-docs/reference/LinearGradientFill.html). This is implemented "the right way" in the typings.
+
+## Original Documentation Links
+- [Original Adobe XD Platform Docs](https://adobexdplatform.com/plugin-docs/reference/xd-index.html)
+- [New Adobe.io XD Docs](https://www.adobe.io/xd/uxp/develop/reference/xd-index/)
+- [New Adobe.io XD Docs GitHub Repo](https://github.com/AdobeDocs/uxp-xd/tree/main/src/pages/develop/reference)
