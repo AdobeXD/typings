@@ -6,7 +6,7 @@ const assets = require('assets');
 const uxp = require('uxp');
 
 /**
- * @param {XDSelection} selection
+ * @param {import('selection').XDSelection} selection
  * @param {import('scenegraph').RootNode} documentRoot
  */
 async function test(selection, documentRoot) {

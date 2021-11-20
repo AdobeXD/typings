@@ -1,1 +1,1 @@
-// TODO
+export class Video { }
