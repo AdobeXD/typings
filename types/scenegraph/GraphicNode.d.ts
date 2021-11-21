@@ -1,11 +1,17 @@
-import { Blur, Color, ImageFill, LinearGradient, RadialGradient, Shadow } from "scenegraph";
+import { AngularGradient, Blur, Color, ImageFill, LinearGradient, RadialGradient, Shadow } from "scenegraph";
 import { SceneNodeClass } from "./SceneNode";
 
 /**
+ * [GraphicNode on Adobe.io](https://www.adobe.io/xd/uxp/develop/reference/GraphicNode/)
+ *
  * Base class for nodes that have a stroke and/or fill. This includes leaf nodes such as Rectangle, as well as BooleanGroup which is a container node. If you create a shape node, it will not be visible unless you explicitly give it either a stroke or a fill.
  */
 export class GraphicNode extends SceneNodeClass {
+    
     /**
+     * @updated XD 42
+     * @default null
+     * 
      * The fill applied to this shape, if any. If this property is null or fillEnabled is false, no fill is drawn. Freshly created nodes have no fill by default.
      *
      * For Line objects, fill is ignored. For Text objects, only solid Color fill values are allowed.
@@ -14,12 +20,7 @@ export class GraphicNode extends SceneNodeClass {
      *
      * Known issue: When modifying a gradient fill object specifically, you must clone the gradient returned by the getter before modifying it, to avoid issues with Undo history.
      */
-    fill:
-        | null
-        | Color
-        | LinearGradient
-        | RadialGradient
-        | ImageFill;
+    fill: Color | LinearGradient | RadialGradient | AngularGradient | ImageFill | null;
 
     /**
      * If false, the fill is not rendered. The user can toggle this via a checkbox in the Properties panel.
@@ -33,7 +34,7 @@ export class GraphicNode extends SceneNodeClass {
      *
      * To modify an existing stroke, always be sure to re-invoke the stroke setter rather than just changing the Color object’s properties inline. See “Properties with object values”.
      */
-    stroke: null | Color;
+    stroke: Color | null;
 
     /**
      * If false, the stroke is not rendered. The user can toggle this via a checkbox in the Properties panel.
@@ -50,17 +51,26 @@ export class GraphicNode extends SceneNodeClass {
      * @default `CENTER_STROKE` for most shapes, `INNER_STROKE` for Rectangle, Ellipse & Polygon
      * Position of the stroke relative to the shape’s path outline: GraphicNode.INNER_STROKE, OUTER_STROKE, or CENTER_STROKE.
      */
-    strokePosition: string;
+    strokePosition: 'INNER_STROKE' | 'OUTER_STROKE' | 'CENTER_STROKE' // string;
+    static readonly INNER_STROKE = 'INNER_STROKE';
+    static readonly OUTER_STROKE = 'OUTER_STROKE';
+    static readonly CENTER_STROKE = 'CENTER_STROKE';
 
     /**
      * For Lines and non-closed Paths, how the dangling ends of the stroke are rendered: GraphicNode.STROKE_CAP_NONE, STROKE_CAP_SQUARE, or STROKE_CAP_ROUND.
      */
-    strokeEndCaps: string;
+    strokeEndCaps: 'STROKE_CAP_NONE' | 'STROKE_CAP_SQUARE' | 'STROKE_CAP_ROUND' // string;
+    static readonly STROKE_CAP_NONE = 'STROKE_CAP_NONE';
+    static readonly STROKE_CAP_SQUARE = 'STROKE_CAP_SQUARE';
+    static readonly STROKE_CAP_ROUND = 'STROKE_CAP_ROUND';
 
     /**
      * How sharp corners in the shape are rendered: GraphicNode.STROKE_JOIN_BEVEL, STROKE_JOIN_ROUND, or STROKE_JOIN_MITER.
      */
-    strokeJoins: string;
+    strokeJoins: 'STROKE_JOIN_BEVEL' | 'STROKE_JOIN_ROUND' | 'STROKE_JOIN_MITER' // string;
+    static readonly STROKE_JOIN_BEVEL = 'STROKE_JOIN_BEVEL';
+    static readonly STROKE_JOIN_ROUND = 'STROKE_JOIN_ROUND';
+    static readonly STROKE_JOIN_MITER = 'STROKE_JOIN_MITER';
 
     /**
      * value must be >= 0
@@ -82,12 +92,12 @@ export class GraphicNode extends SceneNodeClass {
     /**
      * The node’s dropshadow, if any. If there is no shadow applied, this property may be null or shadow.visible may be false.
      */
-    shadow: null | Shadow;
+    shadow: Shadow | null;
 
     /**
      * The node’s object blur or background blur settings, if applicable. If there is no blur effect applied, this property may be null or blur.visible may be false.
      */
-    blur: null | Blur;
+    blur: Blur | null;
 
     /**
      * Returns a representation of the node’s outline in SVG <path> syntax. Note that only nodes with strokePosition == GraphicNode.CENTER_STROKE can be faithfully rendered in actual SVG using the exact pathData shown here.

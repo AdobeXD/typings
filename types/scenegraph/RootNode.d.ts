@@ -5,7 +5,9 @@ export interface RootNode extends RootNodeClass {
 }
 
 /**
- * Class representing the root node of the document. All Artboards are children of this node, as well as any pasteboard content that does not lie within an Artboard. Artboards must be grouped contiguously at the bottom of this node’s z order. The root node has no visual appearance of its own.
+ * [RootNode on Adobe.io](https://www.adobe.io/xd/uxp/develop/reference/RootNode/)
+ *
+ * Class representing the root node of the document. All Artboards are children of this node, as well as any pasteboard content that does not lie within an Artboard. Artboards must be grouped contiguously at the bottom of this node's z order. The root node has no visual appearance of its own.
  */
 export class RootNodeClass extends SceneNodeClass {
     /**

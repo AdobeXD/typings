@@ -1,6 +1,8 @@
 import { GraphicNode } from "scenegraph";
 
 /**
+ * [Ellipse on Adobe.io](https://www.adobe.io/xd/uxp/develop/reference/Ellipse/)
+ * 
  * Ellipse leaf node shape.
  */
 export class Ellipse extends GraphicNode {
@@ -9,5 +11,5 @@ export class Ellipse extends GraphicNode {
     /**
      * True if the Ellipse is a circle (i.e., has a 1:1 aspect ratio).
      */
-    isCircle: boolean;
+    readonly isCircle: boolean;
 }

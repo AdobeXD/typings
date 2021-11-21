@@ -7,6 +7,9 @@ declare module 'scenegraph' {
         x: number;
         y: number;
     }
+    export interface Point3D extends Point{
+        z: number;
+    }
 
     export interface Bounds {
         x: number;
@@ -41,7 +44,7 @@ declare module 'scenegraph' {
     export { LinearGradient } from 'LinearGradient'
     export { LinkedGraphic } from 'LinkedGraphic'
     export { Lottie } from 'Lottie'
-    export { Matrix, ScaleFactor } from 'Matrix'
+    export { Matrix } from 'Matrix'
     export { Matrix3D } from 'Matrix3D'
     export { Path } from 'Path'
     export { PerPluginStorage } from 'PerPluginStorage'

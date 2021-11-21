@@ -1,5 +1,8 @@
 import { Bounds, Point } from "scenegraph";
 
+/**
+ * [Matrix on Adobe.io](https://www.adobe.io/xd/uxp/develop/reference/Matrix/)
+ */
 export class Matrix {
     /**
      * Creates a new transform matrix with the following structure:
@@ -36,37 +39,25 @@ export class Matrix {
 
     /**
      * Multiplies a passed affine transform to the right: this * M. The result effectively applies the transform of the passed in matrix first, followed by the transform of this matrix second. Modifies this matrix object and also returns it so calls can be chained.
-     * @param aOrOtherMatrix A Matrix or the a component of an affine transform.
+     * @param aOrMatrix A Matrix or the `a` component of an affine transform.
+     * @param b The `b` component of an affine transform.
+     * @param c The `c` component of an affine transform.
+     * @param d The `d` component of an affine transform.
+     * @param e The `e` component of an affine transform.
+     * @param f The `f` component of an affine transform.
+     */
+    add(aOrMatrix: number | Matrix, b?: number, c?: number, d?: number, e?: number, f?: number): Matrix;
+
+    /**
+     * Multiplies a passed affine transform to the left: M * this. The result effectively applies the transform of this matrix first, followed by the transform of the passed in matrix second. Modifies this matrix object and also returns it so calls can be chained.
+     * @param aOrMatrix A Matrix or the a component of an affine transform.
      * @param b The b component of an affine transform.
      * @param c The c component of an affine transform.
      * @param d The d component of an affine transform.
      * @param e The e component of an affine transform.
      * @param f The f component of an affine transform.
      */
-    add(aOrOtherMatrix: number, b: number, c: number, d: number, e: number, f: number): void;
-
-    /**
-     * Multiplies a passed affine transform to the right: this * M. The result effectively applies the transform of the passed in matrix first, followed by the transform of this matrix second. Modifies this matrix object and also returns it so calls can be chained.
-     * @param aOrOtherMatrix A Matrix or the a component of an affine transform.
-     */
-    add(aOrOtherMatrix: Matrix): void;
-
-    /**
-     * Multiplies a passed affine transform to the left: M * this. The result effectively applies the transform of this matrix first, followed by the transform of the passed in matrix second. Modifies this matrix object and also returns it so calls can be chained.
-     * @param aOrOtherMatrix A Matrix or the a component of an affine transform.
-     * @param b The b component of an affine transform.
-     * @param c The c component of an affine transform.
-     * @param d The d component of an affine transform.
-     * @param e The e component of an affine transform.
-     * @param f The f component of an affine transform.
-     */
-    multLeft(aOrOtherMatrix: number, b: number, c: number, d: number, e: number, f: number): void;
-
-    /**
-     * Multiplies a passed affine transform to the left: M * this. The result effectively applies the transform of this matrix first, followed by the transform of the passed in matrix second. Modifies this matrix object and also returns it so calls can be chained.
-     * @param aOrOtherMatrix A Matrix or the a component of an affine transform.
-     */
-    multLeft(aOrOtherMatrix: Matrix): void;
+    multLeft(aOrMatrix: number | Matrix, b?: number, c?: number, d?: number, e?: number, f?: number): Matrix;
 
     /**
      * Returns an inverted version of the matrix. Returns a brand new matrix - does not modify this matrix object.
@@ -128,12 +119,12 @@ export class Matrix {
     /**
      * @return The translation component of this matrix: [tx, ty]. Equals the `e` and `f` components of this matrix.
      */
-    getTranslate(): number[];
+    getTranslate(): Array<number>
 
     /**
      * Split the matrix into scale factors. This method assumes that there is no skew in the matrix.
      */
-    scaleFactors(): ScaleFactor;
+    scaleFactors(): { scaleX: number, scaleY: number};
 
     /**
      * Returns a new matrix that contains only the translate and rotate components of the current matrix, with the given scale factors stripped out. Must be passed the exact scale factors returned by scaleFactors() for this matrix, and this matrix must have no skew/shear component.
@@ -148,9 +139,4 @@ export class Matrix {
      * @return true, if the matrix includes any skew (shear)
      */
     hasSkew(): boolean;
-}
-
-export interface ScaleFactor {
-    scaleX: number;
-    scaleY: number;
 }
