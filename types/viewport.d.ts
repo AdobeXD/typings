@@ -1,19 +1,12 @@
+/**
+ * [viewport on Adobe.io](https://www.adobe.io/xd/uxp/develop/reference/viewport/)
+ * 
+ * @since XD 14
+ *
+ * The viewport module represents the current UI view of the XD document's content.
+ */
 declare module 'viewport' {
-    /**
-     * The `viewport` module represents the current UI view of the XD document's content.
-     * Since: XD 14
-     */
     import {SceneNode} from "scenegraph";
-
-    /**
-     * The current viewport bounds expressed in global coordinates.
-     */
-    export const bounds: { x: number, y: number, width: number, height: number };
-
-    /**
-     * The current viewport zoom factor (where 1.0 = 100% zoom, 0.5 = 50% zoom, etc.).
-     */
-    export const zoomFactor: number;
 
     /**
      * Smoothly pan the viewport to bring the entire given region into view. If the region is already fully in view, does nothing. If the given region is too large to fit entirely in view, it is simply centered (zoom remains unchanged).
@@ -59,4 +52,14 @@ declare module 'viewport' {
      * @param {number} height
      */
     export function zoomToRect(x: number, y: number, width: number, height: number): void;
+
+    /**
+     * The current viewport bounds expressed in global coordinates.
+     */
+    export const bounds: { x: number, y: number, width: number, height: number };
+
+    /**
+     * The current viewport zoom factor (where 1.0 = 100% zoom, 0.5 = 50% zoom, etc.).
+     */
+    export const zoomFactor: number;
 }

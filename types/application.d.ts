@@ -1,6 +1,10 @@
+/**
+ * [application on Adobe.io](https://www.adobe.io/xd/uxp/develop/reference/application/)
+ */
 declare module 'application' {
-    import {Color, SceneNode, RootNode} from "scenegraph";
-    import {storage} from "uxp";
+    import { Color, SceneNode, RootNode } from "scenegraph";
+    import { XDSelection } from "selection";
+    import { storage } from "uxp";
 
     interface EditSettings {
         /**
@@ -26,7 +30,7 @@ declare module 'application' {
      * For UI events that often occur in rapid-fire clusters, such as dragging a slider or pressing keys in a text field, XD tries to smartly merge consecutive edits into a single atomic Undo step. See the `mergeId` option below to customize this behavior.
      * @param editFunction Function which will perform your plugin's edits to the scenegraph.
      */
-    export function editDocument(editFunction: (selection: Selection, root: RootNode) => Promise<any> | void): void;
+    export function editDocument(editFunction: (selection: XDSelection, root: RootNode) => Promise<any> | void): void;
 
     /**
      * Call `editDocument()` from a plugin panel UI event listener to initiate an edit operation batch in order to modify the XD document. This API is irrelevant for plugin menu item commands, which are wrapped in an edit batch automatically.
@@ -42,7 +46,7 @@ declare module 'application' {
      * @param options Optional settings object (see below). This argument can be omitted.
      * @param editFunction Function which will perform your plugin's edits to the scenegraph.
      */
-    export function editDocument(options: EditSettings, editFunction: (selection: Selection, root: RootNode) => Promise<any> | void): void;
+    export function editDocument(options: EditSettings, editFunction: (selection: XDSelection, root: RootNode) => Promise<any> | void): void;
 
     interface RenditionSettingsBase {
         /**
@@ -57,7 +61,7 @@ declare module 'application' {
 
     interface RenditionSettingsPNGorJPG extends RenditionSettingsBase {
         /**
-         * (PNG & JPG renditions) DPI multipler in the range [0.1, 100], e.g. 2.0 for @2x DPI.
+         * (PNG & JPG renditions) DPI multiplier in the range [0.1, 100], e.g. 2.0 for @2x DPI.
          */
         scale: number;
         /**
@@ -110,10 +114,10 @@ declare module 'application' {
      * All rendition settings fields are required (for a given rendition type) unless otherwise specified.
      */
     export type RenditionSettings =
-        RenditionSettingsPNG
-        | RenditionSettingsJPG
-        | RenditionSettingsSVG
-        | RenditionSettingsPDF;
+        RenditionSettingsPNG | 
+        RenditionSettingsJPG | 
+        RenditionSettingsSVG | 
+        RenditionSettingsPDF ;
 
     /**
      * Type that gets returned by `application.createRenditions`
@@ -141,6 +145,21 @@ declare module 'application' {
         PDF = "pdf",
         SVG = "svg",
     }
+
+
+    /**
+     * @since XD 45
+     * 
+     * Equivalent to File > Import. Brings assets into the XD document, including images, videos, and Adobe Photoshop or Adobe Illustrator files. Assets will be added as a child of the artboard that is the parent of the current selection (or to the document root if nothing is selected).
+     * 
+     * Supported import file extensions: AI (Illustrator), BMP, GIF, JPG, JPEG, JSON (Lottie), MP4 (Video), PNG, PSD (Photoshop), TIF, TIFF, TXT
+     * 
+     * An error will be thrown if a passed file does not exist or has an unsupported file extension. Parsing errors or other import problems that are specific to formats supported by XD are displayed to the user in the same way the File > Import action informs users.
+     * 
+     * @param entries List of files to be imported
+     */
+    // export function import(entries: storage.File[]): void
+
 
     /**
      * Adobe XD version number in the form "major.minor.patch.build"

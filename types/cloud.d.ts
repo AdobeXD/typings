@@ -1,3 +1,8 @@
+/**
+ * [cloud on Adobe.io](https://www.adobe.io/xd/uxp/develop/reference/cloud/)
+ *
+ * @since XD 14
+ */
 declare module 'cloud' {
     interface BaseSharedArtifact {
         type: ArtifactType;

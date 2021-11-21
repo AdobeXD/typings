@@ -1,3 +1,8 @@
+/**
+ * [assets on Adobe.io](https://www.adobe.io/xd/uxp/develop/reference/assets/)
+ * 
+ * @since XD 15
+ */
 declare module 'assets' {
     import {Color, LinearGradient, RadialGradient} from "scenegraph";
 
@@ -93,17 +98,17 @@ declare module 'assets' {
          */
         underline: boolean;
         /**
-         * (**Since**: XD 19)
+         * @since XD 19
          * Default `false`; whether strikethrough is turned on
          */
         strikethrough?: boolean;
         /**
-         * (**Since**: XD 19)
+         * @since XD 19
          * Default "none"; one of "none", "uppercase", "lowercase", or "titlecase"
          */
         textTransform?: 'none' | 'uppercase' | 'lowercase' | 'titlecase';
         /**
-         * (**Since**: XD 20)
+         * @since XD 20
          * Default "none"; one of "none", "superscript", or "subscript"
          */
         textScript?: 'none' | 'superscript' | 'subscript';
