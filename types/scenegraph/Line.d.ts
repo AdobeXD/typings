@@ -6,6 +6,7 @@ import { GraphicNode, Point } from "scenegraph";
  * Line leaf node shape. Lines have a stroke but no fill.
  */
 export class Line extends GraphicNode {
+    
     /**
      * Start point of the Line in local coordinate space. To change the start point, use setStartEnd.
      */

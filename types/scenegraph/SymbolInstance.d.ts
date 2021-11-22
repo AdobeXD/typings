@@ -1,5 +1,4 @@
 import { SceneNode } from "scenegraph";
-import { SceneNode } from "./SceneNode";
 
 /**
  * [SymbolInstance on Adobe.io](https://www.adobe.io/xd/uxp/develop/reference/SymbolInstance/)

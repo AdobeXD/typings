@@ -8,7 +8,9 @@ export class Blur {
      */
     constructor(blurAmount: number, brightnessAmount: number, fillOpacity: number, visible?: boolean, isBackgroundEffect?: boolean);
 
-    /** 0 - 50 */
+    /** 
+     * 0 - 50 
+     */
     blurAmount: number
 
     /** 

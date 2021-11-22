@@ -1,4 +1,4 @@
-import { SceneNode } from "./SceneNode";
+import { SceneNode } from "scenegraph"
 
 /**
  * [ScrollableGroup on Adobe.io](https://www.adobe.io/xd/uxp/develop/reference/ScrollableGroup/)

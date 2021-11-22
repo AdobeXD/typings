@@ -12,23 +12,31 @@ import { GraphicNode, SceneNode } from "scenegraph";
  */
 export class Artboard extends GraphicNode {
 
-    /** number > 0 */
+    /** 
+     * > 0 
+     */
     width: number // > 0
 
-    /** number > 0 - For scrollable Artboards, this is the total height encompassing all content - not just the viewport size (i.e. screen height). */
+    /** 
+     * > 0
+     * 
+     * For scrollable Artboards, this is the total height encompassing all content - not just the viewport size (i.e. screen height). 
+     */
     height: number // > 0
 
-    /** If Artboard is scrollable, this is the height of the viewport (e.g. mobile device screen size). Null if Artboard isn't scrollable. */
+    /** 
+     * If Artboard is scrollable, this is the height of the viewport (e.g. mobile device screen size). Null if Artboard isn't scrollable. 
+     */
     viewportHeight: number | null
     
     /**
+     * @since XD 19
+     * 
      * Get all interactions whose destination is this artboard (either navigating the entire view, i.e. a "goToArtboard" action, or showing this artboard as an overlay, i.e. an "overlay" action). Each element in the array is an Interaction object which describes a gesture/event plus the action it produces.
      * 
      * May include interactions that are impossible to trigger because the trigger node (or one of its ancestors) has visible = false.
      * 
      * Note: currently, this API excludes any applicable keyboard/gamepad interactions.
-     * 
-     * Since: XD 19
      */
     readonly incomingInteractions: { triggerNode: SceneNode, interactions: Interaction[] }[]
 

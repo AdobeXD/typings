@@ -126,11 +126,6 @@ declare module 'assets' {
          * Get a list of all color/gradient assets, in the order they appear in the Assets panel.
          *
          * The list may contain a mix of solid Color assets and/or gradient assets. If there are no color/gradient assets, an empty array is returned.
-         *
-         * @example
-         *  var assets = require("assets"),
-         *  allColors = assets.colors.get();
-         *
          */
         get(): (ColorAsset | GradientAsset)[];
 
@@ -162,11 +157,6 @@ declare module 'assets' {
          * Get a list of all character style assets, in the order they appear in the Assets panel.
          *
          * If there are no character style assets, an empty array is returned.
-         *
-         * @example
-         *  var assets = require("assets"),
-         *  allCharacterStyles = assets.characterStyles.get();
-         *
          */
         get(): CharacterStyleAsset[];
 

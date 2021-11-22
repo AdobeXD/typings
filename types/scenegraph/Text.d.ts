@@ -8,7 +8,7 @@ import { Color, GraphicNode } from "scenegraph";
  * There are three types of Text nodes:
  * - Point Text - Expands to fit the full width of the text content. Only uses multiple lines if the text content contains hard line breaks ("\n").
  * - Area Text - Fixed width and height. Text is automatically wrapped (soft line wrapping) to fit the width. If it does not fit the height, any remaining text is clipped.
- * - (Since: XD 34) Auto-height Text - Fixed width. Text is automatically wrapped (soft line wrapping) to fit the width. The height is expanded to match all the text lines.
+ * - (@since XD 34) Auto-height Text - Fixed width. Text is automatically wrapped (soft line wrapping) to fit the width. The height is expanded to match all the text lines.
  *
  * Use layoutBox to determine the type of a text node.
  * 
@@ -129,12 +129,6 @@ export class Text extends GraphicNode {
      * Horizontal alignment: Text.ALIGN_LEFT, ALIGN_CENTER, or ALIGN_RIGHT. This setting affects the layout of multiline text, and for point text it also affects how the text is positioned relative to its anchor point (x=0 in local coordinates) and what direction the text grows when edited by the user.
      *
      * Changing textAlign on existing point text will cause it to shift horizontally. To change textAlign while keeping the text in a fixed position, shift the text horizontally (moving its anchor point) to compensate:
-     * ```js
-     * let originalBounds = textNode.localBounds;
-     * textNode.textAlign = newAlignValue;
-     * let newBounds = textNode.localBounds;
-     * textNode.moveInParentCoordinates(originalBounds.x - newBounds.x, 0);
-     *```
      */
     textAlign: 'ALIGN_LEFT' | 'ALIGN_CENTER' | 'ALIGN_RIGHT' // string;
     static readonly ALIGN_LEFT = 'ALIGN_LEFT';

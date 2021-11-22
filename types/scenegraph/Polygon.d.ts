@@ -10,17 +10,6 @@ import { GraphicNode } from "scenegraph";
  * When unrotated, the Polygon always has its bottommost side as a perfectly horizontal line - with the exception of the 4-sided Polygon, which is a diamond shape instead.
  *
  * Like all shape nodes, has no size, fill, or stroke by default unless you set one.
- *
- * ```js
- *  // Add a red triangle to the document and select it
- *  var polygon = new Polygon();
- *  polygon.cornerCount = 3;
- *  polygon.width = 50;
- *  polygon.height = 100;
- *  polygon.fill = new Color("red");
- *  selection.insertionParent.addChild(polygon);
- *  selection.items = [polygon];
- * ```
  */
 export class Polygon extends GraphicNode {
     

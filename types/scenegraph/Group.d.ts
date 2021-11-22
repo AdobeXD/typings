@@ -1,5 +1,4 @@
 import { SceneNode } from "scenegraph";
-import { SceneNode } from "./SceneNode";
 
 /** [Group on Adobe.io](https://www.adobe.io/xd/uxp/develop/reference/Group/) */
 export class Group extends SceneNode {

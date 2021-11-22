@@ -1,5 +1,4 @@
-import { AngularGradient, Blur, Color, ImageFill, LinearGradient, RadialGradient, Shadow } from "scenegraph";
-import { SceneNode } from "./SceneNode";
+import { AngularGradient, Blur, Color, ImageFill, LinearGradient, RadialGradient, Shadow, SceneNode } from "scenegraph";
 
 /**
  * [GraphicNode on Adobe.io](https://www.adobe.io/xd/uxp/develop/reference/GraphicNode/)

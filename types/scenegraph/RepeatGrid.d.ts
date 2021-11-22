@@ -1,5 +1,4 @@
 import { GraphicNode, ImageFill, SceneNode } from "scenegraph";
-import { SceneNode } from "./SceneNode";
 
 /**
  * [RepeatGrid on Adobe.io](https://www.adobe.io/xd/uxp/develop/reference/RepeatGrid/)

@@ -154,18 +154,6 @@ export abstract class SceneNode {
      * Note: If this node (or one of its ancestors) has `visible` = false, tap and drag interactions on it will not be triggered.
      *
      * Currently, this API excludes any keyboard/gamepad interactions on this node.
-     *
-     * ```js
-     * // Print all the interactions triggered by a node
-     * node.triggeredInteractions.forEach((interaction) => {
-     *   console.log(
-     *     "Trigger: " +
-     *       interaction.trigger.type +
-     *       " -> Action: " +
-     *       interaction.action.type
-     *   );
-     * });
-     * ```
      */
     readonly triggeredInteractions?: Interaction[];
 
@@ -173,16 +161,6 @@ export abstract class SceneNode {
      * @since XD 38
      * 
      * Returns a list of this node's children, skipping the background node when present. The list is z-index ordered, from lowest to highest. This list is not an Array, so you must use at(i) instead of [i] to access content children by index.
-     * 
-     * ```js
-     * const node = ...; // supposing that this node has the Stack property enabled
-     * console.log("Node has " + node.contentChildren.length + " stack cells");
-     * console.log("First stack cell: " + node.contentChildren.at(0));  // do not use `[0]` - it will not work!
-     * 
-     * node.contentChildren.forEach(function (stackCell, i) {
-     *     console.log("Stack cell " + i + " is a " + stackCell.constructor.name);
-     * });
-     * ```
      */
     readonly contentChildren: SceneNodeList
 
