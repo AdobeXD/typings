@@ -5,7 +5,6 @@ import './cloud';
 import './commands';
 import './interactions';
 import './scenegraph';
-import './selection';
 import './uxp';
 import './viewport';
 
