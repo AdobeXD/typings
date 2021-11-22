@@ -267,17 +267,17 @@ export abstract class SceneNodeClass {
      * 
      * The third parameter, deltaZ (optional), allows the movement of the object on Z axis.
      * 
-     * @param {number} deltaX Amount to move along X axis
-     * @param {number} deltaY Amount to move along Y axis
-     * @param {number} deltaZ Optional: number of pixels to change depth with
+     * deltaX Amount to move along X axis
+     * deltaY Amount to move along Y axis
+     * deltaZ Optional: number of pixels to change depth with
      */
     moveInParentCoordinates(deltaX: number, deltaY: number, deltaZ?: number): void;
 
     /**
      * Move the node so the given point in its local coordinates is placed at the given point in its parent’s coordinates (taking into account any rotation on this node, etc.).
      * For an overview of node positioning & coordinate systems, see Coordinate spaces.
-     * @param {Point} registrationPoint Point in this node’s local coordinate space to align with parentPoint
-     * @param {Point} parentPoint Point in this node’s parent’s coordinate space to move registrationPoint to
+     * registrationPoint Point in this node’s local coordinate space to align with parentPoint
+     * parentPoint Point in this node’s parent’s coordinate space to move registrationPoint to
      */
     placeInParentCoordinates(registrationPoint: Point, parentPoint: Point): void;
 
@@ -320,8 +320,8 @@ export abstract class SceneNodeClass {
 
     /**
      * Rotate the node clockwise by the given number of degrees around the given point in the plugin’s local coordinate space. If this node already has nonzero rotation, this operation adds to its existing angle.
-     * @param {number} deltaAngle In degrees.
-     * @param {Point} rotationCenter Point to rotate around, in node’s local coordinates.
+     * deltaAngle In degrees.
+     * rotationCenter Point to rotate around, in node’s local coordinates.
      */
     rotateAround(deltaAngle: number, rotationCenter: Point): void;
 
@@ -358,8 +358,8 @@ export abstract class SceneNodeClass {
 
     /**
      * Attempts to change localBounds.width & height to match the specified sizes. This operation may not succeed, since some nodes are not resizable. Resizing one dimension may affect the other, if the node’s aspect ratio is locked.
-     * @param {number} width
-     * @param {number} height
+     * width
+     * height
      */
     resize(width: number, height: number): void;
 

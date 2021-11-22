@@ -12,7 +12,7 @@ declare module 'viewport' {
      * Smoothly pan the viewport to bring the entire given region into view. If the region is already fully in view, does nothing. If the given region is too large to fit entirely in view, it is simply centered (zoom remains unchanged).
      *
      * The region can be defined by passing a {@link SceneNode}, or by explicitly specifying a rectangle in global coordinates.
-     * @param {!SceneNode} node The node that gets scrolled into view
+     * @param node The node that gets scrolled into view
      */
     export function scrollIntoView(node: SceneNode): void;
 
@@ -29,8 +29,8 @@ declare module 'viewport' {
 
     /**
      * Smoothly pan the viewport to center on a specific point in the document's global coordinates. Even if the point is already in view, the view pans until it is centered.
-     * @param {number} x The x-coordinate of the centered point (in the document's global coordinates)
-     * @param {number} y The y-coordinate of the centered point (in the document's global coordinates)
+     * x The x-coordinate of the centered point (in the document's global coordinates)
+     * y The y-coordinate of the centered point (in the document's global coordinates)
      */
     export function scrollToCenter(x: number, y: number): void;
 
@@ -38,7 +38,7 @@ declare module 'viewport' {
      * Zoom & pan the view as needed so the given region fills the viewport (with some padding). If the region is large, zooms out as needed so it fits entirely in view. If the region is smaller, zooms in so the region fills the entire viewport - may zoom in past 100% to achieve this.
      *
      * The region can be defined by passing a {@link SceneNode}, or by explicitly specifying a rectangle in global coordinates.
-     * @param {!SceneNode} node
+     * @param node
      */
     export function zoomToRect(node: SceneNode): void;
 
@@ -46,10 +46,10 @@ declare module 'viewport' {
      * Zoom & pan the view as needed so the given region fills the viewport (with some padding). If the region is large, zooms out as needed so it fits entirely in view. If the region is smaller, zooms in so the region fills the entire viewport - may zoom in past 100% to achieve this.
      *
      * The region can be defined by passing a {@link SceneNode}, or by explicitly specifying a rectangle in global coordinates.
-     * @param {number} x
-     * @param {number} y
-     * @param {number} width
-     * @param {number} height
+     * x
+     * y
+     * width
+     * height
      */
     export function zoomToRect(x: number, y: number, width: number, height: number): void;
 

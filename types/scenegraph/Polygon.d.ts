@@ -60,7 +60,7 @@ export class Polygon extends GraphicNode {
 
     /**
      * Set the corner radius of all corners of the Polygon to the same value.
-     * @param {number} radius
+     * radius
      */
     setAllCornerRadii(radius: number): void;
 
