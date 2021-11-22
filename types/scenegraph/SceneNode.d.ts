@@ -1,14 +1,12 @@
 import { Interaction } from "interactions";
 import { Bounds, InnerShadow, Matrix, Matrix3D, PerPluginStorage, Point, SceneNodeList } from "scenegraph";
 
-export interface SceneNode extends SceneNodeClass { }
-
 /**
  * [SceneNode on Adobe.io](https://www.adobe.io/xd/uxp/develop/reference/SceneNode/)
  *
  * Base class of all scenegraph nodes. Nodes will always be an instance of some subclass of SceneNode.
  */
-export abstract class SceneNodeClass {
+export abstract class SceneNode {
     
     /**
      * Returns a unique identifier for this node that stays the same when the file is closed & reopened, or if the node is moved to a different part of the document. Cut-Paste will result in a new guid, however.

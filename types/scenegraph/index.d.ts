@@ -10,7 +10,7 @@
  */
 declare module 'scenegraph' {
     import { RootNode } from 'RootNode'
-    import { SceneNodeClass } from 'SceneNode';
+    import { SceneNode } from 'SceneNode';
     import { XDSelection } from 'selection';
 
     export interface Point {
@@ -41,6 +41,7 @@ declare module 'scenegraph' {
      * Root node of the current document's scenegraph. Also available as the second argument passed to your plugin command handler function.
      */
     export const root: RootNode;
+    export { RootNode } from 'RootNode'
 
     /**
      * @since XD 28
@@ -49,7 +50,7 @@ declare module 'scenegraph' {
      * 
      * @param guid SceneNode GUID -- must be all lowercase, as returned by the guid getter
      */
-    export function getNodeByGUID(guid:string): SceneNodeClass
+    export function getNodeByGUID(guid:string): SceneNode
 
     export { AngularGradient } from 'AngularGradient'
     export { Artboard } from 'Artboard'
@@ -73,14 +74,18 @@ declare module 'scenegraph' {
     export { RadialGradient } from 'RadialGradient'
     export { Rectangle } from 'Rectangle'
     export { RepeatGrid } from 'RepeatGrid'
-    export { RootNode } from 'RootNode'
-    export { SceneNode } from 'SceneNode'
+    export {
+        SceneNode,
+        BlendMode,
+        HorizontalConstraints,
+        VerticalConstraints,
+        ResizeConstraints,
+        LayoutProperties,
+    } from 'SceneNode'
     export { SceneNodeList } from 'SceneNodeList'
     export { ScrollableGroup } from 'ScrollableGroup'
     export { Shadow } from 'Shadow'
     export { SymbolInstance } from 'SymbolInstance'
     export { Text } from 'Text'
     export { Video } from 'Video'
-
-    export {}; // Avoid exporting SceneNodeClass and RootNodeClass
 }

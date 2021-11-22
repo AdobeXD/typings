@@ -1,5 +1,5 @@
 import { SceneNode } from "scenegraph";
-import { SceneNodeClass } from "./SceneNode";
+import { SceneNode } from "./SceneNode";
 
 /**
  * [SymbolInstance on Adobe.io](https://www.adobe.io/xd/uxp/develop/reference/SymbolInstance/)
@@ -14,7 +14,7 @@ import { SceneNodeClass } from "./SceneNode";
  *
  * It is not currently possible for plugins to *create* a new component definition or a new SymbolInstance node, aside from using `require('commands').duplicate` to clone existing SymbolInstances.
  */
-export class SymbolInstance extends SceneNodeClass {
+export class SymbolInstance extends SceneNode {
     
     /**
      * An identifier unique within this document that is shared by all instances of the same component.

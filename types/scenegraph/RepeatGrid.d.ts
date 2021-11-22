@@ -1,5 +1,5 @@
 import { GraphicNode, ImageFill, SceneNode } from "scenegraph";
-import { SceneNodeClass } from "./SceneNode";
+import { SceneNode } from "./SceneNode";
 
 /**
  * [RepeatGrid on Adobe.io](https://www.adobe.io/xd/uxp/develop/reference/RepeatGrid/)
@@ -8,7 +8,7 @@ import { SceneNodeClass } from "./SceneNode";
  * Each grid cell is a Group that is an immediate child of the RepeatGrid. These groups are automatically created and destroyed as needed when the RepeatGrid is resized.
  * It is not currently possible for plugins to create a new RepeatGrid node, aside from using commands.duplicate to clone existing RepeatGrids.
  */
-export class RepeatGrid extends SceneNodeClass {
+export class RepeatGrid extends SceneNode {
     
     /**
      * Defines size of the RepeatGrid. Cells are created and destroyed as necessary to fill the current size. Cells that only partially fit will be clipped.

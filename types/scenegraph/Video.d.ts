@@ -1,4 +1,4 @@
-import { SceneNodeClass } from "./SceneNode";
+import { SceneNode } from "./SceneNode";
 
 /**
  * [Video on Adobe.io](https://www.adobe.io/xd/uxp/develop/reference/Video/)
@@ -15,4 +15,4 @@ import { SceneNodeClass } from "./SceneNode";
  * - Maximum resolution: 4K
  * - Maximum videos per document: 20
  */
-export class Video extends SceneNodeClass { }
+export class Video extends SceneNode { }

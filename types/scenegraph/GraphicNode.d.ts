@@ -1,12 +1,12 @@
 import { AngularGradient, Blur, Color, ImageFill, LinearGradient, RadialGradient, Shadow } from "scenegraph";
-import { SceneNodeClass } from "./SceneNode";
+import { SceneNode } from "./SceneNode";
 
 /**
  * [GraphicNode on Adobe.io](https://www.adobe.io/xd/uxp/develop/reference/GraphicNode/)
  *
  * Base class for nodes that have a stroke and/or fill. This includes leaf nodes such as Rectangle, as well as BooleanGroup which is a container node. If you create a shape node, it will not be visible unless you explicitly give it either a stroke or a fill.
  */
-export class GraphicNode extends SceneNodeClass {
+export class GraphicNode extends SceneNode {
     
     /**
      * @updated XD 42

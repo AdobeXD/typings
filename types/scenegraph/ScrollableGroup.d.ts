@@ -1,4 +1,4 @@
-import { SceneNodeClass } from "./SceneNode";
+import { SceneNode } from "./SceneNode";
 
 /**
  * [ScrollableGroup on Adobe.io](https://www.adobe.io/xd/uxp/develop/reference/ScrollableGroup/)
@@ -9,7 +9,7 @@ import { SceneNodeClass } from "./SceneNode";
  * 
  * The scroll distance range is defined by a scrollable area rectangle which is the union of the viewport and the bounds of all the content. This can include some blank space, if the content is initially positioned not filling the entire viewport.
  */
-export class ScrollableGroup extends SceneNodeClass {
+export class ScrollableGroup extends SceneNode {
     
     /** 
      * The type of scrolling: one of ScrollableGroup.VERTICAL, HORIZONTAL and PANNING. PANNING enables scrolling on both axes. 

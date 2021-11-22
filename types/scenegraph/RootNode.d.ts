@@ -1,15 +1,11 @@
 import { SceneNode } from "scenegraph";
-import { SceneNodeClass } from "./SceneNode";
-
-export interface RootNode extends RootNodeClass {
-}
 
 /**
  * [RootNode on Adobe.io](https://www.adobe.io/xd/uxp/develop/reference/RootNode/)
  *
  * Class representing the root node of the document. All Artboards are children of this node, as well as any pasteboard content that does not lie within an Artboard. Artboards must be grouped contiguously at the bottom of this node's z order. The root node has no visual appearance of its own.
  */
-export class RootNodeClass extends SceneNodeClass {
+export class RootNode extends SceneNode {
     /**
      * Adds a child node to this container node. You can only add leaf nodes this way; to create structured subtrees of content, use commands.
      * node Child to add
