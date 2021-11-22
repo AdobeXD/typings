@@ -2,7 +2,7 @@
  * [application on Adobe.io](https://www.adobe.io/xd/uxp/develop/reference/application/)
  */
 declare module 'application' {
-    import { Color, SceneNode, RootNode, XDSelection } from "scenegraph";
+    import { Color, SceneNode, RootNode, Selection } from "scenegraph";
     import { storage } from "uxp";
 
     interface EditSettings {
@@ -29,7 +29,7 @@ declare module 'application' {
      * For UI events that often occur in rapid-fire clusters, such as dragging a slider or pressing keys in a text field, XD tries to smartly merge consecutive edits into a single atomic Undo step. See the `mergeId` option below to customize this behavior.
      * @param editFunction Function which will perform your plugin's edits to the scenegraph.
      */
-    export function editDocument(editFunction: (selection: XDSelection, root: RootNode) => Promise<any> | void): void;
+    export function editDocument(editFunction: (selection: Selection, root: RootNode) => Promise<any> | void): void;
 
     /**
      * Call `editDocument()` from a plugin panel UI event listener to initiate an edit operation batch in order to modify the XD document. This API is irrelevant for plugin menu item commands, which are wrapped in an edit batch automatically.
@@ -45,7 +45,7 @@ declare module 'application' {
      * @param options Optional settings object (see below). This argument can be omitted.
      * @param editFunction Function which will perform your plugin's edits to the scenegraph.
      */
-    export function editDocument(options: EditSettings, editFunction: (selection: XDSelection, root: RootNode) => Promise<any> | void): void;
+    export function editDocument(options: EditSettings, editFunction: (selection: Selection, root: RootNode) => Promise<any> | void): void;
 
     interface RenditionSettingsBase {
         /**

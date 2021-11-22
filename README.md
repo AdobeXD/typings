@@ -32,11 +32,11 @@ You may also take a look at the `tsconfig.json` file contained in this repositor
 These type declarations track the contents of the official documentation. If an issue with the type declarations stems from an issue with the official documentation, then the type declaration files will be fixed once the issue is addressed in the documentation. This is intentional so as to keep the type declarations both maintainable and in sync with the documentation.
 
 A few notable exceptions include:
-- `scenegraph.SceneNode` and `scenegraph.RootNode`, are documented as classes, but implemented as interfaces (in the TypeScript-sense, i.e., without a constructor), which is how they get declared in the typings
-- To avoid ambiguity with the *DOM* `Selection` type, the interface [`Selection`](https://adobexdplatform.com/plugin-docs/reference/selection.html) is implemented under the name `XDSelection` (in the global namespace), here.
-- The `LinearGradient` type is incorrectly documented as [`LinearGradientFill`](https://adobexdplatform.com/plugin-docs/reference/LinearGradientFill.html). This is implemented "the right way" in the typings.
+- The [`application.import()`](https://www.adobe.io/xd/uxp/develop/reference/application/#import) function cannot be declared because `import` is a reserved TypeScript keyword (not sure if this can be fixed). It is declared as `application.importWrong()` instead.
+- To avoid ambiguity with the *DOM* `Selection` type, the interface [`Selection`](https://www.adobe.io/xd/uxp/develop/reference/selection/) is also provided as an alias `XDSelection` and exported from the 'scenegraph' module
 
 ## Original Documentation Links
-- [Original Adobe XD Platform Docs](https://adobexdplatform.com/plugin-docs/reference/xd-index.html)
 - [New Adobe.io XD Docs](https://www.adobe.io/xd/uxp/develop/reference/xd-index/)
 - [New Adobe.io XD Docs GitHub Repo](https://github.com/AdobeDocs/uxp-xd/tree/main/src/pages/develop/reference)
+- [Adobe XD API Updates and Changelog](https://www.adobe.io/xd/uxp/develop/changelog/)
+- [Original Adobe XD Platform Docs](https://adobexdplatform.com/plugin-docs/reference/xd-index.html)

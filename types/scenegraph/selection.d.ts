@@ -14,7 +14,7 @@ import { Artboard, SceneNode } from "scenegraph";
  *
  * Items that are locked cannot be in the selection. If the user or your plugin attempts to select any locked items, they are automatically filtered into a separate list (itemsIncludingLocked) which is generally only used by the Unlock command.
  */
-export interface XDSelection {
+export interface Selection {
     /**
      * Array representing the current selection. Empty array if nothing is selected (never null). Never includes locked nodes.
      *
@@ -51,5 +51,5 @@ export interface XDSelection {
     focusedArtboard: Artboard | null | undefined;
 }
 
-// export interface XDSelection extends Selection {}
+export type XDSelection = Selection
 
