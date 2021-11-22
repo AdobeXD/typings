@@ -144,8 +144,9 @@ declare module 'application' {
         SVG = "svg",
     }
 
-
     /**
+     * __Note:__ the actual name of this function is `application.import(entries)` but `import` is a reserved keyword in TypeScript, so this is a placeholder...
+     * 
      * @since XD 45
      * 
      * Equivalent to File > Import. Brings assets into the XD document, including images, videos, and Adobe Photoshop or Adobe Illustrator files. Assets will be added as a child of the artboard that is the parent of the current selection (or to the document root if nothing is selected).
@@ -156,7 +157,7 @@ declare module 'application' {
      * 
      * @param entries List of files to be imported
      */
-    // export function import(entries: storage.File[]): void
+    export function importWrong(entries: storage.File[]): void
 
 
     /**
