@@ -3,7 +3,6 @@
  */
 declare module 'application' {
     import { Color, SceneNode, RootNode } from "scenegraph";
-    import { XDSelection } from "selection";
     import { storage } from "uxp";
 
     interface EditSettings {
