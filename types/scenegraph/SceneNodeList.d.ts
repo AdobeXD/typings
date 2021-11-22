@@ -38,7 +38,7 @@ export interface SceneNodeList {
     filter(
         callback: (sceneNode: SceneNode, index: number) => boolean,
         thisArg?: object
-    ): Array<SceneNode>;
+    ): SceneNode[];
 
     /**
      * Iterates all children and returns an array of the map function's result value for each child node.
@@ -46,7 +46,7 @@ export interface SceneNodeList {
     map(
         callback: (sceneNode: SceneNode, index: number) => any,
         thisArg?: object
-    ): Array<any>;
+    ): any[];
 
     /**
      * Iterates children until the test returns true for at least one child. Returns true if the test function returned true for at least one child.

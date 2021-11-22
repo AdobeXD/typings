@@ -30,7 +30,7 @@ export class Artboard extends GraphicNode {
      * 
      * Since: XD 19
      */
-    readonly incomingInteractions: Array<{ triggerNode: SceneNode, interactions: Array<Interaction> }>
+    readonly incomingInteractions: { triggerNode: SceneNode, interactions: Interaction[] }[]
 
     /** 
      * @deprecated XD 33 - Please use flows which supports multiple flows.

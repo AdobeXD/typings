@@ -218,7 +218,7 @@ declare module 'uxp' {
                  */
                 types?: string[];
                 /**
-                 * Optional. If `true`, multiple files can be selected and this API returns `Array<File>`.
+                 * Optional. If `true`, multiple files can be selected and this API returns `File[]`.
                  *
                  * If `false`, only one file can be selected and this API returns a File directly.
                  *

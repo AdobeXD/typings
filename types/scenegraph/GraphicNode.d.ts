@@ -82,7 +82,7 @@ export class GraphicNode extends SceneNodeClass {
      *
      * The appearance of each segment’s start/end follows the strokeEndCaps setting.
      */
-    strokeDashArray: Array<number>;
+    strokeDashArray: number[];
 
     /**
      * Ignored unless strokeDashArray is non-empty. Shifts the “phase” of the repeating dash pattern along the length of the stroke.

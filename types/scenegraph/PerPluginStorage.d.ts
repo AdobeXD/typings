@@ -18,7 +18,7 @@ export interface PerPluginStorage {
     /**
      *
      */
-    keys(pluginId: string): Array<string>
+    keys(pluginId: string): string[]
 
     /**
      *

@@ -119,7 +119,7 @@ export class Matrix {
     /**
      * @return The translation component of this matrix: [tx, ty]. Equals the `e` and `f` components of this matrix.
      */
-    getTranslate(): Array<number>
+    getTranslate(): number[]
 
     /**
      * Split the matrix into scale factors. This method assumes that there is no skew in the matrix.

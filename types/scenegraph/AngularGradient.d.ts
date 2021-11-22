@@ -24,7 +24,7 @@ export class AngularGradient {
      * selection.items[0].fill = gradient;
      * ```
      */
-    colorStops: Array<{ stop: number, color: Color }>
+    colorStops: { stop: number, color: Color }[]
 
     /** X position of the center of the gradient circle, as a multiple of the object's bounding box: X=0 indicates the left edge of the bounding box and X=1 indicates the right edge. The gradient circle center may start or end outside the object's bounding box, so values may be < 0 or > 1. */
     startX: number
@@ -33,7 +33,7 @@ export class AngularGradient {
     startY: number
 
     /** Returns an array of [startX, startY, endX, endY]. */
-    getEndPoints(): Array<number>
+    getEndPoints(): [number, number, number, number]
 
     /** Method for setting all four start/endpoint properties. (endX, endY) point is the end of the gradient circle radius. */
     setEndPoints(startX: number, startY: number, endX: number, endY: number): void

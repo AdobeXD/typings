@@ -34,7 +34,7 @@ export class Text extends GraphicNode {
      *
      * When setting styleRanges, any fields missing from a given range default to the existing values from the last range in the old value of styleRanges. The styleRanges getter always returns fully realized range objects with all fields specified.
      */
-    styleRanges: Array<{
+    styleRanges: {
         length: number;
         fontFamily: string;
         fontStyle: string;
@@ -45,7 +45,7 @@ export class Text extends GraphicNode {
         strikethrough: boolean;
         textTransform: string;
         textScript: string;
-    }>;
+    }[];
 
     /**
      * @since XD 14

@@ -135,7 +135,6 @@ declare module 'application' {
      * A single createRenditions() call can generate any number of renditions, including multiple renditions of the same node (with different output settings) or renditions of multiple different nodes. Only one createRenditions() call can be executing at any given time, so wait for the Promise it returns before calling it again.
      *
      * @param renditions List of renditions to generate
-     * @return Promise<Array<RenditionResult>, string> - Promise which is fulfilled with an array of RenditionResults (pointing to the same outputFiles that were originally passed in, or rejected with an error string if one or more renditions failed for any reason.
      */
     export function createRenditions(renditions: RenditionSettings[]): Promise<RenditionResult[] | string>;
 

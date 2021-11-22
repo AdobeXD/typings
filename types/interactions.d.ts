@@ -189,7 +189,7 @@ declare module 'interactions' {
      * 
      * A flow is a series or set of artboards starting from one artboard (called a home artboard), which are connected to other artboards or screens via wires or interactions. A document can have zero or multiple (one or more than one) flows and can therefore have zero or multiple home artboards. Each entry in the return array represents a FlowInfo object.
      */
-    export const flows: Array<FlowInfo>
+    export const flows: FlowInfo[]
 
     /**
      * Returns a collection of *all* interactions across the entire document, grouped by triggering scenenode. Each entry in this array specifies a `triggerNode` and the result of getting [`triggerNode.triggeredInteractions`](./scenegraph.md#SceneNode-triggeredInteractions).
@@ -198,5 +198,5 @@ declare module 'interactions' {
      *
      * Note: currently, this API excludes all of the document's keyboard/gamepad interactions.
      */
-    export const allInteractions: Array<{ triggerNode: SceneNode, interactions: Array<Interaction> }>;
+    export const allInteractions: { triggerNode: SceneNode, interactions: Interaction[] }[];
 }

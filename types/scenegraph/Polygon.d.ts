@@ -51,7 +51,7 @@ export class Polygon extends GraphicNode {
     /**
      * List of corner radius for each corner of the polygon. To set corner radius, use setAllCornerRadii().
      */
-    readonly cornerRadii: Array<number>
+    readonly cornerRadii: number[]
 
     /**
      * True if any of the Polygon's corners is rounded (corner radius > 0).

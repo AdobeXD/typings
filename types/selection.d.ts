@@ -25,11 +25,11 @@ declare global {
          *
          * Returns a fresh array each time, so this can be mutated by the caller without interfering with anything. Mutating the array does not change the selection - only invoking the ‘items’ setter changes selection.
          */
-        items: Array<SceneNode>;
+        items: SceneNode[];
         /**
          * Array representing the current selection plus any locked items that the user has attempted to select.
          */
-        itemsIncludingLocked: Array<SceneNode>;
+        itemsIncludingLocked: SceneNode[];
         /**
          * True if the selection isn’t empty and consists of one or more non-Artboards. Never true at the same time as hasArtboards.
          */

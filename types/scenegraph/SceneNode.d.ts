@@ -169,7 +169,7 @@ export abstract class SceneNodeClass {
      * });
      * ```
      */
-    readonly triggeredInteractions?: Array<Interaction>;
+    readonly triggeredInteractions?: Interaction[];
 
     /**
      * @since XD 38
@@ -460,7 +460,7 @@ export interface LayoutProperties {
     stack?: {
         orientation: 'STACK_HORIZONTAL' | 'STACK_VERTICAL'
         /** a number if each cell is equidistant or an array of spaces between cells in order provided by contentChildren */
-        spacings: Array<number> | number
+        spacings: number[] | number
     }
     /** Included if layout type is LAYOUT_STACK or LAYOUT_PADDING */
     padding?: {

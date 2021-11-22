@@ -22,7 +22,7 @@ export class RadialGradient {
     /**
      * Array of objects representing each color and its position along the gradient line. The position (stop value) is a number 0.0 - 1.0.
      */
-    colorStops: Array<{ stop: number, color: Color }>
+    colorStops: { stop: number, color: Color }[]
 
     /**
      * Number representing the gradient radius. The value is multiple of the object's bounding box with condition 0 ≤ endR.

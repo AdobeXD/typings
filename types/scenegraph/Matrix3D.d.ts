@@ -127,7 +127,7 @@ export class Matrix3D {
     /**
      * Get the translate component of this matrix, as an array.
      */
-    getTranslate(): Array<any> // ???
+    getTranslate(): any[] // ???
 
     /**
      *
