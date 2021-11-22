@@ -11,6 +11,7 @@
 declare module 'scenegraph' {
     import { RootNode } from 'RootNode'
     import { SceneNodeClass } from 'SceneNode';
+    import { XDSelection } from 'selection';
 
     export interface Point {
         x: number;
@@ -33,6 +34,7 @@ declare module 'scenegraph' {
      * Object representing the current selection state and edit context. Also available as the first argument passed to your plugin command handler function.
      */
     export const selection: XDSelection;
+    export { XDSelection } from 'selection';
 
     /**
      * @since XD 14

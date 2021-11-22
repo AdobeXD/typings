@@ -2,7 +2,7 @@
  * [application on Adobe.io](https://www.adobe.io/xd/uxp/develop/reference/application/)
  */
 declare module 'application' {
-    import { Color, SceneNode, RootNode } from "scenegraph";
+    import { Color, SceneNode, RootNode, XDSelection } from "scenegraph";
     import { storage } from "uxp";
 
     interface EditSettings {
