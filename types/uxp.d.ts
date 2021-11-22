@@ -307,7 +307,7 @@ declare module 'uxp' {
 
             /**
              * Creates a File Entry object within this folder and returns the appropriate instance. Note that this method just create a file entry object and not the actual file on the disk. The file actually gets created when you call for eg: write method on the file entry object.
-             * name the name of the file to create
+             * @param {string} name the name of the file to create
              * @param options additional options
              *
              * @returns the created entry
@@ -322,14 +322,14 @@ declare module 'uxp' {
 
             /**
              * Creates a Folder within this folder and returns the appropriate instance.
-             * name the name of the folder to create
+             * @param {string} name the name of the folder to create
              * @returns the created entry
              */
             createFolder(name: string): Promise<Folder>;
 
             /**
              * Gets an entry from within this folder and returns the appropriate instance.
-             * filePath the name/path of the entry to fetch
+             * @param {string} filePath the name/path of the entry to fetch
              *
              * @returns the fetched entry.
              */
@@ -337,8 +337,8 @@ declare module 'uxp' {
 
             /**
              * Renames an item on disk to a new name within the same folder. The Entry object passed to this function is automatically updated to reference the new name, however any other Entry objects referencing the original item will not be updated, and will thus no longer point to an item that exists on disk.
-             * entry entry to rename (File or Folder). Must exist.
-             * newName the new name to assign
+             * @param {Entry} entry entry to rename (File or Folder). Must exist.
+             * @param {string} newName the new name to assign
              * @param options additional options
              */
             renameEntry(entry: Entry, newName: string, options?: {
