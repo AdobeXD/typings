@@ -1,6 +1,6 @@
-declare module 'selection' {
-    import { Artboard, SceneNode } from "scenegraph";
-    
+import { Artboard, SceneNode } from "scenegraph";
+
+declare global {
     /**
      * The selection object represents the currently selected set of nodes in the UI. You can set the selection to use it as input for commands, or to determine what is left selected for the user when your plugin’s edit operation completes.
      *
@@ -15,7 +15,7 @@ declare module 'selection' {
      *
      * Items that are locked cannot be in the selection. If the user or your plugin attempts to select any locked items, they are automatically filtered into a separate list (itemsIncludingLocked) which is generally only used by the Unlock command.
      */
-    interface XDSelection {
+    export interface XDSelection {
         /**
          * Array representing the current selection. Empty array if nothing is selected (never null). Never includes locked nodes.
          *
@@ -55,4 +55,3 @@ declare module 'selection' {
     // export interface XDSelection extends Selection {}
 
 }
-

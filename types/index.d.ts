@@ -10,5 +10,5 @@ import './uxp';
 import './viewport';
 
 declare global {
-    function require(path:string): any;
+    function require(path: string): any;
 }
