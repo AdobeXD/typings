@@ -8,22 +8,22 @@ import { SceneNode } from "scenegraph";
 export class RootNode extends SceneNode {
     /**
      * Adds a child node to this container node. You can only add leaf nodes this way; to create structured subtrees of content, use commands.
-     * @param {SceneNode} node Child to add
-     * @param {number} index Optional: index to insert child at. Child is appended to end of children list (top of z order) otherwise.
+     * @param node Child to add
+     * @param index Optional: index to insert child at. Child is appended to end of children list (top of z order) otherwise.
      */
     addChild(node: SceneNode, index?: number): void;
 
     /**
      * Inserts a child node after the given reference node.
-     * @param {SceneNode} node Child to add
-     * @param {SceneNode} relativeTo New child is added immediately after this existing child
+     * @param node Child to add
+     * @param relativeTo New child is added immediately after this existing child
      */
     addChildAfter(node: SceneNode, relativeTo: SceneNode): void;
 
     /**
      * Inserts a child node before the given reference node.
-     * @param {SceneNode} node Child to add
-     * @param {SceneNode} relativeTo New child is added immediately before this existing child
+     * @param node Child to add
+     * @param relativeTo New child is added immediately before this existing child
      */
     addChildBefore(node: SceneNode, relativeTo: SceneNode): void;
 
