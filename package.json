@@ -1,12 +1,18 @@
 {
   "name": "@adobexd/typings",
-  "version": "25.0.0",
+  "version": "45.0.0",
+  "main": "",
   "types": "./types/index.d.ts",
   "description": "Typings for Adobe XD CC",
+  "license": "MIT",
+  "homepage": "https://github.com/AdobeXD/typings#readme",
   "repository": {
     "type": "git",
     "url": "git@github.com:AdobeXD/typings.git"
   },
+    "bugs": {
+      "url": "https://github.com/AdobeXD/typings/issues"
+    },
   "keywords": [
     "typescript",
     "adobe-xd",
@@ -16,12 +22,12 @@
     "typings",
     "typescript definitions"
   ],
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/AdobeXD/typings/issues"
-  },
-  "homepage": "https://github.com/AdobeXD/typings#readme",
   "contributors": [
+    {
+      "name": "James Bradford",
+      "email": "james@bradford.digital",
+      "url": "https://github.com/arniebradfo"
+    },
     {
       "name": "Pablo Klaschka",
       "email": "xdplugins@pabloklaschka.de",

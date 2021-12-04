@@ -32,7 +32,7 @@ You may also take a look at the `tsconfig.json` file contained in this repositor
 These type declarations track the contents of the official documentation. If an issue with the type declarations stems from an issue with the official documentation, then the type declaration files will be fixed once the issue is addressed in the documentation. This is intentional so as to keep the type declarations both maintainable and in sync with the documentation.
 
 A few notable exceptions include:
-- The [`application.import()`](https://www.adobe.io/xd/uxp/develop/reference/application/#import) function cannot be declared because `import` is a reserved TypeScript keyword (not sure if this can be fixed). It is declared as `application.importWrong()` instead.
+- The [`application.import()`](https://www.adobe.io/xd/uxp/develop/reference/application/#import) function cannot be declared because `import` is a reserved TypeScript keyword (not sure if this can be fixed). It is declared as `application.importFiles()` instead.
 - To avoid ambiguity with the *DOM* `Selection` type, the interface [`Selection`](https://www.adobe.io/xd/uxp/develop/reference/selection/) is also provided as an alias `XDSelection` and exported from the 'scenegraph' module
 
 ## Original Documentation Links

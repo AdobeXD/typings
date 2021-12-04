@@ -157,8 +157,7 @@ declare module 'application' {
      * 
      * @param entries List of files to be imported
      */
-    export function importWrong(entries: storage.File[]): void
-
+    export function importFiles(entries: storage.File[]): void
 
     /**
      * Adobe XD version number in the form "major.minor.patch.build"

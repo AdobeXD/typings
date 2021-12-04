@@ -1,9 +1,8 @@
-const {Text, Ellipse, Color} = require("scenegraph");
+const { Text, Ellipse, Color } = require("scenegraph");
 const clipboard = require("clipboard");
 const shell = require("uxp").shell;
 const fs = require("uxp").storage.localFileSystem;
 const assets = require('assets');
-const uxp = require('uxp');
 
 /**
  * @param {import('scenegraph').Selection} selection
@@ -20,9 +19,9 @@ async function test(selection, documentRoot) {
         }
     }
     const tempFolder = await fs.getTemporaryFolder();
-    const newFile = await tempFolder.createFile("tempfile.txt", {overwrite: true});
+    const newFile = await tempFolder.createFile("tempfile.txt", { overwrite: true });
     await newFile.write("Hello, world!");
-    await newFile.moveTo(tempFolder, {overwrite: true});
+    await newFile.moveTo(tempFolder, { overwrite: true });
 
     const anotherFile = await tempFolder.getEntry('tempfile.txt');
     if (anotherFile.isFile) {
