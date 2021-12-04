@@ -1,0 +1,26 @@
+{
+    "compilerOptions": {
+        "target": "es2015",
+        "module": "commonjs",
+        "baseUrl": "./",
+        "typeRoots": [
+            "./"
+        ],
+        "types": [],
+        "lib": [
+            "es2015",
+            "dom"
+        ],
+        "checkJs": true,
+        "noImplicitAny": true,
+        "noImplicitThis": true,
+        "strictNullChecks": true,
+        "strictFunctionTypes": true,
+        "forceConsistentCasingInFileNames": true,
+        "noEmit": true
+    },
+    "files": [
+        "index.d.ts",
+        "adobexd-typings-test.ts"
+    ]
+}
