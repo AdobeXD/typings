@@ -2,7 +2,7 @@
   "name": "@adobexd/typings",
   "version": "45.0.0",
   "main": "",
-  "types": "./types/index.d.ts",
+  "types": "./xd/index.d.ts",
   "description": "Typings for Adobe XD CC",
   "license": "MIT",
   "homepage": "https://github.com/AdobeXD/typings#readme",
