@@ -20,7 +20,6 @@
         "noEmit": true
     },
     "files": [
-        "index.d.ts",
-        "adobexd-typings-test.ts"
+        "index.d.ts"
     ]
 }
