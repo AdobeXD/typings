@@ -8,6 +8,6 @@ import './scenegraph';
 import './uxp';
 import './viewport';
 
-declare global {
-    function require(path: string): any;
-}
+// declare global {
+//     function require(path: string): any;
+// }

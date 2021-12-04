@@ -1,48 +1,50 @@
-/**
- * [PerPluginStorage on Adobe.io](https://www.adobe.io/xd/uxp/develop/reference/PerPluginStorage/)
- * 
- * @since XD 29
- */
-export interface PerPluginStorage {
-
+declare module 'scenegraph' {
     /**
+     * [PerPluginStorage on Adobe.io](https://www.adobe.io/xd/uxp/develop/reference/PerPluginStorage/)
      * 
+     * @since XD 29
      */
-    getAll(): Record<string, Record<string, string>>
+    export interface PerPluginStorage {
 
-    /**
-     *
-     */
-    getForPluginId(pluginId: string): Record<string, string>
+        /**
+         * 
+         */
+        getAll(): Record<string, Record<string, string>>
 
-    /**
-     *
-     */
-    keys(pluginId: string): string[]
+        /**
+         *
+         */
+        getForPluginId(pluginId: string): Record<string, string>
 
-    /**
-     *
-     */
-    getItem(pluginId: string, key: string): string | undefined
+        /**
+         *
+         */
+        keys(pluginId: string): string[]
 
-    /**
-     *
-     */
-    setItem(pluginId: string, key: string, value?: string): void
+        /**
+         *
+         */
+        getItem(pluginId: string, key: string): string | undefined
 
-    /**
-     *
-     */
-    removeItem(pluginId: string, key: string): void
+        /**
+         *
+         */
+        setItem(pluginId: string, key: string, value?: string): void
 
-    /**
-     *
-     */
-    toString(): string
+        /**
+         *
+         */
+        removeItem(pluginId: string, key: string): void
 
-    /**
-     *
-     */
-    toJSON(): Object
+        /**
+         *
+         */
+        toString(): string
 
+        /**
+         *
+         */
+        toJSON(): Object
+
+    }
 }

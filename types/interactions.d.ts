@@ -10,9 +10,9 @@
  * 
  * Tip Interactions are a fast-changing area in XD. APIs here have a higher likelihood of becoming deprecated, or lagging behind new XD features, than other parts of XD's plugin APIs.
  */
-
 declare module 'interactions' {
-    import {Artboard, SceneNode} from "scenegraph";
+
+    import { Artboard, SceneNode } from "scenegraph";
 
     /**
      * An interaction consists of a Trigger + Action pair and is attached to a single, specific scenenode.
