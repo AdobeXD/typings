@@ -37,7 +37,7 @@ declare module 'scenegraph' {
         toRgba(): { r: number, g: number, b: number, a: number };
 
         /**
-         * Convert to hex string with "#" prefix. Ignores the Color's alpha value. Returns a 3-character string in the form #123 if possible, otherwise returns a 6-character string in the form #456ABC.
+         * Convert to hex string with '#' prefix. Ignores the Color's alpha value. Returns a 3-character string in the form #123 if possible, otherwise returns a 6-character string in the form #456ABC.
          * @param forceSixDigits True if you want the result to always have 6 digits.
          */
         toHex(forceSixDigits: boolean): string;

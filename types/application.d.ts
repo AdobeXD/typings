@@ -2,8 +2,8 @@
  * [application on Adobe.io](https://www.adobe.io/xd/uxp/develop/reference/application/)
  */
 declare module 'application' {
-    import { Color, SceneNode, RootNode, Selection } from "scenegraph";
-    import { storage } from "uxp";
+    import { Color, SceneNode, RootNode, Selection } from 'scenegraph';
+    import { storage } from 'uxp';
 
     interface EditSettings {
         /**
@@ -11,7 +11,7 @@ declare module 'application' {
          */
         editLabel?: string;
         /**
-         * If two consecutive edits to the same selection have the same `mergeId`, they are flattened together into one Undo step. If unspecified, for "high frequency" UI events (see above), XD treats the originating DOM node as a unique identifier for merging; for other UI events, merging is disabled.
+         * If two consecutive edits to the same selection have the same `mergeId`, they are flattened together into one Undo step. If unspecified, for 'high frequency' UI events (see above), XD treats the originating DOM node as a unique identifier for merging; for other UI events, merging is disabled.
          */
         mergeId?: string;
     }
@@ -24,7 +24,7 @@ declare module 'application' {
      * * It is passed two arguments, the selection and the root node of the scenegraph
      * * It can return a Promise to extend the duration of the edit asynchronously
      *
-     * You can only call `editDocument()` in response to a user action, such as a button `"click"` event or a text input's `"input"` event. This generally means you must call it while a UI event handler is on the call stack.
+     * You can only call `editDocument()` in response to a user action, such as a button `'click'` event or a text input's `'input'` event. This generally means you must call it while a UI event handler is on the call stack.
      *
      * For UI events that often occur in rapid-fire clusters, such as dragging a slider or pressing keys in a text field, XD tries to smartly merge consecutive edits into a single atomic Undo step. See the `mergeId` option below to customize this behavior.
      * @param editFunction Function which will perform your plugin's edits to the scenegraph.
@@ -39,7 +39,7 @@ declare module 'application' {
      * * It is passed two arguments, the selection and the root node of the scenegraph
      * * It can return a Promise to extend the duration of the edit asynchronously
      *
-     * You can only call `editDocument()` in response to a user action, such as a button `"click"` event or a text input's `"input"` event. This generally means you must call it while a UI event handler is on the call stack.
+     * You can only call `editDocument()` in response to a user action, such as a button `'click'` event or a text input's `'input'` event. This generally means you must call it while a UI event handler is on the call stack.
      *
      * For UI events that often occur in rapid-fire clusters, such as dragging a slider or pressing keys in a text field, XD tries to smartly merge consecutive edits into a single atomic Undo step. See the `mergeId` option below to customize this behavior.
      * @param options Optional settings object (see below). This argument can be omitted.
@@ -138,10 +138,10 @@ declare module 'application' {
     export function createRenditions(renditions: RenditionSettings[]): Promise<RenditionResult[] | string>;
 
     export enum RenditionType {
-        JPG = "jpg",
-        PNG = "png",
-        PDF = "pdf",
-        SVG = "svg",
+        JPG = 'jpg',
+        PNG = 'png',
+        PDF = 'pdf',
+        SVG = 'svg',
     }
 
     /**
@@ -160,17 +160,17 @@ declare module 'application' {
     export function importFiles(entries: storage.File[]): void
 
     /**
-     * Adobe XD version number in the form "major.minor.patch.build"
+     * Adobe XD version number in the form 'major.minor.patch.build'
      */
     export const version: string;
 
     /**
-     * Current language the application UI is using. This may not equal the user's OS locale setting: it is the closest locale supported by XD - use this when you want your plugin's UI to be consistent with XD's UI. Specifies language only, with no region info (e.g. "fr", not "fr_FR").
+     * Current language the application UI is using. This may not equal the user's OS locale setting: it is the closest locale supported by XD - use this when you want your plugin's UI to be consistent with XD's UI. Specifies language only, with no region info (e.g. 'fr', not 'fr_FR').
      */
     export const appLanguage: string;
 
     /**
-     * User's OS-wide locale setting. May not match the XD UI, since XD does not support all world languages. Includes both language and region (e.g. "fr_CA" or "en_US").
+     * User's OS-wide locale setting. May not match the XD UI, since XD does not support all world languages. Includes both language and region (e.g. 'fr_CA' or 'en_US').
      */
     export const systemLocale: string;
 

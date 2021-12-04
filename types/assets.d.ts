@@ -4,7 +4,7 @@
  * @since XD 15
  */
 declare module 'assets' {
-    import {Color, LinearGradient, RadialGradient} from "scenegraph";
+    import {Color, LinearGradient, RadialGradient} from 'scenegraph';
 
     /**
      * Type of gradient color element: linear gradient or radial gradient
@@ -105,12 +105,12 @@ declare module 'assets' {
         strikethrough?: boolean;
         /**
          * @since XD 19
-         * Default "none"; one of "none", "uppercase", "lowercase", or "titlecase"
+         * Default 'none'; one of 'none', 'uppercase', 'lowercase', or 'titlecase'
          */
         textTransform?: 'none' | 'uppercase' | 'lowercase' | 'titlecase';
         /**
          * @since XD 20
-         * Default "none"; one of "none", "superscript", or "subscript"
+         * Default 'none'; one of 'none', 'superscript', or 'subscript'
          */
         textScript?: 'none' | 'superscript' | 'subscript';
     }

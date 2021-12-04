@@ -6,7 +6,7 @@
  * The viewport module represents the current UI view of the XD document's content.
  */
 declare module 'viewport' {
-    import {SceneNode} from "scenegraph";
+    import {SceneNode} from 'scenegraph';
 
     /**
      * Smoothly pan the viewport to bring the entire given region into view. If the region is already fully in view, does nothing. If the given region is too large to fit entirely in view, it is simply centered (zoom remains unchanged).

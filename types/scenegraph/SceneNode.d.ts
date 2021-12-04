@@ -1,4 +1,4 @@
-import { Interaction } from "interactions";
+import { Interaction } from 'interactions';
 
 declare module 'scenegraph' {
     /**
@@ -56,7 +56,7 @@ declare module 'scenegraph' {
          * 
          * Blend mode determines how a node is composited onto the content below it.
          * 
-         * Note: for leaf nodes (GraphicNode), the XD UI may show leaf nodes as blend mode "Normal" even when the underlying value is BLEND_MODE_PASSTHROUGH. This is because "Pass Through" and "Normal" are essentially equivalent for leaf nodes -- they only differ in appearance when a node has children.
+         * Note: for leaf nodes (GraphicNode), the XD UI may show leaf nodes as blend mode 'Normal' even when the underlying value is BLEND_MODE_PASSTHROUGH. This is because 'Pass Through' and 'Normal' are essentially equivalent for leaf nodes -- they only differ in appearance when a node has children.
          * 
          */
         blendMode: BlendMode
@@ -345,7 +345,7 @@ declare module 'scenegraph' {
          * 
          * The node's inner shadow, if any. If this property is null or innerShadow.visible is false, no inner shadow is drawn. Artboard, Line and any container object like Group, ScrollableGroup, SymbolInstance and Repeat Grid don't support inner shadow.
          * 
-         * To modify an existing inner shadow, always be sure to re-invoke the innerShadow setter rather than just changing the InnerShadow object's properties inline.See "Properties with object values".
+         * To modify an existing inner shadow, always be sure to re-invoke the innerShadow setter rather than just changing the InnerShadow object's properties inline.See 'Properties with object values'.
          */
         innerShadow: InnerShadow | null
 

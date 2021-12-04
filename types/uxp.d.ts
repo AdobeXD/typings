@@ -1,7 +1,7 @@
 declare module 'uxp' {
 
     /**
-     * To get an instance: `require("uxp").shell`
+     * To get an instance: `require('uxp').shell`
      */
     interface Shell {
         /**
@@ -204,7 +204,7 @@ declare module 'uxp' {
          */
         interface FileSystemProvider {
             /**
-             * Gets a file (or files) suitable for reading by displaying an "Open" file picker dialog to the user. File entries returned by this API are read-only - use getFileForSaving to get a File entry you can write to.
+             * Gets a file (or files) suitable for reading by displaying an 'Open' file picker dialog to the user. File entries returned by this API are read-only - use getFileForSaving to get a File entry you can write to.
              *
              * The user can select multiple files only if the `allowMultiple` option is `true`.
              * @param options additional options
@@ -213,7 +213,7 @@ declare module 'uxp' {
              */
             getFileForOpening(options?: {
                 /**
-                 * Optional. Allowed file extensions, with no "." prefix; use `storage.fileTypes.all` to allow any file to be picked
+                 * Optional. Allowed file extensions, with no '.' prefix; use `storage.fileTypes.all` to allow any file to be picked
                  * @default ['*']
                  */
                 types?: string[];
@@ -228,7 +228,7 @@ declare module 'uxp' {
             }): Promise<File[] | File>;
 
             /**
-             * Gets a file reference suitable for saving. The file is read-write. Any file picker displayed will be of the "save" variety.
+             * Gets a file reference suitable for saving. The file is read-write. Any file picker displayed will be of the 'save' variety.
              *
              * If the user attempts to save a file that doesn't exist, the file is created automatically.
              *
@@ -240,7 +240,7 @@ declare module 'uxp' {
              */
             getFileForSaving(suggestedName: string, options: {
                 /**
-                 * Required. Allowed file extensions, with no "." prefix.
+                 * Required. Allowed file extensions, with no '.' prefix.
                  */
                 types: string[];
             }): Promise<File>;

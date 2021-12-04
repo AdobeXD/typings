@@ -5,7 +5,7 @@ declare module 'scenegraph' {
      * Text leaf node shape. Text can have a fill and/or stroke, but only a solid-color fill is allowed (gradient or image fill will be rejected).
      * 
      * There are three types of Text nodes:
-     * - Point Text - Expands to fit the full width of the text content. Only uses multiple lines if the text content contains hard line breaks ("\n").
+     * - Point Text - Expands to fit the full width of the text content. Only uses multiple lines if the text content contains hard line breaks ('\n').
      * - Area Text - Fixed width and height. Text is automatically wrapped (soft line wrapping) to fit the width. If it does not fit the height, any remaining text is clipped.
      * - (@since XD 34) Auto-height Text - Fixed width. Text is automatically wrapped (soft line wrapping) to fit the width. The height is expanded to match all the text lines.
      *
@@ -20,7 +20,7 @@ declare module 'scenegraph' {
      */
     export class Text extends GraphicNode {
         /**
-         * @default " " (a single space character)
+         * @default ' ' (a single space character)
          * 
          * The plaintext content of the node, including any hard line breaks but excluding soft line wrap breaks.
          *
@@ -103,17 +103,17 @@ declare module 'scenegraph' {
 
         /**
          * @since XD 19
-         * @default "none"
+         * @default 'none'
          * 
-         * Set textTransform ("none", "uppercase", "lowercase", or "titlecase") across all style ranges, or get the textTransform of the last style range.
+         * Set textTransform ('none', 'uppercase', 'lowercase', or 'titlecase') across all style ranges, or get the textTransform of the last style range.
          */
         textTransform: 'none' | 'uppercase' | 'lowercase' | 'titlecase';
 
         /**
          * @since XD 20
-         * @default "none"
+         * @default 'none'
          * 
-         * Set textScript ("none" or "superscript" or "subscript") across all style ranges, or get the textScript of the last style range.
+         * Set textScript ('none' or 'superscript' or 'subscript') across all style ranges, or get the textScript of the last style range.
          */
         textScript: 'none' | 'superscript' | 'subscript';
 
@@ -160,7 +160,7 @@ declare module 'scenegraph' {
          *
          * Changing point text to area text or vice versa will change the origin / anchor point of the text, thus changing its localBounds, but it will also automatically change the node's transform so its globalBounds and boundsInParent origins remain unchanged.
          *
-         * Changing area text to point text will also automatically insert hard line breaks ("\n") into the text to match the previous line wrapping's appearance exactly.
+         * Changing area text to point text will also automatically insert hard line breaks ('\n') into the text to match the previous line wrapping's appearance exactly.
          */
         areaBox: null | { width: number; height: number };
 
@@ -176,7 +176,7 @@ declare module 'scenegraph' {
          * 
          * Changing POINT text to FIXED_HEIGHT or AUTO_HEIGHT text or vice versa will change the origin / anchor point of the text, thus changing its localBounds, but it will also automatically change the node's transform so its globalBounds and boundsInParent origins remain unchanged.
          * 
-         * Changing FIXED_HEIGHT or AUTO_HEIGHT text to POINT text will automatically insert hard line break ("\n") into the text to match the previous line wrapping's appearance exactly.
+         * Changing FIXED_HEIGHT or AUTO_HEIGHT text to POINT text will automatically insert hard line break ('\n') into the text to match the previous line wrapping's appearance exactly.
          * 
          * Changing from FIXED_HEIGHT to AUTO_HEIGHT text will automatically change the height of the bounds to match the height of the total text (can be a no-op).
          * 

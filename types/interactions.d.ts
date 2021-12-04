@@ -4,7 +4,7 @@
  * @since XD 19+ (some APIs added later)
  * 
  * The interactions module and related APIs provide read only information about the document's interactive prototype mode, including:
- * - The blue "wires" seen in XD's prototyping UI, known as "interactions," which specify gestures/events which trigger actions to occur in the prototype. Accessible as a single consolidated global listing via this module's allInteractions API, or you can access information from specific nodes in the scenegraph via SceneNode.triggeredInteractions and Artboard.incomingInteractions.
+ * - The blue 'wires' seen in XD's prototyping UI, known as 'interactions,' which specify gestures/events which trigger actions to occur in the prototype. Accessible as a single consolidated global listing via this module's allInteractions API, or you can access information from specific nodes in the scenegraph via SceneNode.triggeredInteractions and Artboard.incomingInteractions.
  * - Designers can author multiple prototype or interaction flows in a single document and publish unique shareable links for each flow. Developers can access all document flows using the flows API. With multiple flow support the homeArtboard API is being deprecated as XD no longer has a single home artboard restriction.
  * - Properties that affect Artboard scrolling behavior: Artboard viewportHeight and node fixedWhenScrolling.
  * 
@@ -12,7 +12,7 @@
  */
 declare module 'interactions' {
 
-    import { Artboard, SceneNode } from "scenegraph";
+    import { Artboard, SceneNode } from 'scenegraph';
 
     /**
      * An interaction consists of a Trigger + Action pair and is attached to a single, specific scenenode.
@@ -34,17 +34,17 @@ declare module 'interactions' {
         /**
          * One of the trigger types listed below.
          *
-         * ### `"tap"`
+         * ### `'tap'`
          * When the user clicks or taps on a scenenode.
          *
-         * ### `"drag"`
+         * ### `'drag'`
          * When the user drags or swipes a scenenode. Can only trigger a `goToArtboard` action with the `autoAnimate` transition style.
          *
-         * ### `"time"`
+         * ### `'time'`
          * Once a set amount of time elapses (this trigger type only exists on Artboard nodes). Additional Trigger properties:
          * *  {@link delay}
          *
-         * ### `"voice"`
+         * ### `'voice'`
          * When the user speaks a specific voice command. Additional Trigger properties:
          * * {@link speechCommand}
          */
@@ -72,22 +72,22 @@ declare module 'interactions' {
         /**
          * One of the action types listed below.
          *
-         * ### "goToArtboard"
+         * ### 'goToArtboard'
          * Navigate the entire screen to view a different artboard. Additional Action properties:
          * * {@link destination}
          * * {@link transition}
          * * {@link preserveScrollPosition}
          *
-         * ### "overlay"
+         * ### 'overlay'
          * Displays a second artboard overlaid on top of the current one. Additional Action properties:
          * * {@link overlay}
          * * {@link transition}
          * * {@link overlayTopLeft}
          *
-         * ### "goBack"
-         * Reverse the last `"goToArtboard"` or `"overlay"` action, replaying in reverse whatever transition it used.
+         * ### 'goBack'
+         * Reverse the last `'goToArtboard'` or `'overlay'` action, replaying in reverse whatever transition it used.
          *
-         * ### "speak"
+         * ### 'speak'
          * Speak with audio output to the user. Additional Action properties:
          * * {@link speechOutput}
          * * {@link locale}
@@ -123,17 +123,17 @@ declare module 'interactions' {
          */
         speechOutput?: string;
         /**
-         * Locale determines the pronounciation and accent of the digital voice. Includes both language *and* region (e.g. "en-us").
+         * Locale determines the pronounciation and accent of the digital voice. Includes both language *and* region (e.g. 'en-us').
          */
         locale?: string;
         /**
-         * "Persona" of the digital voice to use. Available personas vary by locale.
+         * 'Persona' of the digital voice to use. Available personas vary by locale.
          */
         voice?: string;
     }
 
     /**
-     * Animation style with which `"goToArtboard"` and `"overlay"` actions transition from/to Artboards.
+     * Animation style with which `'goToArtboard'` and `'overlay'` actions transition from/to Artboards.
      */
     type Transition = {
         /**
@@ -142,7 +142,7 @@ declare module 'interactions' {
         type: 'autoAnimate' | 'dissolve' | 'push' | 'slide' | 'none';
 
         /**
-         * _(If type = "push" or "slide")._ One of: `"L"`, `"R"`, `"T"`, `"B"`
+         * _(If type = 'push' or 'slide')._ One of: `'L'`, `'R'`, `'T'`, `'B'`
          */
         fromSide?: string;
 

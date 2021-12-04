@@ -1,4 +1,4 @@
-import { Interaction } from "interactions";
+import { Interaction } from 'interactions';
 
 declare module 'scenegraph' {
     /** 
@@ -32,7 +32,7 @@ declare module 'scenegraph' {
         /**
          * @since XD 19
          * 
-         * Get all interactions whose destination is this artboard (either navigating the entire view, i.e. a "goToArtboard" action, or showing this artboard as an overlay, i.e. an "overlay" action). Each element in the array is an Interaction object which describes a gesture/event plus the action it produces.
+         * Get all interactions whose destination is this artboard (either navigating the entire view, i.e. a 'goToArtboard' action, or showing this artboard as an overlay, i.e. an 'overlay' action). Each element in the array is an Interaction object which describes a gesture/event plus the action it produces.
          * 
          * May include interactions that are impossible to trigger because the trigger node (or one of its ancestors) has visible = false.
          * 

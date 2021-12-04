@@ -110,7 +110,7 @@ declare module 'scenegraph' {
         transformPoint(point: Point): Point;
 
         /**
-         * Transforms a rectangle using this matrix, returning the axis-aligned bounds of the resulting rectangle. If this matrix has rotation, then the result will have different width & height from the original rectangle, due to axis alignment. See "Coordinate Spaces" for some illustrations of this.
+         * Transforms a rectangle using this matrix, returning the axis-aligned bounds of the resulting rectangle. If this matrix has rotation, then the result will have different width & height from the original rectangle, due to axis alignment. See 'Coordinate Spaces' for some illustrations of this.
          * @param rect
          */
         transformRect(rect: Bounds): Bounds;

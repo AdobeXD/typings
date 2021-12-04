@@ -1,4 +1,4 @@
-import { storage } from "uxp";
+import { storage } from 'uxp';
 
 declare module 'scenegraph' {
     /** [ImageFill on Adobe.io](https://www.adobe.io/xd/uxp/develop/reference/ImageFill/) */

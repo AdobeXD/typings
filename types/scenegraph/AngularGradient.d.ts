@@ -2,7 +2,7 @@ declare module 'scenegraph' {
     /** 
      * [AngularGradient on Adobe.io](https://www.adobe.io/xd/uxp/develop/reference/AngularGradient/) 
      * @since XD 42
-     * In an angular (also known as "conical") gradient, colors blend together in a sweeping pattern around a shape from the center of a circle. The gradient fills the entire area of the shape it is applied to.
+     * In an angular (also known as 'conical') gradient, colors blend together in a sweeping pattern around a shape from the center of a circle. The gradient fills the entire area of the shape it is applied to.
      */
     export class AngularGradient {
         
