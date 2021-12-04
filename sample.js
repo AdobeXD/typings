@@ -3,6 +3,7 @@ const clipboard = require('clipboard');
 const shell = require('uxp').shell;
 const fs = require('uxp').storage.localFileSystem;
 const assets = require('assets');
+const uxp = require('uxp');
 
 /**
  * @param {import('scenegraph').Selection} selection
