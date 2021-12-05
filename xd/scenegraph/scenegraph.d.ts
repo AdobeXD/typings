@@ -37,6 +37,14 @@ declare module 'scenegraph' {
      */
     export const root: RootNode;
 
+    /** 
+     * __non-standard__ - interface for a plugin's `main.js` `module.exports.commands` 
+     * [Basic Example](https://www.adobe.io/xd/uxp/develop/tutorials/quick-start/#4-create-your-plugins-code)
+     */
+    export interface CommandHandler {
+        (selection: Selection, root:RootNode): void
+    }
+
     /**
      * @since XD 28
      * 
