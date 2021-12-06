@@ -1,5 +1,5 @@
 /**
- * [ImageFill on Adobe.io](https://www.adobe.io/xd/uxp/develop/reference/ImageFill/) 
+ * [scenegraph on Adobe.io](https://www.adobe.io/xd/uxp/develop/reference/scenegraph/)
  * 
  * The scenegraph is a node tree which represents the structure of the XD document. It closely matches the hierarchy seen in the Layers panel inside XD. Some scenenodes may contain children (e.g., a Group or Artboard), while others are leaf nodes (e.g., a Rectangle or Text node). The root of the scenegraph contains all Artboards that exist in the document, as well as all pasteboard content (nodes that are not contained by any artboard).
  * 

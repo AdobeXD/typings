@@ -1,6 +1,6 @@
 declare module 'scenegraph' {
     /**
-     * [ImageFill on Adobe.io](https://www.adobe.io/xd/uxp/develop/reference/ImageFill/)
+     * [Line on Adobe.io](https://www.adobe.io/xd/uxp/develop/reference/Line/)
      * 
      * Line leaf node shape. Lines have a stroke but no fill.
      */
