@@ -19,6 +19,11 @@ To get started
     },
   }
   ```
+- (optional) add the [UXP WebComponents](https://www.adobe.io/xd/uxp/uxp/reference-spectrum/) to the `JSX.IntrinsicElements` namespace by adding a reference to a `types.d.ts` file
+  ```ts
+  /// <reference path="./node_modules/uxp/jsxWebComponents.d.ts" />
+  ```
+  
 
 ## About these type files
 These type declarations track the contents of the official documentation. If an issue with the type declarations stems from an issue with the official documentation, then the type declaration files will be fixed once the issue is addressed in the documentation. This is intentional so as to keep the type declarations both maintainable and in sync with the documentation.
