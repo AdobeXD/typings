@@ -1,3 +1,8 @@
+/**
+ * [cloud on Adobe.io](https://www.adobe.io/xd/uxp/develop/reference/cloud/)
+ *
+ * @since XD 14
+ */
 declare module 'cloud' {
     interface BaseSharedArtifact {
         type: ArtifactType;
@@ -82,8 +87,6 @@ declare module 'cloud' {
      * Get a list of recently shared artifacts generated from this document. Older artifacts may not be included even if the shared links are still live. Shared links that have been deleted from the server (File > Manage Published Links) may still be listed here, as this API only provides a record of recent share actions from XD - not what the links' current status on the server may be.
      *
      * The list may contain a mix of PrototypeArtifact and/or SpecsArtifact, and items are listed in no particular order. If nothing has been shared from this document, an empty array is returned.
-     *
-     * @return {!Array<!PrototypeArtifact|SpecsArtifact>}
      */
-    export function getSharedArtifacts(): Array<PrototypeArtifact | SpecsArtifact>;
+    export function getSharedArtifacts(): (PrototypeArtifact | SpecsArtifact)[];
 }

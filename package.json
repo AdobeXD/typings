@@ -1,27 +1,40 @@
 {
   "name": "@adobexd/typings",
-  "version": "25.0.0",
-  "types": "./types/index.d.ts",
+  "version": "45.0.0",
+  "main": "",
+  "types": "index.d.ts",
   "description": "Typings for Adobe XD CC",
+  "license": "MIT",
+  "homepage": "https://github.com/AdobeXD/typings#readme",
   "repository": {
     "type": "git",
     "url": "git@github.com:AdobeXD/typings.git"
   },
+  "bugs": {
+    "url": "https://github.com/AdobeXD/typings/issues"
+  },
+  "files": [
+    "index.d.ts",
+    "xd",
+    "uxp"
+  ],
   "keywords": [
-    "typescript",
     "adobe-xd",
     "xd",
     "adobexd",
     "plugins",
+    "types",
+    "@types",
     "typings",
-    "typescript definitions"
+    "typescript definitions",
+    "typescript"
   ],
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/AdobeXD/typings/issues"
-  },
-  "homepage": "https://github.com/AdobeXD/typings#readme",
   "contributors": [
+    {
+      "name": "James Bradford",
+      "email": "james@bradford.digital",
+      "url": "https://github.com/arniebradfo"
+    },
     {
       "name": "Pablo Klaschka",
       "email": "xdplugins@pabloklaschka.de",

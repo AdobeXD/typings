@@ -1,52 +1,4 @@
-import './application';
-import './assets';
-import './clipboard';
-import './cloud';
-import './commands';
-import './interactions';
-import './scenegraph';
-import './uxp';
-import './viewport';
-import {SceneNode, Artboard} from 'scenegraph';
-
-declare global {
-    function require(path:string): any;
-
-    /**
-     * Represents the children of a scenenode. Typically accessed via the SceneNode.children property.
-     */
-    interface SceneNodeList {
-        items: SceneNode[];
-        readonly length: number;
-
-        forEach(
-            callback: (sceneNode: SceneNode, index: number) => void,
-            thisArg?: object
-        ): void;
-
-        forEachRight(
-            callback: (sceneNode: SceneNode, index: number) => void,
-            thisArg?: object
-        ): void;
-
-        filter(
-            callback: (sceneNode: SceneNode, index: number) => boolean,
-            thisArg?: object
-        ): Array<SceneNode>;
-
-        map(
-            callback: (sceneNode: SceneNode, index: number) => any,
-            thisArg?: object
-        ): Array<any>;
-
-        some(
-            callback: (sceneNode: SceneNode, index: number) => boolean,
-            thisArg?: object
-        ): boolean;
-
-        at(index: number): SceneNode | null;
-    }
-
+declare module 'scenegraph' {
     /**
      * The selection object represents the currently selected set of nodes in the UI. You can set the selection to use it as input for commands, or to determine what is left selected for the user when your plugin’s edit operation completes.
      *
@@ -61,7 +13,7 @@ declare global {
      *
      * Items that are locked cannot be in the selection. If the user or your plugin attempts to select any locked items, they are automatically filtered into a separate list (itemsIncludingLocked) which is generally only used by the Unlock command.
      */
-    interface XDSelection {
+    export interface Selection {
         /**
          * Array representing the current selection. Empty array if nothing is selected (never null). Never includes locked nodes.
          *
@@ -71,11 +23,11 @@ declare global {
          *
          * Returns a fresh array each time, so this can be mutated by the caller without interfering with anything. Mutating the array does not change the selection - only invoking the ‘items’ setter changes selection.
          */
-        items: Array<SceneNode>;
+        items: SceneNode[];
         /**
          * Array representing the current selection plus any locked items that the user has attempted to select.
          */
-        itemsIncludingLocked: Array<SceneNode>;
+        itemsIncludingLocked: SceneNode[];
         /**
          * True if the selection isn’t empty and consists of one or more non-Artboards. Never true at the same time as hasArtboards.
          */
@@ -97,4 +49,8 @@ declare global {
          */
         focusedArtboard: Artboard | null | undefined;
     }
+
+    /** alias to scenegraph.Selection to avoid confusiton with native browser Selection */
+    export type XDSelection = Selection 
+
 }

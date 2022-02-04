@@ -1,3 +1,10 @@
+/**
+ * [commands on Adobe.io](https://www.adobe.io/xd/uxp/develop/reference/commands/)
+ *
+ * You can make structural changes to the scenegraph, and perform other complex operations, by programmatically invoking the same commands as XD users have access to in the UI. Because structural changes have many nuanced rules and behaviors in XD, these calls function more like automating the UI than like low-level APIs.
+ *
+ * For example, these methods do not take arguments. Instead, set the selection to the objects you want the command to target, then invoke the command. Commands may also change the selection when run - for example, group() selects the newly created Group node.
+ */
 declare module 'commands' {
     /**
      * Wraps the selected objects in a Group, leaving the Group selected afterward. Equivalent to Object > Group in the UI.
@@ -18,6 +25,12 @@ declare module 'commands' {
      * Converts each selected object to a Path with the exact same visual appearance. Only applies to leaf nodes and Boolean Groups. Equivalent to Object > Path > Convert to Path.
      */
     export function convertToPath(): void;
+
+    /**
+     * Converts each selected object's stroke to a Path with the exact same visual appearance. Only applies to leaf nodes, Groups and Boolean Groups. Equivalent to Object > Path > Outline Stroke.
+
+     */
+    export function outlineStroke(): void;
 
     /**
      * Duplicates all selected objects, leaving the duplicates selected afterward.
@@ -94,14 +107,13 @@ declare module 'commands' {
      */
     export function alignToPixelGrid(): void;
 
+    /**
+     * Flips the object horizontally. Some objects such as Symbols cannot be flipped. Equivalent to Object > Flip > Horizontally.
+     */
+    // function flipHorizontal(): void;
 
-// /**
-//* Flips the object horizontally. Some objects such as Symbols cannot be flipped. Equivalent to Object > Flip > Horizontally.
-//*/
-//function filpHorizontal(): void;
-//
-//  /**
-// * Flips the object vertically. Some objects such as Symbols cannot be flipped. Equivalent to Object > Flip > Vertically.
-//*/
-//function flipVertical(): void;
+    /**
+     * Flips the object vertically. Some objects such as Symbols cannot be flipped. Equivalent to Object > Flip > Vertically.
+     */
+    // function flipVertical(): void;
 }

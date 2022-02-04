@@ -1,12 +1,18 @@
+/**
+ * [assets on Adobe.io](https://www.adobe.io/xd/uxp/develop/reference/assets/)
+ * 
+ * @since XD 15
+ */
 declare module 'assets' {
-    import {Color, LinearGradient, RadialGradient} from "scenegraph";
+    import {Color, LinearGradient, RadialGradient} from 'scenegraph';
 
     /**
      * Type of gradient color element: linear gradient or radial gradient
      */
     export enum GradientType {
-        LINEAR,
-        RADIAL
+        LINEAR = 'LINEAR',
+        RADIAL = 'RADIAL',
+        // ANGULAR = 'ANGULAR', // ???
     }
 
     /**
@@ -39,7 +45,7 @@ declare module 'assets' {
         /**
          * Array of color stops used in the gradient, where stop >= 0 and <= 1, and the values are strictly increasing. Same format as the colorStops property of a LinearGradient object.
          */
-        colorStops: Array<{ stop: number, color: Color }>
+        colorStops: { stop: number, color: Color }[]
     }
 
     /**
@@ -93,21 +99,24 @@ declare module 'assets' {
          */
         underline: boolean;
         /**
-         * (**Since**: XD 19)
+         * @since XD 19
          * Default `false`; whether strikethrough is turned on
          */
         strikethrough?: boolean;
         /**
-         * (**Since**: XD 19)
-         * Default "none"; one of "none", "uppercase", "lowercase", or "titlecase"
+         * @since XD 19
+         * Default 'none'; one of 'none', 'uppercase', 'lowercase', or 'titlecase'
          */
         textTransform?: 'none' | 'uppercase' | 'lowercase' | 'titlecase';
         /**
-         * (**Since**: XD 20)
-         * Default "none"; one of "none", "superscript", or "subscript"
+         * @since XD 20
+         * Default 'none'; one of 'none', 'superscript', or 'subscript'
          */
         textScript?: 'none' | 'superscript' | 'subscript';
     }
+
+    // nonstandard
+    type ColorOrAsset = Color | ColorAsset | LinearGradient | RadialGradient | GradientAsset
 
     /**
      * The collection of colors and gradients saved in this document's Asset library
@@ -117,13 +126,8 @@ declare module 'assets' {
          * Get a list of all color/gradient assets, in the order they appear in the Assets panel.
          *
          * The list may contain a mix of solid Color assets and/or gradient assets. If there are no color/gradient assets, an empty array is returned.
-         *
-         * @example
-         *  var assets = require("assets"),
-         *  allColors = assets.colors.get();
-         *
          */
-        get(): Array<ColorAsset | GradientAsset>;
+        get(): (ColorAsset | GradientAsset)[];
 
         /**
          * Add color/gradient assets to the collection.
@@ -132,7 +136,7 @@ declare module 'assets' {
          * @param colorAssets The color assets
          * @returns {number} number of assets added (may be less than requested if duplicates already exist)
          */
-        add(colorAssets: Color | ColorAsset | LinearGradient | RadialGradient | GradientAsset | Array<Color | ColorAsset | LinearGradient | RadialGradient | GradientAsset>): number;
+        add(colorAssets: ColorOrAsset | ColorOrAsset[]): number;
 
         /**
          * Delete color/gradient assets from the collection.
@@ -142,7 +146,7 @@ declare module 'assets' {
          * @param colorAssets The color assets
          * @returns {number} number of assets deleted (may be less than requested if some didn't exist)
          */
-        delete(colorAssets: Color | ColorAsset | LinearGradient | RadialGradient | GradientAsset | Array<Color | ColorAsset | LinearGradient | RadialGradient | GradientAsset>): number;
+        delete(colorAssets: ColorOrAsset | ColorOrAsset[]): number;
     }
 
     /**
@@ -153,13 +157,8 @@ declare module 'assets' {
          * Get a list of all character style assets, in the order they appear in the Assets panel.
          *
          * If there are no character style assets, an empty array is returned.
-         *
-         * @example
-         *  var assets = require("assets"),
-         *  allCharacterStyles = assets.characterStyles.get();
-         *
          */
-        get(): Array<CharacterStyleAsset>;
+        get(): CharacterStyleAsset[];
 
         /**
          * Add one or more character style assets to the collection.
@@ -169,7 +168,7 @@ declare module 'assets' {
          * @param charStyleAssets The character style assets
          * @returns {number} number of assets added (may be less than requested if duplicates already exist)
          */
-        add(charStyleAssets: CharacterStyleAsset | Array<CharacterStyleAsset>): number;
+        add(charStyleAssets: CharacterStyleAsset | CharacterStyleAsset[]): number;
 
         /**
          * Delete one or more character style assets from the collection.
@@ -181,7 +180,7 @@ declare module 'assets' {
          * @returns {number} number of assets deleted (may be less than requested if some didn't exist)
          * @param charStyleAssets The character styles
          */
-        delete(charStyleAssets: CharacterStyleAsset | Array<CharacterStyleAsset>): number;
+        delete(charStyleAssets: CharacterStyleAsset | CharacterStyleAsset[]): number;
     }
 
     /**

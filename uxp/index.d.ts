@@ -1,7 +1,7 @@
 declare module 'uxp' {
 
     /**
-     * To get an instance: `require("uxp").shell`
+     * To get an instance: `require('uxp').shell`
      */
     interface Shell {
         /**
@@ -204,7 +204,7 @@ declare module 'uxp' {
          */
         interface FileSystemProvider {
             /**
-             * Gets a file (or files) suitable for reading by displaying an "Open" file picker dialog to the user. File entries returned by this API are read-only - use getFileForSaving to get a File entry you can write to.
+             * Gets a file (or files) suitable for reading by displaying an 'Open' file picker dialog to the user. File entries returned by this API are read-only - use getFileForSaving to get a File entry you can write to.
              *
              * The user can select multiple files only if the `allowMultiple` option is `true`.
              * @param options additional options
@@ -213,12 +213,12 @@ declare module 'uxp' {
              */
             getFileForOpening(options?: {
                 /**
-                 * Optional. Allowed file extensions, with no "." prefix; use `storage.fileTypes.all` to allow any file to be picked
+                 * Optional. Allowed file extensions, with no '.' prefix; use `storage.fileTypes.all` to allow any file to be picked
                  * @default ['*']
                  */
                 types?: string[];
                 /**
-                 * Optional. If `true`, multiple files can be selected and this API returns `Array<File>`.
+                 * Optional. If `true`, multiple files can be selected and this API returns `File[]`.
                  *
                  * If `false`, only one file can be selected and this API returns a File directly.
                  *
@@ -228,7 +228,7 @@ declare module 'uxp' {
             }): Promise<File[] | File>;
 
             /**
-             * Gets a file reference suitable for saving. The file is read-write. Any file picker displayed will be of the "save" variety.
+             * Gets a file reference suitable for saving. The file is read-write. Any file picker displayed will be of the 'save' variety.
              *
              * If the user attempts to save a file that doesn't exist, the file is created automatically.
              *
@@ -240,7 +240,7 @@ declare module 'uxp' {
              */
             getFileForSaving(suggestedName: string, options: {
                 /**
-                 * Required. Allowed file extensions, with no "." prefix.
+                 * Required. Allowed file extensions, with no '.' prefix.
                  */
                 types: string[];
             }): Promise<File>;
@@ -307,7 +307,7 @@ declare module 'uxp' {
 
             /**
              * Creates a File Entry object within this folder and returns the appropriate instance. Note that this method just create a file entry object and not the actual file on the disk. The file actually gets created when you call for eg: write method on the file entry object.
-             * @param {string} name the name of the file to create
+             * @param name the name of the file to create
              * @param options additional options
              *
              * @returns the created entry
@@ -322,14 +322,14 @@ declare module 'uxp' {
 
             /**
              * Creates a Folder within this folder and returns the appropriate instance.
-             * @param {string} name the name of the folder to create
+             * @param name the name of the folder to create
              * @returns the created entry
              */
             createFolder(name: string): Promise<Folder>;
 
             /**
              * Gets an entry from within this folder and returns the appropriate instance.
-             * @param {string} filePath the name/path of the entry to fetch
+             * @param filePath the name/path of the entry to fetch
              *
              * @returns the fetched entry.
              */
@@ -337,8 +337,8 @@ declare module 'uxp' {
 
             /**
              * Renames an item on disk to a new name within the same folder. The Entry object passed to this function is automatically updated to reference the new name, however any other Entry objects referencing the original item will not be updated, and will thus no longer point to an item that exists on disk.
-             * @param {Entry} entry entry to rename (File or Folder). Must exist.
-             * @param {string} newName the new name to assign
+             * @param entry entry to rename (File or Folder). Must exist.
+             * @param newName the new name to assign
              * @param options additional options
              */
             renameEntry(entry: Entry, newName: string, options?: {
